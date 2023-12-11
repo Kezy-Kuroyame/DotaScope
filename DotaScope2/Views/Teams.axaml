@@ -1,0 +1,123 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:vm="clr-namespace:DotaScope2.ViewModels"	 
+             mc:Ignorable="d" d:DesignWidth="1920" d:DesignHeight="1080"
+             x:Class="DotaScope2.Views.Teams"
+			 x:DataType="vm:TeamsViewModel">
+
+	<ScrollViewer>
+		<Grid Background="#1A1A1A">
+			<DockPanel Grid.Row ="0"
+			Height="40"
+			Background="#4A3458"
+			
+			VerticalAlignment="Top">
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="300"/>
+						<ColumnDefinition Width="400"/>
+						<ColumnDefinition />
+					</Grid.ColumnDefinitions>
+
+					<TextBlock
+						Grid.Column="0"
+						Text="{Binding DotaScope}"
+						HorizontalAlignment="Center"
+						VerticalAlignment="Center"
+						FontSize="32"
+					
+						FontWeight="Bold"
+						TextAlignment="Center"/>
+					<Grid Grid.Column="1">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition />
+							<ColumnDefinition />
+						</Grid.ColumnDefinitions>
+						<Button
+							Grid.Column="0"
+							Content="{Binding Matches}"
+							FontSize="20"
+							Background="Transparent"
+							HorizontalAlignment="Center"
+							VerticalAlignment="Center" />
+						<Button
+							Grid.Column="1"
+							Content="{Binding Teams}"
+							Background="Transparent"
+							FontSize="20"
+							HorizontalAlignment="Center"
+							VerticalAlignment="Center"
+							Click="toTeams"
+							/>
+					</Grid>
+					<Button Background="#22FFFFFF"
+							Grid.Column="2"
+							HorizontalAlignment="Right"
+							Margin=" 0 0 20 0"
+							Content="{Binding LogIn}"
+							Click="SteamLogIn"/>
+				</Grid>
+			</DockPanel>
+			<Grid VerticalAlignment="Top" ShowGridLines="True" Margin="0 40 0 0">
+				  <Grid.RowDefinitions>
+					<RowDefinition Height="150"/>
+					<RowDefinition Height="900"/>
+				</Grid.RowDefinitions>
+				<Canvas Grid.Row="0" Background="#007E6F"/>
+				<Grid Grid.Row="0" Background="#007E6F">
+					<Grid.Background>
+						<LinearGradientBrush StartPoint="0%, 270%" EndPoint="60%, 0%">
+							<GradientStop Color="#720074" Offset="0"/>
+							<GradientStop Color="#88600762" Offset="0.3"/>
+							<GradientStop Color="#00352837" Offset="0.7"/>
+						</LinearGradientBrush>
+					</Grid.Background>
+				</Grid>
+				<Grid Grid.Row="0" Background="#007E6F">
+					<Grid.Background>
+						<LinearGradientBrush StartPoint="100%, 100%" EndPoint="50%, 0%">
+							<GradientStop Color="#253B88" Offset="0"/>
+							<GradientStop Color="#882E2A5E" Offset="0.3"/>
+							<GradientStop Color="#00352837" Offset="0.7"/>
+						</LinearGradientBrush>
+					</Grid.Background>
+				</Grid>
+				<TextBlock Grid.Row="0" FontSize="70" Text="Teams" FontWeight="Medium" Foreground="White" Margin="150 0 0 0" VerticalAlignment="Center"/>
+				<Grid Grid.Row="1" Background="AliceBlue">
+					<DataGrid VerticalAlignment="Center" HorizontalAlignment="Center" Background="#2D2D2D"
+							  ItemsSource="{Binding TeamsCollection}"
+							  IsReadOnly="True"
+							  CanUserReorderColumns="False"
+							  CanUserResizeColumns="False"
+							  CanUserSortColumns="False"
+							  GridLinesVisibility="Horizontal"
+							  BorderThickness="1"
+							  BorderBrush="Gray"
+							  Name="DataGrid"
+							  Width="1600"
+							  AutoGenerateColumns="True"
+							  FontSize="10">
+
+						<DataGrid.Columns>
+								<DataGridTemplateColumn>
+									<DataGridTemplateColumn.CellTemplate>
+										<DataTemplate>
+											<Image Source="{Binding Logo}" VerticalAlignment="Center" HorizontalAlignment="Center" Width="70" Height="70"/>
+										</DataTemplate>
+									</DataGridTemplateColumn.CellTemplate>
+									</DataGridTemplateColumn>
+								<DataGridTextColumn Binding="{Binding Name}"/>
+								<DataGridTextColumn Binding="{Binding Wins}" Header="Wins"/>
+								<DataGridTextColumn Binding="{Binding Losses}" Header="Losses"/>
+								<DataGridTextColumn Binding="{Binding Total}" Header="Total"/>
+								<DataGridTextColumn Binding="{Binding Raiting}" Header="Raiting"/>
+								<DataGridTextColumn Binding="{Binding Id}" Header="#"/>
+							</DataGrid.Columns>
+					</DataGrid>
+				</Grid>
+			</Grid>
+		</Grid>
+	</ScrollViewer>
+</UserControl>

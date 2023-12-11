@@ -1,0 +1,117 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:DotaScope2.ViewModels"	 
+			 mc:Ignorable="d" d:DesignWidth="1920" d:DesignHeight="2000"
+			 x:Class="DotaScope2.Views.Home"
+			 x:DataType="vm:HomeViewModel">
+	<ScrollViewer>
+		<Grid MaxHeight="4000">
+			<DockPanel Grid.Row ="0"
+		Height="40"
+		Background="#4A3458"
+			
+		VerticalAlignment="Top">
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="300"/>
+						<ColumnDefinition Width="400"/>
+						<ColumnDefinition />
+					</Grid.ColumnDefinitions>
+
+					<TextBlock
+						Grid.Column="0"
+						Text="{Binding DotaScope}"
+						HorizontalAlignment="Center"
+						VerticalAlignment="Center"
+						FontSize="32"
+					
+						FontWeight="Bold"
+						TextAlignment="Center"/>
+					<Grid Grid.Column="1">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition />
+							<ColumnDefinition />
+						</Grid.ColumnDefinitions>
+						<Button
+							Grid.Column="0"
+							Content="{Binding Matches}"
+							FontSize="20"
+							Background="Transparent"
+							HorizontalAlignment="Center"
+							VerticalAlignment="Center" />
+						<Button
+							Grid.Column="1"
+							Content="{Binding Teams}"
+							Background="Transparent"
+							FontSize="20"
+							HorizontalAlignment="Center"
+							VerticalAlignment="Center"
+							Click="toTeams"
+						/>
+					</Grid>
+					<Button Background="#22FFFFFF"
+							Grid.Column="2"
+							HorizontalAlignment="Right"
+							Margin=" 0 0 20 0"
+							Content="{Binding LogIn}"
+							Click="SteamLogIn"/>
+				</Grid>
+			</DockPanel>
+			<Grid VerticalAlignment="Top" ShowGridLines="True" Margin="0 40 0 0">
+
+				<Grid.RowDefinitions>
+					<RowDefinition Height="750"/>
+					<RowDefinition Height="800"/>
+				</Grid.RowDefinitions>
+
+				<Grid Grid.Row="0" Background="#007E6F">
+					<Grid>
+						<Grid>
+							<Grid.Background>
+								<LinearGradientBrush StartPoint="0%, 100%" EndPoint="50%, 0%">
+									<GradientStop Color="#720074" Offset="0"/>
+									<GradientStop Color="#88600762" Offset="0.3"/>
+									<GradientStop Color="#00352837" Offset="0.7"/>
+								</LinearGradientBrush>
+							</Grid.Background>
+							<Image Source="avares://DotaScope2/Assets/search.png" Width="700" Margin="100 0 0 0"/>
+							<Grid Width="370" Height="250" Background="#00FFFFFF" Margin="0 0 30 110">
+
+								<TextBlock Text="Dota Scope" FontSize="95" FontWeight="Bold" VerticalAlignment="Top" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center"/>
+							</Grid>
+						</Grid>
+						<Grid.Background>
+							<LinearGradientBrush StartPoint="100%, 100%" EndPoint="50%, 0%">
+								<GradientStop Color="#253B88" Offset="0"/>
+								<GradientStop Color="#882E2A5E" Offset="0.3"/>
+								<GradientStop Color="#00352837" Offset="0.7"/>
+							</LinearGradientBrush>
+						</Grid.Background>
+					</Grid>
+				</Grid>
+
+				<Grid Grid.Row="1">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition/>
+						<ColumnDefinition/>
+					</Grid.ColumnDefinitions>
+
+					<Grid Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" Width="650" Background="#00FFFFFF">
+						<Grid.RowDefinitions>
+							<RowDefinition Height="auto"/>
+							<RowDefinition Height="auto"/>
+						</Grid.RowDefinitions>
+						<TextBlock Text="{Binding WhatIsHeader}" FontSize="38" Grid.Row="0" TextAlignment="Center" FontWeight="Bold"/>
+						<TextBlock Text="{Binding WhatIsText}" FontSize="24" TextAlignment="Center" Grid.Row="1" LineHeight="40" Margin="0 35 0 0" Foreground="#CACACA" TextWrapping="WrapWithOverflow"/>
+					</Grid>
+
+					<Grid Grid.Column="1">
+						<TextBlock Text="?"  FontSize="528" VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="White" />
+					</Grid>
+				</Grid>
+			</Grid>
+		</Grid>
+	</ScrollViewer>
+</UserControl>
