@@ -8,7 +8,8 @@
         x:Class="DotaScope2.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
         Title="DotaScope"
-		WindowState="Maximized">
-	
-	    <views:Teams/>
+		WindowState="Maximized"
+		Content="{Binding ContentViewModel}">
+	<TextBlock Text="{Binding Block}"/>
+        
 </Window>
