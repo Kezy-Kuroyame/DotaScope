@@ -5,12 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using System.ComponentModel;
 
 namespace DotaScope2.Models
 {
     public class Team
     {
-        [JsonProperty("name")]
+
+        [JsonProperty("name")] 
         public string Name { get; set; }
 
         [JsonProperty("wins")]  
@@ -27,7 +29,7 @@ namespace DotaScope2.Models
 
         public string Id { get; set; }
         public string Total { get; set; }
-        public Task<Bitmap?> Logo { get; set; }
+        public Task<Bitmap> Logo { get; set; }
 
         public Team(string name, string wins, string losses, string raiting,  string id, string logo)
         {
