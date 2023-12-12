@@ -4,8 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 xmlns:vm="clr-namespace:DotaScope2.ViewModels"	 
              mc:Ignorable="d" d:DesignWidth="1920" d:DesignHeight="1080"
-             x:Class="DotaScope2.Views.Teams"
-			 x:DataType="vm:TeamsViewModel">
+             x:Class="DotaScope2.Views.Matches"
+			 x:DataType="vm:MatchesViewModel">
 
 	<ScrollViewer>
 		<Grid Background="#1A1A1A">
@@ -52,12 +52,15 @@
 							Click="toTeams"
 							/>
 					</Grid>
+
+					<TextBox x:Name="DotaID" Margin="0 5" HorizontalAlignment="Right" Grid.Column="2" Width="250"></TextBox>
 					<Button Background="#22FFFFFF"
 							Grid.Column="2"
 							HorizontalAlignment="Right"
-							Margin=" 0 0 20 0"
-							Content="{Binding LogIn}"
-							Click="SteamLogIn"/>
+							Margin=" 5 0"
+							Content="Search"
+							/>
+
 				</Grid>
 			</DockPanel>
 			<Grid VerticalAlignment="Top" ShowGridLines="True" Margin="0 40 0 0">
@@ -84,10 +87,10 @@
 						</LinearGradientBrush>
 					</Grid.Background>
 				</Grid>
-				<TextBlock Grid.Row="0" FontSize="70" Text="Teams" FontWeight="Medium" Foreground="White" Margin="150 0 0 0" VerticalAlignment="Center"/>
-				<Grid Grid.Row="1" Background="White">
-					<DataGrid VerticalAlignment="Center" HorizontalAlignment="Center" Background="#2D2D2D"
-							  ItemsSource="{Binding TeamsCollection}"
+				<TextBlock Grid.Row="0" FontSize="70" Text="Matches" FontWeight="Medium" Foreground="White" Margin="20 0 0 0" VerticalAlignment="Center"/>
+				<Grid Grid.Row="1" Background="#2A2A2A">
+					<DataGrid VerticalAlignment="Center" HorizontalAlignment="Center" Background="#919191"
+							  ItemsSource="{Binding MatchesCollection}"
 							  IsReadOnly="True"
 							  CanUserReorderColumns="False"
 							  CanUserResizeColumns="False"
@@ -96,24 +99,28 @@
 							  BorderThickness="1"
 							  BorderBrush="Gray"
 							  Name="DataGrid"
-							  Width="1600"
-							  AutoGenerateColumns="True"
+							  Width="940"
+							  Foreground="White"
+							  AutoGenerateColumns="False"
 							  FontSize="10">
+						
 
 						<DataGrid.Columns>
 							<DataGridTemplateColumn>
 								<DataGridTemplateColumn.CellTemplate>
 									<DataTemplate>
-										<Image Source="{Binding Logo}" VerticalAlignment="Center" HorizontalAlignment="Center" Width="70" Height="70"/>
+										<Image Source="{Binding img^}" VerticalAlignment="Center" HorizontalAlignment="Center" Width="50" Height="30"/>
 									</DataTemplate>
 								</DataGridTemplateColumn.CellTemplate>
 							</DataGridTemplateColumn>
-							<DataGridTextColumn Binding="{Binding Name}"/>
-							<DataGridTextColumn Binding="{Binding Wins}" Header="Wins"/>
-							<DataGridTextColumn Binding="{Binding Losses}" Header="Losses"/>
-							<DataGridTextColumn Binding="{Binding Total}" Header="Total"/>
-							<DataGridTextColumn Binding="{Binding Raiting}" Header="Raiting"/>
-							<DataGridTextColumn Binding="{Binding Id}" Header="#"/>
+							<DataGridTextColumn Binding="{Binding win}"/>
+							<DataGridTextColumn Binding="{Binding kills}"/>
+							<DataGridTextColumn Binding="{Binding deaths}"/>
+							<DataGridTextColumn Binding="{Binding assists}"/>
+							<DataGridTextColumn Binding="{Binding normal_duration}"/>
+							<DataGridTextColumn Binding="{Binding string_game_mode}"/>
+							<DataGridTextColumn Binding="{Binding string_lobby_type}"/>
+							<DataGridTextColumn Binding="{Binding how_long_ago}"/>
 						</DataGrid.Columns>
 					</DataGrid>
 				</Grid>
