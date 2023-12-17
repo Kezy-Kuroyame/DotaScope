@@ -22,4 +22,14 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 	 <PackageReference Include="Avalonia.Controls.DataGrid" Version="$(AvaloniaVersion)" />
   </ItemGroup>
+  
+	
+  <ItemGroup>
+    <Compile Update="Views\Home.axaml.cs">
+      <DependentUpon>Home.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Teams.axaml.cs">
+      <DependentUpon>Teams.axaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
 </Project>

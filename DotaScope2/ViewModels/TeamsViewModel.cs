@@ -12,6 +12,10 @@ using Avalonia.Media.Imaging;
 using Avalonia.Data;    
 using Avalonia;
 using System.ComponentModel;
+using ReactiveUI;
+using System.Reactive;
+using Avalonia.Controls;
+using DotaScope2.Views;
 
 
 namespace DotaScope2.ViewModels
@@ -22,6 +26,7 @@ namespace DotaScope2.ViewModels
         public string Matches => "Matches";
         public string Teams => "Teams";
         public string LogIn => "Login In";
+        private UserControl _contentView;
 
         private ObservableCollection<Team> _teamsCollection;
         public ObservableCollection<Team> TeamsCollection
@@ -74,7 +79,6 @@ namespace DotaScope2.ViewModels
                     foreach (var item in TeamsCollection) {
                         System.Diagnostics.Debug.WriteLine(item.ToString());
                     }
-                    
                 }
                 catch (HttpRequestException ex)
                 {

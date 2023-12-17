@@ -24,6 +24,7 @@ namespace DotaScope2.Views
         private async Task LoadData()
         {
             // Загрузка данных из сервера при запуске
+            System.Diagnostics.Debug.WriteLine("Загружаем данные из сервера");
             await _viewModel.GetDataFromServer();
         }
 
