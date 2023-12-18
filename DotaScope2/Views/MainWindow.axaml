@@ -10,6 +10,7 @@
 		x:DataType="vm:MainViewModel"
         Icon="/Assets/avalonia-logo.ico"
         Title="DotaScope"
+		WindowState="Maximized"
 		>
 	<Design.DataContext>
 		<vm:MainViewModel />
@@ -64,12 +65,6 @@
 								Command="{Binding NavigateTeamsCommand}"				
 					/>
 						</Grid>
-						<Button Background="#22FFFFFF"
-								Grid.Column="2"
-								HorizontalAlignment="Right"
-								Margin=" 0 0 20 0"
-								Content="{Binding LogIn}"
-								/>
 					</Grid>
 				</DockPanel>
 

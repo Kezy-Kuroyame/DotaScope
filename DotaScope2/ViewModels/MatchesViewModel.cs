@@ -12,16 +12,58 @@ using Avalonia.Media.Imaging;
 using System.Security.Cryptography.X509Certificates;
 using System.Collections.Specialized;
 using System.Xml.Schema;
+using System.Reactive.Linq;
+using ReactiveUI;
+using System.Windows.Input;
 
 namespace DotaScope2.ViewModels
 {
-    public class MatchesViewModel: ViewModelBase
+    public class MatchesViewModel : ViewModelBase
     {
-        public MatchesViewModel() { }
+        public MatchesViewModel() 
+        {
+            NewPlayerComand = ReactiveCommand.Create(NewPlayer);
+        }
+
+        public ICommand NewPlayerComand{ get; }
+        private async void NewPlayer()
+        {
+            await GetDataFromServer();
+        }
         public string DotaScope => "DotaScope";
         public string Matches => "Matches";
         public string Teams => "Teams";
         public string LogIn => "Login In";
+
+        private string _PlayerID = "138040334";
+        public string GivePlayerId
+        {
+            get { return _PlayerID; }
+            private set
+            {
+                this.RaiseAndSetIfChanged(ref _PlayerID, value);
+            }
+        }
+
+        private Task<Bitmap?> _Avatar;
+        public Task<Bitmap?> GiveAvatar
+        {
+            get { return _Avatar; }
+            private set { this.RaiseAndSetIfChanged(ref _Avatar, value);
+                System.Diagnostics.Debug.WriteLine(_Avatar.ToString());
+            }
+        }
+
+        private Task<Bitmap?> _Rank;
+        public Task<Bitmap?> GiveRank
+        {
+            get { return _Rank; }
+            private set
+            {
+                this.RaiseAndSetIfChanged(ref _Rank, value);
+            }
+        }
+
         public static DateTime UnixTimeToDateTime(double unixTime)
         {
             DateTime dateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0);
@@ -49,43 +91,91 @@ namespace DotaScope2.ViewModels
             }
         }
         public ObservableCollection<Match> MatchesCollection { get; } = new ObservableCollection<Match>();
+        public ObservableCollection<Player> players { get; } = new ObservableCollection<Player>();
         public async Task GetDataFromServer()
         {
             using (HttpClient client = new HttpClient())
             {
                 try
                 {
-                    int account_id = 291273072;
-                    string apiURLforMatch = $"https://api.opendota.com/api/players/{account_id}/matches";
+                    string apiURLforMatch = $"https://api.opendota.com/api/players/{_PlayerID}/matches";
                     string apiURLforHeroes = "https://api.opendota.com/api/heroStats";
-                    //string apiURLforPlayer = "https://api.opendota.com/api/players/{account_id}";
-                    //string apiURLforWinLose = "https://api.opendota.com/api/players/{account_id}/wl";
+                    string apiURLforPlayer = $"https://api.opendota.com/api/players/{_PlayerID}";
+                    string apiURLforWinLose = $"https://api.opendota.com/api/players/{_PlayerID}/wl";
 
                     string jsonResponseMatch = await client.GetStringAsync(apiURLforMatch);
                     string jsonResponseHeroes = await client.GetStringAsync(apiURLforHeroes);
-                    //string jsonResponsePlayer = await client.GetStringAsync(apiURLforPlayer);
-                    //string jsonResponseWinLose = await client.GetStringAsync(apiURLforPlayer);
+                    string jsonResponsePlayer = await client.GetStringAsync(apiURLforPlayer);
+                    string jsonResponseWinLose = await client.GetStringAsync(apiURLforWinLose);
 
                     // Десериализация полученных данных
                     var deserializedDataMatch = JsonConvert.DeserializeObject<Match[]>(jsonResponseMatch);
                     var deserializedDataHeroes = JsonConvert.DeserializeObject<Hero[]>(jsonResponseHeroes);
-                   // var deserializedDataPlayer = JsonConvert.DeserializeObject<Player[]>(jsonResponsePlayer);
-                   // var deserializedDataWinLose = JsonConvert.DeserializeObject<WinLose[]>(jsonResponseWinLose);
+                    dynamic profile = JsonConvert.DeserializeObject(jsonResponsePlayer);
+                    dynamic WinLose = JsonConvert.DeserializeObject(jsonResponseWinLose);
 
                     // Очистка и добавление данных в коллекцию
                     MatchesCollection.Clear();
                     int k = 0;
-                   // foreach (var stat in deserializedDataPlayer)
-                    //{
-                      //  stat.imgAvatar = ImageHelper.LoadFromWeb(new Uri("https://api.opendota.com" + stat.avatar));
-                        //foreach(var item in deserializedDataWinLose)
-                        //{
-                         //   stat.win = item.win;
-                         //   stat.lose = item.lose;
-                       // }
-                        //stat.total = $"{int.Parse(stat.win) + int.Parse(stat.lose)}";
-                        //stat.percent = $"{float.Parse(stat.win) * 100 / float.Parse(stat.total):0.00}%";
-                   // }
+                    string name = profile.profile.personaname;
+                    string rank = profile.rank_tier;
+                    string ava = profile.profile.avatarmedium;
+                    string win = WinLose.win;
+                    string lose = WinLose.lose;
+
+                    if (players.Count == 1)
+                    {
+                        players.Remove(players[0]);
+                    }
+                    players.Add(new Player(_PlayerID.ToString(), name, rank));
+
+                    if (int.Parse(rank) > 9 && int.Parse(rank) < 16)
+                    {
+                        GiveRank = ImageHelper.LoadFromWeb(new Uri("https://static.wikia.nocookie.net/dota2_gamepedia/images/2/2b/SeasonalRank1-5.png"));
+                    }
+                    else if (int.Parse(rank) > 19 && int.Parse(rank) < 26)
+                    {
+                        GiveRank = ImageHelper.LoadFromWeb(new Uri("https://static.wikia.nocookie.net/dota2_gamepedia/images/3/32/SeasonalRank2-5.png"));
+                    }
+                    else if (int.Parse(rank) > 29 && int.Parse(rank) < 36)
+                    {
+                        GiveRank = ImageHelper.LoadFromWeb(new Uri("https://static.wikia.nocookie.net/dota2_gamepedia/images/b/b1/SeasonalRank3-5.png"));
+                    }
+                    else if (int.Parse(rank) > 39 && int.Parse(rank) < 46)
+                    {
+                        GiveRank = ImageHelper.LoadFromWeb(new Uri("https://static.wikia.nocookie.net/dota2_gamepedia/images/a/a3/SeasonalRank4-5.png"));
+                    }
+                    else if (int.Parse(rank) > 49 && int.Parse(rank) < 56)
+                    {
+                        GiveRank = ImageHelper.LoadFromWeb(new Uri("https://static.wikia.nocookie.net/dota2_gamepedia/images/8/8e/SeasonalRank5-5.png"));
+                    }
+                    else if (int.Parse(rank) > 59 && int.Parse(rank) < 66)
+                    {
+                        GiveRank = ImageHelper.LoadFromWeb(new Uri("https://static.wikia.nocookie.net/dota2_gamepedia/images/4/47/SeasonalRank6-5.png"));
+                    }
+                    else if (int.Parse(rank) > 69 && int.Parse(rank) < 76)
+                    {
+                        GiveRank = ImageHelper.LoadFromWeb(new Uri("https://static.wikia.nocookie.net/dota2_gamepedia/images/3/33/SeasonalRank7-5.png"));
+                    }
+                    else if (int.Parse(rank) > 79)
+                    {
+                        GiveRank = ImageHelper.LoadFromWeb(new Uri("https://static.wikia.nocookie.net/dota2_gamepedia/images/f/f2/SeasonalRankTop0.png"));
+                    }
+                    else
+                    {
+                        GiveRank = ImageHelper.LoadFromWeb(new Uri("https://static.wikia.nocookie.net/dota2_gamepedia/images/e/e7/SeasonalRank0-0.png"));
+                    }
+
+                    GiveAvatar = ImageHelper.LoadFromWeb(new Uri(ava));
+                    System.Diagnostics.Debug.WriteLine(ava);
+                    players[0].win = win;
+                    players[0].lose = lose;
+                    players[0].total = $"{int.Parse(players[0].win) + int.Parse(players[0].lose)}";
+                    players[0].percent = $"{float.Parse(players[0].win) * 100 / float.Parse(players[0].total):0.00}%";
+
+                    System.Diagnostics.Debug.WriteLine("-------------------------------------------------------");
+                    System.Diagnostics.Debug.WriteLine(players[0].ToString());
+
                     foreach (var item in deserializedDataMatch)
                     {
                         if (k == 15) { break; }

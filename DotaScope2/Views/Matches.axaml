@@ -53,21 +53,14 @@
 							/>
 					</Grid>
 
-					<TextBox x:Name="DotaID" Margin="0 5" HorizontalAlignment="Right" Grid.Column="2" Width="250"></TextBox>
-					<Button Background="#22FFFFFF"
-							Grid.Column="2"
-							HorizontalAlignment="Right"
-							Margin=" 5 0"
-							Content="Search"
-							/>
-
 				</Grid>
 			</DockPanel>
-			<Grid VerticalAlignment="Top" ShowGridLines="True" Margin="0 40 0 0">
+			<Grid VerticalAlignment="Top" Margin="0 40 0 0">
 				  <Grid.RowDefinitions>
 					<RowDefinition Height="150"/>
 					<RowDefinition Height="900"/>
 				</Grid.RowDefinitions>
+				
 				<Canvas Grid.Row="0" Background="#007E6F"/>
 				<Grid Grid.Row="0" Background="#007E6F">
 					<Grid.Background>
@@ -88,9 +81,54 @@
 					</Grid.Background>
 				</Grid>
 				<TextBlock Grid.Row="0" FontSize="70" Text="Matches" FontWeight="Medium" Foreground="White" Margin="20 0 0 0" VerticalAlignment="Center"/>
-				<Grid Grid.Row="1" Background="#2A2A2A">
-					<DataGrid VerticalAlignment="Center" HorizontalAlignment="Center" Background="#919191"
+				<Grid Grid.Row="0" VerticalAlignment="Center" Width="640" >
+					<Image Source="{Binding GiveAvatar^}" VerticalAlignment="Center" HorizontalAlignment="Left" Width="100" Height="100"/>
+					<ItemsControl ItemsSource="{Binding players}">
+						<ItemsControl.ItemTemplate>
+							<DataTemplate>
+								<Grid>
+									<Grid.ColumnDefinitions>
+										<ColumnDefinition Width="100"/>
+										<ColumnDefinition Width="300"/>
+										<ColumnDefinition Width="60"/>
+										<ColumnDefinition Width="80"/>
+										<ColumnDefinition Width="120"/>
+									</Grid.ColumnDefinitions>
+									<Grid.RowDefinitions>
+										<RowDefinition Height="33"/>
+										<RowDefinition Height="33"/>
+										<RowDefinition Height="33"/>
+									</Grid.RowDefinitions>
+									<TextBlock Grid.Column="1" VerticalAlignment="Center" Margin="10 0 0 0" Grid.Row="1" FontSize="24" FontWeight="Medium" Foreground="White" Text="{Binding name}"/>
+									<TextBlock Grid.Column="2" VerticalAlignment="Center" Grid.Row="0" FontWeight="Medium" Foreground="Yellow" Margin="20 0 0 0" Text="{Binding total}"/>
+									<TextBlock Grid.Column="3" VerticalAlignment="Center" Grid.Row="0" FontWeight="Medium" Foreground="White" Text="Matches"/>
+									<TextBlock Grid.Column="2" VerticalAlignment="Center" Grid.Row="1" FontWeight="Medium" Foreground="#2ACB4F" Margin="5 0 0 0" Text="{Binding percent}"/>
+									<TextBlock Grid.Column="3" VerticalAlignment="Center" Grid.Row="1" FontWeight="Medium" Foreground="White" Margin="5 0 0 0" Text="Win Rate"/>
+									<TextBlock Grid.Column="2" VerticalAlignment="Center" Grid.Row="2" FontWeight="Medium" Foreground="#2ACB4F" Margin="20 0 0 0" Text="{Binding win}"/>
+									<TextBlock Grid.Column="3" VerticalAlignment="Center" Grid.Row="2" FontWeight="Medium" Foreground="#FFFFFF" Margin="-2.5 0 0 0" Text="-"/>
+									<TextBlock Grid.Column="3" VerticalAlignment="Center" Grid.Row="2" FontWeight="Medium" Foreground="#EC041F" Margin="7.5 0 0 0" Text="{Binding lose}"/>
+								</Grid>
+							</DataTemplate>
+						</ItemsControl.ItemTemplate>
+					</ItemsControl>
+					<Image Source="{Binding GiveRank^}" VerticalAlignment="Center" HorizontalAlignment="Right" Width="100" Height="100"/>
+				</Grid>
+
+				<Grid Grid.Row="1" Width="640">
+					<TextBox x:Name="DotaID" Margin="0 5"
+							 VerticalAlignment="Top" HorizontalAlignment="Center"
+							 Grid.Row="1" Width="250" Height="30" Text="{Binding GivePlayerId}"></TextBox>
+					<Button Background="#22FFFFFF"
+							Grid.Row="1"
+							Command="{Binding NewPlayerComand}"
+							HorizontalAlignment="Right"
+							VerticalAlignment="Top"
+							Margin=" 30 5 120 0"
+							Content="Search"
+							/>
+					<DataGrid VerticalAlignment="Top" HorizontalAlignment="Center" Background="#919191"
 							  ItemsSource="{Binding MatchesCollection}"
+							  Margin="0 50 0 0"
 							  IsReadOnly="True"
 							  CanUserReorderColumns="False"
 							  CanUserResizeColumns="False"
@@ -99,10 +137,11 @@
 							  BorderThickness="1"
 							  BorderBrush="Gray"
 							  Name="DataGrid"
-							  Width="940"
+							  Width="640"
 							  Foreground="White"
 							  AutoGenerateColumns="False"
-							  FontSize="10">
+							  FontSize="10"
+							  HeadersVisibility="None">
 						
 
 						<DataGrid.Columns>

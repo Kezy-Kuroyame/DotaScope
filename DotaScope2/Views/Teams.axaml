@@ -53,12 +53,7 @@
 							Click="toTeams"
 							/>
 					</Grid>
-					<Button Background="#22FFFFFF"
-							Grid.Column="2"
-							HorizontalAlignment="Right"
-							Margin=" 0 0 20 0"
-							Content="{Binding LogIn}"
-							Click="SteamLogIn"/>
+				
 				</Grid>
 			</DockPanel>
 			<Grid VerticalAlignment="Top" ShowGridLines="True" Margin="0 40 0 0">
