@@ -31,24 +31,24 @@ namespace DotaScope2.ViewModels
 
         public Bitmap? ImageFromBinding { get; set; } = ImageHelper.LoadFromResource(new("avares://DotaScope2/Assets/Exort_icon.png"));
 
-        private Bitmap? _FirstBall;
+        private Bitmap? _firstBall;
         public Bitmap? FirstBall
         {
             get {
-                return _FirstBall; }
-            private set => this.RaiseAndSetIfChanged(ref _FirstBall, value);
+                return _firstBall; }
+            private set => this.RaiseAndSetIfChanged(ref _firstBall, value);
         }
-        private Bitmap? _SecondBall;
+        private Bitmap? _secondBall;
         public Bitmap? SecondBall
         {
-            get { return _SecondBall; }
-            private set => this.RaiseAndSetIfChanged(ref _SecondBall, value);
+            get { return _secondBall; }
+            private set => this.RaiseAndSetIfChanged(ref _secondBall, value);
         }
-        private Bitmap? _ThirdBall;
+        private Bitmap? _thirdBall;
         public Bitmap? ThirdBall
         {
-            get { return _ThirdBall; }
-            private set => this.RaiseAndSetIfChanged(ref _ThirdBall, value);
+            get { return _thirdBall; }
+            private set => this.RaiseAndSetIfChanged(ref _thirdBall, value);
         }
         private ObservableCollection<string> _ballsCollection;
         public ObservableCollection<string> BallsCollection

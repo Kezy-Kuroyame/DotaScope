@@ -7,30 +7,29 @@ namespace DotaScope2.Views
 {
     public partial class Invoker : UserControl
     {
-        private readonly InvokerViewModel _viewModel;
         public Invoker()
         {
             InitializeComponent();
-            _viewModel = new InvokerViewModel();
+            DataContext = new InvokerViewModel();
         }
 
         private void QButtonClick(object sender, RoutedEventArgs e)
         {
             System.Diagnostics.Debug.WriteLine("Q Event");
-            _viewModel.addBallToCache("Q");
+            ((InvokerViewModel)DataContext).addBallToCache("Q");
             // Обработать событие нажатия на кнопку здесь
         }
         private void WButtonClick(object sender, RoutedEventArgs e)
         {
             System.Diagnostics.Debug.WriteLine("W Event");
-            _viewModel.addBallToCache("W");
+            ((InvokerViewModel)DataContext).addBallToCache("W");
 
             // Обработать событие нажатия на кнопку здесь
         }
         private void EButtonClick(object sender, RoutedEventArgs e)
         {
             System.Diagnostics.Debug.WriteLine("E Event");
-            _viewModel.addBallToCache("E");
+            ((InvokerViewModel)DataContext).addBallToCache("E");
             // Обработать событие нажатия на кнопку здесь
         }
         private void RButtonClick(object sender, RoutedEventArgs e)
