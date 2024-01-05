@@ -1,32 +1,36 @@
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
+using DotaScope2.ViewModels;
 
 namespace DotaScope2.Views
 {
     public partial class Invoker : UserControl
     {
+        private readonly InvokerViewModel _viewModel;
         public Invoker()
         {
             InitializeComponent();
+            _viewModel = new InvokerViewModel();
         }
 
         private void QButtonClick(object sender, RoutedEventArgs e)
         {
             System.Diagnostics.Debug.WriteLine("Q Event");
-
+            _viewModel.addBallToCache("Q");
             // Обработать событие нажатия на кнопку здесь
         }
         private void WButtonClick(object sender, RoutedEventArgs e)
         {
             System.Diagnostics.Debug.WriteLine("W Event");
+            _viewModel.addBallToCache("W");
 
             // Обработать событие нажатия на кнопку здесь
         }
         private void EButtonClick(object sender, RoutedEventArgs e)
         {
             System.Diagnostics.Debug.WriteLine("E Event");
-
+            _viewModel.addBallToCache("E");
             // Обработать событие нажатия на кнопку здесь
         }
         private void RButtonClick(object sender, RoutedEventArgs e)

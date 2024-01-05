@@ -32,6 +32,8 @@
 				</Grid.ColumnDefinitions>
 				<!-- Рекорды -->
 				
+				<Image Source="{Binding FirstBall}" Grid.Column="0" Width="200" />
+				
 				<!-- Игра -->
 				<Grid Grid.Column="1" ShowGridLines="" Background="">
 					<Grid.RowDefinitions>
@@ -69,19 +71,19 @@
 							<!-- First Ball -->
 							<Ellipse Width="100" Height="100" Stroke="#AAFFFFFF" StrokeThickness="2" Grid.Column="1">
 								<Ellipse.Fill>
-									<ImageBrush Source="/Assets/Exort_icon.png"/>
+									<ImageBrush Source="{Binding FirstBall}	"/>
 								</Ellipse.Fill>
 							</Ellipse>
 							<!-- Second Ball -->
 							<Ellipse Width="100" Height="100" Stroke="#AAFFFFFF" StrokeThickness="2" Grid.Column="2">
 								<Ellipse.Fill>
-									<ImageBrush Source="/Assets/Exort_icon.png"/>
+									<ImageBrush Source="{Binding SecondBall}"/>
 								</Ellipse.Fill>
 							</Ellipse>
 							<!-- Third Ball -->
 							<Ellipse Width="100" Height="100" Stroke="#AAFFFFFF" StrokeThickness="2" Grid.Column="3">
 								<Ellipse.Fill>
-									<ImageBrush Source="/Assets/Exort_icon.png"/>
+									<ImageBrush Source="{Binding ThirdBall}"/>
 								</Ellipse.Fill>
 							</Ellipse>
 						</Grid>
