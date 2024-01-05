@@ -17,6 +17,7 @@ public class MainViewModel : ViewModelBase
     public string Matches => "Matches";
     public string Teams => "Teams";
     public string LogIn => "Login In";
+    public string Invoker => "Invoker";
 
 
 
@@ -24,7 +25,8 @@ public class MainViewModel : ViewModelBase
     {
         new HomeViewModel(),
         new TeamsViewModel(),
-        new MatchesViewModel()
+        new MatchesViewModel(),
+        new InvokerViewModel()
     };
 
     private ViewModelBase _CurrentPage;
@@ -45,6 +47,7 @@ public class MainViewModel : ViewModelBase
         NavigateHomeCommand = ReactiveCommand.Create(NavigateHome);
         NavigateTeamsCommand = ReactiveCommand.Create(NavigateTeams);
         NavigateMatchesCommand = ReactiveCommand.Create(NavigateMatches);
+        NavigateInvokerCommand = ReactiveCommand.Create(NavigateInvoker);
     }
 
     public ICommand NavigateHomeCommand { get; }
@@ -64,6 +67,12 @@ public class MainViewModel : ViewModelBase
     private void NavigateMatches()
     {
         CurrentPage = Pages[2];
+    }
+    
+    public ICommand NavigateInvokerCommand { get; }
+    private void NavigateInvoker()
+    {
+        CurrentPage = Pages[3];
     }
 
 

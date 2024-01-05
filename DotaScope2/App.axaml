@@ -9,6 +9,10 @@
         <FluentTheme/>
 		<StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Fluent.xaml"/>
     </Application.Styles>
+	<Application.Resources>
+		<FontFamily x:Key="GeorgiaFont">avares://DotaScope2/Assets/Fonts/GEORGIA.TTF</FontFamily>
+		<FontFamily x:Key="SerifFont">avares://DotaScope2/Assets/Fonts/SERIFER.FON</FontFamily>
+	</Application.Resources>
 	<Application.DataTemplates>
 		<local:ViewLocator/>
 	</Application.DataTemplates>

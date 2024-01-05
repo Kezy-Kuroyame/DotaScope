@@ -8,7 +8,18 @@
   
   <ItemGroup>
     <AvaloniaResource Include="Assets\**" />
-	  <AvaloniaResource Include="Assets\search.png" />
+    <AvaloniaRosource Include="Assets\Exort_icon.png" />
+	<AvaloniaRosource Include="Assets\Invoke_icon.png" />
+	<AvaloniaRosource Include="Assets\Quas_icon.png" />
+	<AvaloniaRosource Include="Assets\Wex_icon.png" />
+	<AvaloniaResource Include="Assets\search.png" />
+	 <AvaloniaResource Include="Assets\Fonts\GEORGIA.TTF" />
+	 <AvaloniaResource Include="Assets\Fonts\SERIFER.FON" />
+  </ItemGroup>
+
+  
+  <ItemGroup>
+    <Content Include="Assets\Fonts\GEORGIA.TTF" />
   </ItemGroup>
   
 	

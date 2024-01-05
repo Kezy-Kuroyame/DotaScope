@@ -1,0 +1,146 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:vm="clr-namespace:DotaScope2.ViewModels"	 
+             mc:Ignorable="d" d:DesignWidth="1920" d:DesignHeight="1080"
+             x:Class="DotaScope2.Views.Invoker"
+	         x:CompileBindings="True"
+	         x:DataType="vm:InvokerViewModel"
+			 >
+	<Design.DataContext>
+		<vm:InvokerViewModel />
+	</Design.DataContext>
+	<ScrollViewer>
+		<Grid MaxHeight="1080" Background="#1A1A1A">
+			<TextBlock Background=""
+					   Height="50"
+					   VerticalAlignment="Top"
+						Text="Invoker Game"
+					   Margin="0 60 0 0 "
+					   FontSize="50"
+					   HorizontalAlignment="Center"			   
+					   FontWeight="Normal"
+						Foreground="White"/>
+			<Grid Background=""
+				  Margin="10 150 10 15"
+				  ShowGridLines="True">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="350"/>
+					<ColumnDefinition/>
+					<ColumnDefinition Width="350"/>
+				</Grid.ColumnDefinitions>
+				<!-- Рекорды -->
+				
+				<!-- Игра -->
+				<Grid Grid.Column="1" ShowGridLines="" Background="">
+					<Grid.RowDefinitions>
+						<RowDefinition/>
+						<RowDefinition/>
+						<RowDefinition/>
+					</Grid.RowDefinitions>
+					<Grid Grid.Row="1" ShowGridLines="">
+						<Grid.RowDefinitions>
+							<RowDefinition/>
+							<RowDefinition/>
+						</Grid.RowDefinitions>
+						<!-- Кнопка запуска -->
+						<Grid Grid.Row="0" HorizontalAlignment="Center">
+							<Button CornerRadius="20"
+									Content="Start Game"
+									FontSize="30" 
+									Foreground="White"
+									Padding="10"
+									Background="#22FFFFFF"
+									BorderThickness="2"
+									BorderBrush="#44FFFFFF">
+							</Button>
+						</Grid>
+						<!-- Нажатые шарики -->
+						<Grid Grid.Row="1" ShowGridLines="">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition/>
+								<ColumnDefinition Width ="150"/>
+								<ColumnDefinition Width="150"/>
+								<ColumnDefinition Width="150"/>
+								<ColumnDefinition/>
+							</Grid.ColumnDefinitions>
+							<!-- First Ball -->
+							<Ellipse Width="100" Height="100" Stroke="Black" StrokeThickness="2" Grid.Column="1">
+								<Ellipse.Fill>
+									<ImageBrush Source="/Assets/Exort_icon.png"/>
+								</Ellipse.Fill>
+							</Ellipse>
+							<!-- Second Ball -->
+							<Ellipse Width="100" Height="100" Stroke="Black" StrokeThickness="2" Grid.Column="2">
+								<Ellipse.Fill>
+									<ImageBrush Source="/Assets/Exort_icon.png"/>
+								</Ellipse.Fill>
+							</Ellipse>
+							<!-- Third Ball -->
+							<Ellipse Width="100" Height="100" Stroke="Black" StrokeThickness="2" Grid.Column="3">
+								<Ellipse.Fill>
+									<ImageBrush Source="/Assets/Exort_icon.png"/>
+								</Ellipse.Fill>
+							</Ellipse>
+						</Grid>
+					</Grid>
+					<!-- Balls -->
+					<Grid Grid.Row="2" ShowGridLines="">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="50"/>
+							<ColumnDefinition/>
+							<ColumnDefinition/>
+							<ColumnDefinition/>
+							<ColumnDefinition/>
+							<ColumnDefinition Width="50"/>
+						</Grid.ColumnDefinitions>
+							<Button Click="QButtonClick" Grid.Column="1" Background="#2D2D2D" Width="150" Height="150" HorizontalAlignment="Center" KeyUp="ButtonKeyUp">
+								<Grid >
+									<Image Source="/Assets/Quas_icon.png"/>
+									<TextBlock Text="Q" FontSize="40" Background="#2D2D2D" Width="40" Height="40" VerticalAlignment="Top" HorizontalAlignment="Left" TextAlignment="Center"/>
+								</Grid>
+							</Button>
+							<Button Click="WButtonClick" Grid.Column="2" Background="#2D2D2D" Width="150" Height="150" HorizontalAlignment="Center" KeyUp="ButtonKeyUp">
+								<Grid >
+									<Image Source="/Assets/Wex_icon.png"/>
+									<TextBlock Text="W" FontSize="40" Background="#2D2D2D" Width="40" Height="40" VerticalAlignment="Top" HorizontalAlignment="Left" TextAlignment="Center"/>
+								</Grid>
+							</Button>
+							<Button Click="EButtonClick" Grid.Column="3" Background="#2D2D2D" Width="150" Height="150" HorizontalAlignment="Center" KeyUp="ButtonKeyUp">
+								<Grid >
+									<Image Source="/Assets/Exort_icon.png"/>
+									<TextBlock Text="E" FontSize="40" Background="#2D2D2D" Width="40" Height="40" VerticalAlignment="Top" HorizontalAlignment="Left" TextAlignment="Center"/>
+								</Grid>
+							</Button>
+							<Button Click="RButtonClick" Grid.Column="4" Background="#2D2D2D" Width="150" Height="150" HorizontalAlignment="Center" KeyUp="ButtonKeyUp">
+								<Grid >
+									<Image Source="/Assets/Invoke_icon.png"/>
+									<TextBlock Text="R" FontSize="40" Background="#2D2D2D" Width="40" Height="40" VerticalAlignment="Top" HorizontalAlignment="Left" TextAlignment="Center"/>
+								</Grid>
+							</Button>
+						
+					</Grid>
+				</Grid>
+
+				<!-- Спеллы -->
+				<Grid Grid.Column="2" Background="#05FFFFFF" ShowGridLines="True">
+					<Grid.RowDefinitions>
+						<RowDefinition Height="100"/>
+						<RowDefinition/>
+						<RowDefinition/>
+						<RowDefinition/>
+						<RowDefinition/>
+						<RowDefinition/>
+						<RowDefinition/>
+						<RowDefinition/>
+						<RowDefinition Height="450"/>
+					</Grid.RowDefinitions>
+					
+					<TextBlock Text="SPELLS" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" Foreground="White" FontFamily="{StaticResource SerifFont}" FontWeight="Normal"/>
+				</Grid>
+			</Grid>
+		</Grid>
+	</ScrollViewer>
+	
+</UserControl>
