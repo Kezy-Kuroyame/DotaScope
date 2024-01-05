@@ -24,7 +24,7 @@
 						Foreground="White"/>
 			<Grid Background=""
 				  Margin="10 150 10 15"
-				  ShowGridLines="True">
+				  ShowGridLines="">
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition Width="350"/>
 					<ColumnDefinition/>
@@ -39,6 +39,7 @@
 						<RowDefinition/>
 						<RowDefinition/>
 					</Grid.RowDefinitions>
+					
 					<Grid Grid.Row="1" ShowGridLines="">
 						<Grid.RowDefinitions>
 							<RowDefinition/>
@@ -66,19 +67,19 @@
 								<ColumnDefinition/>
 							</Grid.ColumnDefinitions>
 							<!-- First Ball -->
-							<Ellipse Width="100" Height="100" Stroke="Black" StrokeThickness="2" Grid.Column="1">
+							<Ellipse Width="100" Height="100" Stroke="#AAFFFFFF" StrokeThickness="2" Grid.Column="1">
 								<Ellipse.Fill>
 									<ImageBrush Source="/Assets/Exort_icon.png"/>
 								</Ellipse.Fill>
 							</Ellipse>
 							<!-- Second Ball -->
-							<Ellipse Width="100" Height="100" Stroke="Black" StrokeThickness="2" Grid.Column="2">
+							<Ellipse Width="100" Height="100" Stroke="#AAFFFFFF" StrokeThickness="2" Grid.Column="2">
 								<Ellipse.Fill>
 									<ImageBrush Source="/Assets/Exort_icon.png"/>
 								</Ellipse.Fill>
 							</Ellipse>
 							<!-- Third Ball -->
-							<Ellipse Width="100" Height="100" Stroke="Black" StrokeThickness="2" Grid.Column="3">
+							<Ellipse Width="100" Height="100" Stroke="#AAFFFFFF" StrokeThickness="2" Grid.Column="3">
 								<Ellipse.Fill>
 									<ImageBrush Source="/Assets/Exort_icon.png"/>
 								</Ellipse.Fill>
@@ -124,7 +125,7 @@
 				</Grid>
 
 				<!-- Спеллы -->
-				<Grid Grid.Column="2" Background="#05FFFFFF" ShowGridLines="True">
+				<Grid Grid.Column="2" Background="" ShowGridLines="">
 					<Grid.RowDefinitions>
 						<RowDefinition Height="100"/>
 						<RowDefinition/>
@@ -134,10 +135,97 @@
 						<RowDefinition/>
 						<RowDefinition/>
 						<RowDefinition/>
-						<RowDefinition Height="450"/>
+						<RowDefinition/>
+						<RowDefinition/>
+						<RowDefinition/>
+						<RowDefinition Height="150"/>
 					</Grid.RowDefinitions>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="40"/>
+						<ColumnDefinition/>
+
+					</Grid.ColumnDefinitions>
 					
-					<TextBlock Text="SPELLS" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" Foreground="White" FontFamily="{StaticResource SerifFont}" FontWeight="Normal"/>
+					<TextBlock Text="SPELLS" Grid.Row="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" Foreground="White" FontFamily="" />
+					
+					<Image Source="/Assets/Cold_Snap_icon.png" Width="30" Grid.Row="1" />
+					<TextBlock Grid.Row="1" Grid.Column="1" FontSize="24" Foreground="White" VerticalAlignment="Center" Margin="10 0 0 0" HorizontalAlignment="Left">
+						<Run Text="{Binding ColdSnap}"/>
+						<Run Text="-"/>
+						<Run Text="Q Q Q" Foreground="#72C3FC" FontWeight="Bold"/>
+					</TextBlock>
+					
+					<Image Source="/Assets/Ghost_Walk_icon.png" Width="30" Grid.Row="2" />
+					<TextBlock Grid.Row="2" Grid.Column="1" FontSize="24" Foreground="White" VerticalAlignment="Center" Margin="10 0 0 0" HorizontalAlignment="Left">
+						<Run Text="{Binding GhostWalk}"/>
+						<Run Text="-"/>
+						<Run Text="Q Q" Foreground="#72C3FC" FontWeight="Bold"/>
+						<Run Text="W" Foreground="#CE72FC" FontWeight="Bold"/>
+					</TextBlock>
+					
+					<Image Source="/Assets/Ice_Wall_icon.png" Width="30" Grid.Row="3" />
+					<TextBlock Grid.Row="3" Grid.Column="1" FontSize="24" Foreground="White" VerticalAlignment="Center" Margin="10 0 0 0" HorizontalAlignment="Left">
+						<Run Text="{Binding IceWall}"/>
+						<Run Text="-"/>
+						<Run Text="Q Q" Foreground="#72C3FC" FontWeight="Bold"/>
+						<Run Text="E" Foreground="#FCCA72" FontWeight="Bold"/>
+					</TextBlock>
+					
+					<Image Source="/Assets/E.M.P._icon.png" Width="30" Grid.Row="4" />
+					<TextBlock Grid.Row="4" Grid.Column="1" FontSize="24" Foreground="White" VerticalAlignment="Center" Margin="10 0 0 0" HorizontalAlignment="Left">
+						<Run Text="{Binding EMP}"/>
+						<Run Text="-"/>
+						<Run Text="W W W" Foreground="#CE72FC" FontWeight="Bold"/>
+					</TextBlock>
+					
+					<Image Source="/Assets/Tornado_icon.png" Width="30" Grid.Row="5" />
+					<TextBlock Grid.Row="5" Grid.Column="1" FontSize="24" Foreground="White" VerticalAlignment="Center" Margin="10 0 0 0" HorizontalAlignment="Left">
+						<Run Text="{Binding Tornado}"/>
+						<Run Text="-"/>
+						<Run Text="W W" Foreground="#CE72FC" FontWeight="Bold"/>
+						<Run Text="Q" Foreground="#72C3FC" FontWeight="Bold"/>
+					</TextBlock>
+					
+					<Image Source="/Assets/Alacrity_icon.png" Width="30" Grid.Row="6" />
+					<TextBlock Grid.Row="6" Grid.Column="1" FontSize="24" Foreground="White" VerticalAlignment="Center" Margin="10 0 0 0" HorizontalAlignment="Left">
+						<Run Text="{Binding Alacrity}"/>
+						<Run Text="-"/>
+						<Run Text="W W" Foreground="#CE72FC" FontWeight="Bold"/>
+						<Run Text="E" Foreground="#FCCA72" FontWeight="Bold"/>
+					</TextBlock>
+					
+					<Image Source="/Assets/Sun_Strike_icon.png" Width="30" Grid.Row="7" />
+					<TextBlock Grid.Row="7" Grid.Column="1" FontSize="24" Foreground="White" VerticalAlignment="Center" Margin="10 0 0 0" HorizontalAlignment="Left">
+						<Run Text="{Binding SunStrike}"/>
+						<Run Text="-"/>
+						<Run Text="E E E" Foreground="#FCCA72" FontWeight="Bold"/>
+					</TextBlock>
+					
+					<Image Source="/Assets/Forge_Spirit_icon.png" Width="30" Grid.Row="8" />
+					<TextBlock Grid.Row="8" Grid.Column="1" FontSize="24" Foreground="White" VerticalAlignment="Center" Margin="10 0 0 0" HorizontalAlignment="Left">
+						<Run Text="{Binding ForgeSpirit}"/>
+						<Run Text="-"/>
+						<Run Text="E E" Foreground="#FCCA72" FontWeight="Bold"/>
+						<Run Text="Q" Foreground="#72C3FC" FontWeight="Bold"/>
+					</TextBlock>
+										
+					<Image Source="/Assets/Chaos_Meteor_icon.png" Width="30" Grid.Row="9" />
+					<TextBlock Grid.Row="9" Grid.Column="1" FontSize="24" Foreground="White" VerticalAlignment="Center" Margin="10 0 0 0" HorizontalAlignment="Left">
+						<Run Text="{Binding ChaosMeteor}"/>
+						<Run Text="-"/>
+						<Run Text="E E" Foreground="#FCCA72" FontWeight="Bold"/>
+						<Run Text="W" Foreground="#CE72FC" FontWeight="Bold"/>
+					</TextBlock>
+										
+					<Image Source="/Assets/Deafening_Blast_icon.png" Width="30" Grid.Row="10" />
+					<TextBlock Grid.Row="10" Grid.Column="1" FontSize="24" Foreground="White" VerticalAlignment="Center" Margin="10 0 0 0" HorizontalAlignment="Left">
+						<Run Text="{Binding DeafeningBlast}"/>
+						<Run Text="-"/>
+						<Run Text="Q" Foreground="#72C3FC" FontWeight="Bold"/>
+						<Run Text="W" Foreground="#CE72FC" FontWeight="Bold"/>
+						<Run Text="E" Foreground="#FCCA72" FontWeight="Bold"/>
+					</TextBlock>
+					
 				</Grid>
 			</Grid>
 		</Grid>

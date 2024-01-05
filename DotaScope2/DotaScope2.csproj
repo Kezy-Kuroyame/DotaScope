@@ -8,18 +8,25 @@
   
   <ItemGroup>
     <AvaloniaResource Include="Assets\**" />
+    <AvaloniaRosource Include="Assets\Alacrity_icon.png" />
+    <AvaloniaRosource Include="Assets\Chaos_Meteor_icon.png" />
+    <AvaloniaRosource Include="Assets\Cold_Snap_icon.png" />
+    <AvaloniaRosource Include="Assets\Deafening_Blast_icon.png" />
+    <AvaloniaRosource Include="Assets\E.M.P._icon.png" />
+    <AvaloniaRosource Include="Assets\Fonts\GEORGIA.TTF" />
+    <AvaloniaRosource Include="Assets\Fonts\GEORGIAB.TTF" />
+    <AvaloniaRosource Include="Assets\Fonts\GEORGIAI.TTF" />
+    <AvaloniaRosource Include="Assets\Fonts\GEORGIAZ.TTF" />
+    <AvaloniaRosource Include="Assets\Forge_Spirit_icon.png" />
+    <AvaloniaRosource Include="Assets\Ghost_Walk_icon.png" />
+    <AvaloniaRosource Include="Assets\Ice_Wall_icon.png" />
+    <AvaloniaRosource Include="Assets\Sun_Strike_icon.png" />
+    <AvaloniaRosource Include="Assets\Tornado_icon.png" />
     <AvaloniaRosource Include="Assets\Exort_icon.png" />
 	<AvaloniaRosource Include="Assets\Invoke_icon.png" />
 	<AvaloniaRosource Include="Assets\Quas_icon.png" />
 	<AvaloniaRosource Include="Assets\Wex_icon.png" />
 	<AvaloniaResource Include="Assets\search.png" />
-	 <AvaloniaResource Include="Assets\Fonts\GEORGIA.TTF" />
-	 <AvaloniaResource Include="Assets\Fonts\SERIFER.FON" />
-  </ItemGroup>
-
-  
-  <ItemGroup>
-    <Content Include="Assets\Fonts\GEORGIA.TTF" />
   </ItemGroup>
   
 	
