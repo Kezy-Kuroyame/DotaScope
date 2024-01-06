@@ -34,13 +34,39 @@
 				
 				<Image Source="{Binding FirstBall}" Grid.Column="0" Width="200" />
 				
-				<!-- Игра -->
+				<!-- Игровая Колонка -->
 				<Grid Grid.Column="1" ShowGridLines="" Background="">
 					<Grid.RowDefinitions>
 						<RowDefinition/>
 						<RowDefinition/>
 						<RowDefinition/>
 					</Grid.RowDefinitions>
+					
+					<!-- Игровой блок -->
+					<Grid Grid.Row="0" ShowGridLines="True" Background="#11FFFFFF">
+						<Grid.RowDefinitions>
+							<RowDefinition Height="*"/>
+							<RowDefinition Height="3*"/>
+						</Grid.RowDefinitions>
+
+						<!-- Timer -->
+						<Grid Grid.Row="0">
+							<TextBlock Text="30" Foreground="White" FontSize="50" VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Justify"/>
+						</Grid>
+						
+						<!-- Game -->
+						<Grid Grid.Row="1" ShowGridLines="True">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width=""/>
+								<ColumnDefinition Width="250"/>
+								<ColumnDefinition Width="250"/>
+								<ColumnDefinition />
+							</Grid.ColumnDefinitions>
+							<Image Source="{Binding GameImageSpell}" Grid.Column="1" Width="140" HorizontalAlignment="Right" Margin="10 0" />
+							<TextBlock Text="{Binding GameTextSpell}" Grid.Column="2" Margin="10 0" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="White" FontSize="32"/>
+
+						</Grid>
+					</Grid>
 					
 					<Grid Grid.Row="1" ShowGridLines="">
 						<Grid.RowDefinitions>
@@ -56,7 +82,8 @@
 									Padding="10"
 									Background="#22FFFFFF"
 									BorderThickness="2"
-									BorderBrush="#44FFFFFF">
+									BorderBrush="#44FFFFFF"
+									Click="StartGameClick">
 							</Button>
 						</Grid>
 						<!-- Нажатые шарики -->

@@ -1,8 +1,12 @@
 ﻿using Avalonia.Media.Imaging;
 using DotaScope2.Models;
 using DotaScope2.Views;
+using DynamicData;
+using DynamicData.Aggregation;
+using Microsoft.CodeAnalysis;
 using ReactiveUI;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -29,6 +33,8 @@ namespace DotaScope2.ViewModels
         public string ChaosMeteor => "Chaos Meteor";
         public string DeafeningBlast => "Deafening Blast";
 
+        private bool biggingGame = false;
+
         public Bitmap? ImageFromBinding { get; set; } = ImageHelper.LoadFromResource(new("avares://DotaScope2/Assets/Exort_icon.png"));
 
         private Bitmap? _firstBall;
@@ -50,6 +56,28 @@ namespace DotaScope2.ViewModels
             get { return _thirdBall; }
             private set => this.RaiseAndSetIfChanged(ref _thirdBall, value);
         }
+
+        private Bitmap _gameImageSpell;
+        public Bitmap GameImageSpell
+        {
+            get { return _gameImageSpell; }
+            private set => this.RaiseAndSetIfChanged(ref _gameImageSpell, value);
+        }
+        
+        private string _gameTextSpell;
+        public string GameTextSpell
+        {
+            get { return _gameTextSpell; }
+            private set => this.RaiseAndSetIfChanged(ref _gameTextSpell, value);
+        }
+
+         private string _countCurrent;
+         public string CountCurrent
+         {
+             get { return _countCurrent; }
+             private set => this.RaiseAndSetIfChanged(ref _countCurrent, value);
+         }
+
         private ObservableCollection<string> _ballsCollection;
         public ObservableCollection<string> BallsCollection
         {
@@ -82,12 +110,12 @@ namespace DotaScope2.ViewModels
 
             System.Diagnostics.Debug.WriteLine(ballsImagesMap[BallsCollection[0]] );
 
-            FirstBall = ImageHelper.LoadFromResource(new Uri(ballsImagesMap[BallsCollection[0]]));
+            ThirdBall = ImageHelper.LoadFromResource(new Uri(ballsImagesMap[BallsCollection[0]]));
             if (BallsCollection[1] != null) {
                 SecondBall = ImageHelper.LoadFromResource(new Uri(ballsImagesMap[BallsCollection[1]]));
             }
             if (BallsCollection[2] != null) {
-                ThirdBall = ImageHelper.LoadFromResource(new Uri(ballsImagesMap[BallsCollection[2]]));
+                FirstBall = ImageHelper.LoadFromResource(new Uri(ballsImagesMap[BallsCollection[2]]));
             }
             System.Diagnostics.Debug.WriteLine("пук");
         }
@@ -102,6 +130,80 @@ namespace DotaScope2.ViewModels
         }
 
         // [e q w]
+        
+        public void startGame()
+        {
+            biggingGame = true;
+            //TODO Timer
+            List<string> spellsList = new List<string>() { "Cold Snap", "Ghost Walk", "Ice Wall", "E.M.P.", "Tornado", "Alacrity", "Sun Strike", "Forge Spirit", "Chaos Meteor", "Deafening Blast" };
+            Dictionary<string, string> spellsImagesMap = new Dictionary<string, string>();
+            spellsImagesMap["Cold Snap"] = "avares://DotaScope2/Assets/Cold_Snap_icon.png";
+            spellsImagesMap["Ghost Walk"] = "avares://DotaScope2/Assets/Ghost_Walk_icon.png";
+            spellsImagesMap["Ice Wall"] = "avares://DotaScope2/Assets/Ice_Wall_icon.png";
+            spellsImagesMap["E.M.P."] = "avares://DotaScope2/Assets/E.M.P._icon.png";
+            spellsImagesMap["Tornado"] = "avares://DotaScope2/Assets/Tornado_icon.png";
+            spellsImagesMap["Alacrity"] = "avares://DotaScope2/Assets/Alacrity_icon.png";
+            spellsImagesMap["Sun Strike"] = "avares://DotaScope2/Assets/Sun_Strike_icon.png";
+            spellsImagesMap["Forge Spirit"] = "avares://DotaScope2/Assets/Forge_Spirit_icon.png";
+            spellsImagesMap["Chaos Meteor"] = "avares://DotaScope2/Assets/Chaos_Meteor_icon.png";
+            spellsImagesMap["Deafening Blast"] = "avares://DotaScope2/Assets/Deafening_Blast_icon.png";
 
+            Random random = new Random();
+            int previosIndex = -1;
+            int randomInRange = random.Next(0, 10);
+            while (randomInRange == previosIndex) {
+                randomInRange = random.Next(0, 10);
+            }
+            GameImageSpell = ImageHelper.LoadFromResource(new Uri(spellsImagesMap[spellsList[randomInRange]]));
+            GameTextSpell = spellsList[randomInRange];
+        }
+
+        public void castSpell()
+        {
+            Dictionary<string, int> ballsNameToNumMap = new Dictionary<string, int>();
+            ballsNameToNumMap["Q"] = 1;
+            ballsNameToNumMap["W"] = 10;
+            ballsNameToNumMap["E"] = 100;
+
+            Dictionary<int, string> spellsNumToNameMap = new Dictionary<int, string>();
+            spellsNumToNameMap[1 + 1 + 1] = "Cold Snap";
+            spellsNumToNameMap[1 + 1 + 10] = "Ghost Walk";
+            spellsNumToNameMap[1 + 1 + 100] = "Ice Wall";
+            spellsNumToNameMap[10 + 10 + 10] = "E.M.P.";
+            spellsNumToNameMap[10 + 10 + 1] = "Tornado";
+            spellsNumToNameMap[10 + 10 + 100] = "Alacrity";
+            spellsNumToNameMap[100 + 100 + 100] = "Sun Strike";
+            spellsNumToNameMap[100 + 100 + 1] = "Forge Spirit";
+            spellsNumToNameMap[100 + 100 + 10] = "Chaos Meteor";
+            spellsNumToNameMap[1 + 10 + 100] = "Deafening Blast";
+
+            castSpellWithoutCreating(ballsNameToNumMap, spellsNumToNameMap);
+        }
+        private void castSpellWithoutCreating(Dictionary<string, int> balls, Dictionary<int, string> spells)
+        {
+            int spellNum = 0;
+
+            if (!BallsCollection.Any(item => item == null))
+            {
+                foreach (string ball in BallsCollection)
+                {
+                    spellNum += balls[ball];
+                }
+
+                string spell = spells[spellNum];
+                System.Diagnostics.Debug.WriteLine(spell);
+
+                if (biggingGame)
+                {
+                    if (GameTextSpell == spell)
+                    {
+                        System.Diagnostics.Debug.WriteLine("Вверно!");
+                        CountCurrent += 1;
+                        startGame();
+                    }
+
+                }
+            }
+        }
     }
 }

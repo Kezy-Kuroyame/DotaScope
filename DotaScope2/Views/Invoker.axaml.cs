@@ -35,6 +35,7 @@ namespace DotaScope2.Views
         private void RButtonClick(object sender, RoutedEventArgs e)
         {
             System.Diagnostics.Debug.WriteLine("R Event");
+            ((InvokerViewModel)DataContext).castSpell();
             // Обработать событие нажатия на кнопку здесь
         }
 
@@ -61,6 +62,13 @@ namespace DotaScope2.Views
                 // Активировать код для клавиши Enter
                 RButtonClick(sender, e);
             }
+        }
+
+        private void StartGameClick(object sender, RoutedEventArgs e)
+        {
+            System.Diagnostics.Debug.WriteLine("Start Game event");
+            ((InvokerViewModel)DataContext).startGame();
+            // Обработать событие нажатия на кнопку здесь
         }
     }
 }
