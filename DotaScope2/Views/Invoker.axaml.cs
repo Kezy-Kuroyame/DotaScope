@@ -70,5 +70,9 @@ namespace DotaScope2.Views
             ((InvokerViewModel)DataContext).startGame();
             // Обработать событие нажатия на кнопку здесь
         }
+
+        private void Binding(object? sender, Avalonia.Input.KeyEventArgs e)
+        {
+        }
     }
 }

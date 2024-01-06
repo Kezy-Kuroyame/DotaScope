@@ -7,6 +7,8 @@
              x:Class="DotaScope2.Views.Invoker"
 	         x:CompileBindings="True"
 	         x:DataType="vm:InvokerViewModel"
+			 KeyUp="ButtonKeyUp"
+			 Focusable="True"
 			 >
 	<Design.DataContext>
 		<vm:InvokerViewModel />
@@ -43,7 +45,7 @@
 					</Grid.RowDefinitions>
 					
 					<!-- Игровой блок -->
-					<Grid Grid.Row="0" ShowGridLines="True" Background="#11FFFFFF">
+					<Grid Grid.Row="0" ShowGridLines="" Background="">
 						<Grid.RowDefinitions>
 							<RowDefinition Height="*"/>
 							<RowDefinition Height="3*"/>
@@ -51,11 +53,11 @@
 
 						<!-- Timer -->
 						<Grid Grid.Row="0">
-							<TextBlock Text="30" Foreground="White" FontSize="50" VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Justify"/>
+							<TextBlock Text="{Binding SecondsLeft}" Foreground="White" FontSize="50" VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Justify"/>
 						</Grid>
 						
 						<!-- Game -->
-						<Grid Grid.Row="1" ShowGridLines="True">
+						<Grid Grid.Row="1" ShowGridLines="">
 							<Grid.ColumnDefinitions>
 								<ColumnDefinition Width=""/>
 								<ColumnDefinition Width="250"/>
@@ -64,7 +66,7 @@
 							</Grid.ColumnDefinitions>
 							<Image Source="{Binding GameImageSpell}" Grid.Column="1" Width="140" HorizontalAlignment="Right" Margin="10 0" />
 							<TextBlock Text="{Binding GameTextSpell}" Grid.Column="2" Margin="10 0" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="White" FontSize="32"/>
-
+							<TextBlock Text="{Binding Score}" Grid.ColumnSpan="4" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" Foreground="White" FontWeight="Normal"/>
 						</Grid>
 					</Grid>
 					
@@ -76,7 +78,7 @@
 						<!-- Кнопка запуска -->
 						<Grid Grid.Row="0" HorizontalAlignment="Center">
 							<Button CornerRadius="20"
-									Content="Start Game"
+									Content="{Binding StartGameButton}"
 									FontSize="30" 
 									Foreground="White"
 									Padding="10"
@@ -125,25 +127,25 @@
 							<ColumnDefinition/>
 							<ColumnDefinition Width="50"/>
 						</Grid.ColumnDefinitions>
-							<Button Click="QButtonClick" Grid.Column="1" Background="#2D2D2D" Width="150" Height="150" HorizontalAlignment="Center" KeyUp="ButtonKeyUp">
+							<Button Click="QButtonClick" Focusable="True" Grid.Column="1" Background="#2D2D2D" Width="150" Height="150" HorizontalAlignment="Center">
 								<Grid >
 									<Image Source="/Assets/Quas_icon.png"/>
 									<TextBlock Text="Q" FontSize="40" Background="#2D2D2D" Width="40" Height="40" VerticalAlignment="Top" HorizontalAlignment="Left" TextAlignment="Center"/>
 								</Grid>
 							</Button>
-							<Button Click="WButtonClick" Grid.Column="2" Background="#2D2D2D" Width="150" Height="150" HorizontalAlignment="Center" KeyUp="ButtonKeyUp">
+							<Button Click="WButtonClick" Focusable="True" Grid.Column="2" Background="#2D2D2D" Width="150" Height="150" HorizontalAlignment="Center">
 								<Grid >
 									<Image Source="/Assets/Wex_icon.png"/>
 									<TextBlock Text="W" FontSize="40" Background="#2D2D2D" Width="40" Height="40" VerticalAlignment="Top" HorizontalAlignment="Left" TextAlignment="Center"/>
 								</Grid>
 							</Button>
-							<Button Click="EButtonClick" Grid.Column="3" Background="#2D2D2D" Width="150" Height="150" HorizontalAlignment="Center" KeyUp="ButtonKeyUp">
+							<Button Click="EButtonClick" Focusable="True" Grid.Column="3" Background="#2D2D2D" Width="150" Height="150" HorizontalAlignment="Center">
 								<Grid >
 									<Image Source="/Assets/Exort_icon.png"/>
 									<TextBlock Text="E" FontSize="40" Background="#2D2D2D" Width="40" Height="40" VerticalAlignment="Top" HorizontalAlignment="Left" TextAlignment="Center"/>
 								</Grid>
 							</Button>
-							<Button Click="RButtonClick" Grid.Column="4" Background="#2D2D2D" Width="150" Height="150" HorizontalAlignment="Center" KeyUp="ButtonKeyUp">
+							<Button Click="RButtonClick" Focusable="True" Grid.Column="4" Background="#2D2D2D" Width="150" Height="150" HorizontalAlignment="Center">
 								<Grid >
 									<Image Source="/Assets/Invoke_icon.png"/>
 									<TextBlock Text="R" FontSize="40" Background="#2D2D2D" Width="40" Height="40" VerticalAlignment="Top" HorizontalAlignment="Left" TextAlignment="Center"/>

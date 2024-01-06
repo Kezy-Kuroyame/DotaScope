@@ -1,4 +1,5 @@
 ﻿using Avalonia.Media.Imaging;
+using Avalonia.Threading;
 using DotaScope2.Models;
 using DotaScope2.Views;
 using DynamicData;
@@ -12,6 +13,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace DotaScope2.ViewModels
@@ -21,7 +23,12 @@ namespace DotaScope2.ViewModels
     {
         public string InvokerGame => "Invoker Game";
         public string Spells => "Spells";
-        public string StartGame => "StartGame";
+        private string _startGameButton = "Start Game";
+        public string StartGameButton
+        {
+            get { return _startGameButton; }
+            private set => this.RaiseAndSetIfChanged(ref _startGameButton, value);
+        }
         public string ColdSnap => "Cold snap";
         public string GhostWalk => "Ghost Walk";
         public string IceWall => "Ice Wall";
@@ -33,7 +40,7 @@ namespace DotaScope2.ViewModels
         public string ChaosMeteor => "Chaos Meteor";
         public string DeafeningBlast => "Deafening Blast";
 
-        private bool biggingGame = false;
+        private bool beginningGame = false;
 
         public Bitmap? ImageFromBinding { get; set; } = ImageHelper.LoadFromResource(new("avares://DotaScope2/Assets/Exort_icon.png"));
 
@@ -117,7 +124,6 @@ namespace DotaScope2.ViewModels
             if (BallsCollection[2] != null) {
                 FirstBall = ImageHelper.LoadFromResource(new Uri(ballsImagesMap[BallsCollection[2]]));
             }
-            System.Diagnostics.Debug.WriteLine("пук");
         }
 
         public void addBallToCache(string Ball)
@@ -130,11 +136,79 @@ namespace DotaScope2.ViewModels
         }
 
         // [e q w]
-        
+
+        private int? _secondsLeft;
+        public int? SecondsLeft
+        {
+            get { return _secondsLeft; }
+            private set => this.RaiseAndSetIfChanged(ref _secondsLeft, value);
+        }  
+
+        private string _score;
+        public string Score
+        {
+            get { return _score; }
+            private set => this.RaiseAndSetIfChanged(ref _score, value);
+        }
+
+        private System.Threading.Timer timerSeconds;
+        private System.Threading.Timer timerGame;
         public void startGame()
         {
-            biggingGame = true;
-            //TODO Timer
+            if (!beginningGame)
+            {
+                Score = string.Empty;
+                beginningGame = true;
+                StartGameButton = "Stop Game";
+                CountCurrent = "0";
+                SecondsLeft = 30;
+
+                timerSeconds = new Timer(async _ => await TimerCallbackSeconds(), null, 1000, 1000);
+                timerGame = new Timer(async _ => await TimerCallbackGame(), null, 30000, Timeout.Infinite);
+                gameLogic();
+            }
+            else
+            {
+                SecondsLeft = null;
+                timerSeconds.Change(Timeout.Infinite, Timeout.Infinite);
+                timerGame.Change(Timeout.Infinite, Timeout.Infinite);
+                beginningGame = false;
+                GameImageSpell = null;
+                GameTextSpell = string.Empty;
+                Score = "Score " + CountCurrent;
+                StartGameButton = "Start Game";
+            }
+        }
+
+        private async Task TimerCallbackSeconds()
+        {
+            await Dispatcher.UIThread.InvokeAsync(() =>
+            {
+                System.Diagnostics.Debug.WriteLine("Прошла секунда");
+                SecondsLeft--;
+            });
+            if (SecondsLeft == 0)
+            {
+                SecondsLeft = null;
+                timerSeconds.Change(Timeout.Infinite, Timeout.Infinite);
+            }
+        }
+
+        private async Task TimerCallbackGame()
+        {
+            await Dispatcher.UIThread.InvokeAsync(() =>
+            {
+                System.Diagnostics.Debug.WriteLine("Время таймера истекло.");
+                beginningGame = false;
+                GameImageSpell = null;
+                StartGameButton = "Start Game";
+                GameTextSpell = string.Empty;
+                Score = "Score " + CountCurrent;
+            });
+        }
+
+        public void gameLogic()
+        {
             List<string> spellsList = new List<string>() { "Cold Snap", "Ghost Walk", "Ice Wall", "E.M.P.", "Tornado", "Alacrity", "Sun Strike", "Forge Spirit", "Chaos Meteor", "Deafening Blast" };
             Dictionary<string, string> spellsImagesMap = new Dictionary<string, string>();
             spellsImagesMap["Cold Snap"] = "avares://DotaScope2/Assets/Cold_Snap_icon.png";
@@ -151,7 +225,8 @@ namespace DotaScope2.ViewModels
             Random random = new Random();
             int previosIndex = -1;
             int randomInRange = random.Next(0, 10);
-            while (randomInRange == previosIndex) {
+            while (randomInRange == previosIndex)
+            {
                 randomInRange = random.Next(0, 10);
             }
             GameImageSpell = ImageHelper.LoadFromResource(new Uri(spellsImagesMap[spellsList[randomInRange]]));
@@ -193,15 +268,14 @@ namespace DotaScope2.ViewModels
                 string spell = spells[spellNum];
                 System.Diagnostics.Debug.WriteLine(spell);
 
-                if (biggingGame)
+                if (beginningGame)
                 {
                     if (GameTextSpell == spell)
                     {
                         System.Diagnostics.Debug.WriteLine("Вверно!");
-                        CountCurrent += 1;
-                        startGame();
+                        CountCurrent = (int.Parse(CountCurrent) + 1).ToString();
+                        gameLogic();
                     }
-
                 }
             }
         }
