@@ -29,6 +29,7 @@
 							<ColumnDefinition Width="300"/>
 							<ColumnDefinition Width="500"/>
 							<ColumnDefinition />
+							<ColumnDefinition Width="200"/>
 						</Grid.ColumnDefinitions>
 
 						<Button
@@ -74,6 +75,18 @@
 								VerticalAlignment="Center"
 								Command="{Binding NavigateInvokerCommand}"/>
 						</Grid>
+						
+						<Button
+							Grid.Column="3"
+							Content="{Binding LogIn}"
+							HorizontalAlignment="Center"
+							VerticalAlignment="Center"
+							FontSize="20"
+							Background="#11FFFFFF"
+							Padding="5 0"
+							Foreground="White"
+							Command="{Binding NavigateLogInSignUpCommand}"
+							/>
 					</Grid>
 				</DockPanel>
 

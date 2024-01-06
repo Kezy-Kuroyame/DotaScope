@@ -1,0 +1,31 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="1536" d:DesignHeight="662"
+			 xmlns:vm="clr-namespace:DotaScope2.ViewModels"
+	         x:CompileBindings="True"
+	         x:DataType="vm:LogInViewModel"
+             x:Class="DotaScope2.Views.LogIn">
+	
+	<Design.DataContext>
+		<vm:LogInViewModel />
+	</Design.DataContext>
+	<Grid Background="#1A1A1A">
+		<Grid ShowGridLines="">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="130"/> <!-- Header -->
+				<RowDefinition Height="*"/> <!-- Name Field -->
+				<RowDefinition Height="*"/> <!-- Password Field -->
+				<RowDefinition Height="200"/> <!-- Password Field -->
+			</Grid.RowDefinitions>
+				
+			<!--Header-->
+			<TextBlock  Grid.Row="0" FontSize="70" Text="Login" Foreground="White" FontWeight="Medium" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+			<TextBox Grid.Row="1" Text="{Binding Name}" Width="400" Height="70" CornerRadius="30" Background="#1FFFFFFF" BorderBrush="#25FFFFFF" BorderThickness="2" Watermark="Name" Foreground="White" FontSize="32" VerticalAlignment="Center" Padding="20 15 0 0" Name="NameLoginField"/>
+			<TextBox IsHitTestVisible="True"   Text="{Binding Password}" PasswordChar="*" Grid.Row="2"  Width="400" Height="70" CornerRadius="30" Background="#1FFFFFFF" BorderBrush="#25FFFFFF" BorderThickness="2" Watermark="Password" Foreground="White" FontSize="32" VerticalAlignment="Center" Padding="20 15 0 0" Name="PasswordLoginField"/>
+			<Button Grid.Row="3" Click="LoginButtonClick" Background="#FFb361f3" HorizontalAlignment="Center" Content="Login" FontSize="50" Padding="50 5" CornerRadius="10" />
+		</Grid>
+	</Grid>
+
+</UserControl>

@@ -1,0 +1,62 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="1920" d:DesignHeight="1080"
+			 xmlns:vm="clr-namespace:DotaScope2.ViewModels"
+	         x:CompileBindings="True"
+	         x:DataType="vm:LogInSignUpViewModel"
+             x:Class="DotaScope2.Views.LogInSignUp">
+	<Design.DataContext>
+		<vm:LogInSignUpViewModel />
+	</Design.DataContext>
+	
+	<Grid Background="#1A1A1A" ShowGridLines="">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="130"/>
+			<RowDefinition/>
+		</Grid.RowDefinitions>
+
+		<!-- Sign Up and Log In buttons -->
+		<TransitioningContentControl Grid.Row="1" Content="{Binding RegistrationPage}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+		<Grid Grid.Row="0" ShowGridLines="">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition/>
+				<ColumnDefinition/>
+			</Grid.ColumnDefinitions>
+			<Button
+				Grid.Column="0"
+				Background="Transparent"
+				HorizontalAlignment="Center"
+				VerticalAlignment="Bottom"
+				Command="{Binding NavigateLogInCommand}"
+				>
+				<TextBlock
+					Text="LOGIN"
+					Name="LogInPageTextButton"
+					Foreground="{Binding TextColorLogIn}"
+					FontSize="50"
+					FontWeight="Normal"
+					TextDecorations="{Binding TextDecorationsLogIn}"
+					/>
+			</Button>
+			<Button
+				Grid.Column="1"
+				Background="Transparent"
+				HorizontalAlignment="Center"
+				VerticalAlignment="Bottom"
+				Command="{Binding NavigateSignUpCommand}"
+				>
+				<TextBlock
+					Text="SIGN UP"
+					Name="SignUpPageTextButton"
+					Foreground="{Binding TextColorSignUp}"
+					FontSize="50"
+					FontWeight="Normal"
+					TextDecorations="{Binding TextDecorationsSignUp}"
+					/>
+			</Button>
+		</Grid>
+
+	</Grid>
+</UserControl>
