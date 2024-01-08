@@ -26,8 +26,8 @@
 
 			<!--Header-->
 			<TextBlock  Grid.Row="0" FontSize="70" Text="Sign Up" Foreground="White" FontWeight="Medium" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-			<TextBox Grid.Row="1" Width="400" Height="70" CornerRadius="30" Background="#1FFFFFFF" BorderBrush="#25FFFFFF" BorderThickness="2" Watermark="Name" Foreground="White" FontSize="32" VerticalAlignment="Center" Padding="20 15 0 0" Name="NameLoginField"/>
-			<TextBox IsHitTestVisible="True" PasswordChar="*" Grid.Row="2"  Width="400" Height="70" CornerRadius="30" Background="#1FFFFFFF" BorderBrush="#25FFFFFF" BorderThickness="2" Watermark="Password" Foreground="White" FontSize="32" VerticalAlignment="Center" Padding="20 15 0 0" Name="PasswordLoginField"/>
+			<TextBox Text="{Binding NameSignUp}" Grid.Row="1" Width="400" Height="70" CornerRadius="30" Background="#1FFFFFFF" BorderBrush="#25FFFFFF" BorderThickness="2" Watermark="Name" Foreground="White" FontSize="32" VerticalAlignment="Center" Padding="20 15 0 0" Name="NameLoginField"/>
+			<TextBox Text="{Binding PasswordSignUp}" IsHitTestVisible="True" PasswordChar="*" Grid.Row="2"  Width="400" Height="70" CornerRadius="30" Background="#1FFFFFFF" BorderBrush="#25FFFFFF" BorderThickness="2" Watermark="Password" Foreground="White" FontSize="32" VerticalAlignment="Center" Padding="20 15 0 0" Name="PasswordLoginField"/>
 			<Button Grid.Row="3" Click="SignUpButtonClick" Background="#FFb361f3" HorizontalAlignment="Center" Content="Sign up" FontSize="50" Padding="50 5" CornerRadius="10" />
 		</Grid>
 	</Grid>

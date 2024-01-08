@@ -43,6 +43,7 @@ namespace DotaScope2.ViewModels
                     bool containsCharactersPassword = charactersToCheck.Any(c => Password.Contains(c));
                     if (!(containsCharactersName) && !(containsCharactersPassword))
                     {
+
                         // вот здесь тип ты крутой и переход на другую страницу
                     }
                 }

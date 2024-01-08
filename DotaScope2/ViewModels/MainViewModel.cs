@@ -35,7 +35,11 @@ public class MainViewModel : ViewModelBase
     public ViewModelBase CurrentPage
     {
         get  {   return _CurrentPage;    }
-        private set { this.RaiseAndSetIfChanged(ref _CurrentPage, value); }
+        private set {
+            this.RaiseAndSetIfChanged(ref _CurrentPage, value); 
+            System.Diagnostics.Debug.WriteLine("изменение CurrentPage");
+            System.Diagnostics.Debug.WriteLine(_CurrentPage);
+        }
     }
   
 
@@ -53,8 +57,9 @@ public class MainViewModel : ViewModelBase
     }
 
     public ICommand NavigateHomeCommand { get; }
-    private void NavigateHome()
+    public void NavigateHome()
     {
+        System.Diagnostics.Debug.WriteLine("Переход домой");
         CurrentPage = Pages[0];
     }
 

@@ -15,7 +15,7 @@ namespace DotaScope2.Models
         {
             string conString = DBConnection.ConnectionString;
             string insertQuery = $@"
-                INSER INTO users (name, password, games, score_sum)
+                INSERT INTO users (name, password, games, score_sum)
                 VALUES
                     ('{name}', '{pas}', 0, 0);";
 
@@ -24,25 +24,25 @@ namespace DotaScope2.Models
                 try
                 {
                     connection.Open();
-                    Console.WriteLine("Соединение успешно установлено!");
+                    System.Diagnostics.Debug.WriteLine("Соединение успешно установлено!");
 
                     using (NpgsqlCommand cmd = new NpgsqlCommand(insertQuery, connection))
                     {
                         int rowsAffected = cmd.ExecuteNonQuery();
                         if (rowsAffected > 0)
                         {
-                            Console.WriteLine("Запись успешно добавлена!");
+                            System.Diagnostics.Debug.WriteLine("Запись успешно добавлена!");
                         }
                         else
                         {
-                            Console.WriteLine("Не удалось добавить запись.");
+                            System.Diagnostics.Debug.WriteLine("Не удалось добавить запись.");
                         }
                     }
                     connection.Close();
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("Ошибка соединения: " + ex.Message);
+                    System.Diagnostics.Debug.WriteLine("Ошибка соединения: " + ex.Message);
                 }
             }
         }
@@ -60,25 +60,75 @@ namespace DotaScope2.Models
                 try
                 {
                     connection.Open();
-                    Console.WriteLine("Соединение успешно установлено!");
+                    System.Diagnostics.Debug.WriteLine("Соединение успешно установлено!");
 
                     using (NpgsqlCommand cmd = new NpgsqlCommand(insertQuery, connection))
                     {
                         int rowsAffected = cmd.ExecuteNonQuery();
                         if (rowsAffected > 0)
                         {
-                            Console.WriteLine("Запись успешно добавлена!");
+                            System.Diagnostics.Debug.WriteLine("Запись успешно добавлена!");
                         }
                         else
                         {
-                            Console.WriteLine("Не удалось добавить запись.");
+                            System.Diagnostics.Debug.WriteLine("Не удалось добавить запись.");
                         }
                     }
                     connection.Close();
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("Ошибка соединения: " + ex.Message);
+                    System.Diagnostics.Debug.WriteLine("Ошибка соединения: " + ex.Message);
+                }
+            }
+        }
+
+        public int getUser(string name)
+        {
+            string conString = DBConnection.ConnectionString;
+            string selectQuery = $@"
+                SELECT* FROM users 
+                WHERE users.name = '{name}'
+                ";
+            List<User> users = new List<User>();
+            using (NpgsqlConnection connection = new NpgsqlConnection(conString))
+            {
+                try
+                {
+                    connection.Open();
+
+                    using (NpgsqlCommand cmd = new NpgsqlCommand(selectQuery, connection))
+                    {
+                        using (NpgsqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                User entity = new User
+                                {
+                                    Id = reader.GetInt32(0),
+                                    Name = reader.GetString(1),
+                                    Password = reader.GetString(2)
+                                };
+                                users.Add(entity);
+                            }
+                            System.Diagnostics.Debug.WriteLine("Соединение закрыто");
+                            connection.Close();
+                            if (users.Count == 0)
+                            {
+                                return -1;
+                            }
+                            else
+                            {
+                                return users[0].Id;
+                            }
+                        }
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine("Ошибка: " + ex.Message);
+                    return -2;
                 }
             }
         }
@@ -87,8 +137,8 @@ namespace DotaScope2.Models
         {
             string conString = DBConnection.ConnectionString;
             string selectQuery = $@"
-                SELECT (users.name, invoker_game.score) FROM invoker_game (id_user, score)
-                JOIN users ON invoker_game.user_id = users.user_id
+                SELECT (users.name, invoker_game.score) FROM invoker_game
+                JOIN users ON invoker_game.id_user = users.id_user
                 ORDER BY invoker_game.score DESC
                 LIMIT 10;";
 
@@ -129,9 +179,9 @@ namespace DotaScope2.Models
         {
             string conString = DBConnection.ConnectionString;
             string selectQuery = $@"
-                SELECT (users.name, invoker_game.score) FROM invoker_game (id_user, score)
-                JOIN users ON invoker_game.user_id = users.user_id
-                WHERE (users.id == {userId})
+                SELECT (users.name, invoker_game.score) FROM invoker_game 
+                JOIN users ON invoker_game.id_user = users.id_user
+                WHERE (users.id_user == {userId})
                 ORDER BY invoker_game.score DESC
                 LIMIT 10;";
 
@@ -174,6 +224,14 @@ namespace DotaScope2.Models
     {
         public string Name { get; set; }
         public int Score { get; set; }
+        // Добавьте дополнительные свойства, соответствующие вашим столбцам
+    }
+
+    public class User
+    {
+         public int Id { get; set; }
+        public string Name { get; set; }
+        public string Password { get; set; }
         // Добавьте дополнительные свойства, соответствующие вашим столбцам
     }
 }
