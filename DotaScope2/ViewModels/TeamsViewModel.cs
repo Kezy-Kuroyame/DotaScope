@@ -20,7 +20,7 @@ using DotaScope2.Views;
 
 namespace DotaScope2.ViewModels
 {
-    public class TeamsViewModel: ViewModelBase
+    public class TeamsViewModel: NavigationViewModel
     {
         public string DotaScope => "DotaScope";
         public string Matches => "Matches";

@@ -19,7 +19,7 @@ using System.Threading.Tasks;
 namespace DotaScope2.ViewModels
 {
 
-    internal class InvokerViewModel : ViewModelBase
+    internal class InvokerViewModel : NavigationViewModel
     {
         public string InvokerGame => "Invoker Game";
         public string Spells => "Spells";
@@ -70,7 +70,7 @@ namespace DotaScope2.ViewModels
             get { return _gameImageSpell; }
             private set => this.RaiseAndSetIfChanged(ref _gameImageSpell, value);
         }
-        
+
         private string _gameTextSpell;
         public string GameTextSpell
         {
@@ -78,12 +78,12 @@ namespace DotaScope2.ViewModels
             private set => this.RaiseAndSetIfChanged(ref _gameTextSpell, value);
         }
 
-         private string _countCurrent;
-         public string CountCurrent
-         {
-             get { return _countCurrent; }
-             private set => this.RaiseAndSetIfChanged(ref _countCurrent, value);
-         }
+        private string _countCurrent;
+        public string CountCurrent
+        {
+            get { return _countCurrent; }
+            private set => this.RaiseAndSetIfChanged(ref _countCurrent, value);
+        }
 
         private ObservableCollection<string> _ballsCollection;
         public ObservableCollection<string> BallsCollection
@@ -105,7 +105,70 @@ namespace DotaScope2.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        
+        private int _userId = -1;
+        public int UserId
+        {
+            get => _userId;
+            private set => this.RaiseAndSetIfChanged(ref _userId, value);
+        }
+
+        private ObservableCollection<UserScore> _leaderBoardCollection;
+        public ObservableCollection<UserScore> LeaderBoardCollection
+        {
+            get
+            {
+                return _leaderBoardCollection ?? (_leaderBoardCollection = new ObservableCollection<UserScore>());
+            }
+            set
+            {
+                _leaderBoardCollection = value;
+                OnPropertyChanged(nameof(Teams));
+            }
+        }
+            
+        private ObservableCollection<UserScore> _bestUsersScoreCollection;
+        public ObservableCollection<UserScore> BestUsersScoreCollection
+        {
+            get
+            {
+                return _bestUsersScoreCollection ?? (_bestUsersScoreCollection = new ObservableCollection<UserScore>());
+            }
+            set
+            {
+                _bestUsersScoreCollection = value;
+                OnPropertyChanged(nameof(Teams));
+            }
+        }
+        //------------------------------------------------ Главный код---------------------------------------------------------- 
+        public int setUserId(int userId)
+        {
+            UserId = userId;
+            return UserId;
+        }
+
+        public InvokerViewModel(int userId){
+            UserId = userId;
+            System.Diagnostics.Debug.WriteLine("Invoker UserID: " + UserId);
+
+            DataBase dataBase = new DataBase();
+            List<UserScore> LeaderBoardList = dataBase.getLeaderBoard();
+            System.Diagnostics.Debug.WriteLine(LeaderBoardList.Count);
+            foreach (UserScore userScore in LeaderBoardList)
+            {
+                System.Diagnostics.Debug.WriteLine(userScore);
+                LeaderBoardCollection.Add(userScore);
+            }
+            
+            List<UserScore> BestUsersScoreList = dataBase.getUserIdRecords(UserId);
+            System.Diagnostics.Debug.WriteLine("BestUsersScoreList: " + BestUsersScoreList.Count);
+            foreach (UserScore userScore in BestUsersScoreList)
+            {
+                System.Diagnostics.Debug.WriteLine(userScore);
+                BestUsersScoreCollection.Add(userScore);
+            }
+
+        }
+
         private void setImages()
         {
             Dictionary<string, string> ballsImagesMap = new Dictionary<string, string>();
@@ -180,6 +243,8 @@ namespace DotaScope2.ViewModels
             }
         }
 
+        // Таймер секунд
+
         private async Task TimerCallbackSeconds()
         {
             await Dispatcher.UIThread.InvokeAsync(() =>
@@ -194,6 +259,7 @@ namespace DotaScope2.ViewModels
             }
         }
 
+        // Таймер до конца игры
         private async Task TimerCallbackGame()
         {
             await Dispatcher.UIThread.InvokeAsync(() =>
@@ -204,6 +270,27 @@ namespace DotaScope2.ViewModels
                 StartGameButton = "Start Game";
                 GameTextSpell = string.Empty;
                 Score = "Score " + CountCurrent;
+
+                DataBase dataBase = new DataBase();
+                dataBase.insertGame(UserId, int.Parse(CountCurrent));
+
+                LeaderBoardCollection.Clear();
+                List<UserScore> LeaderBoardList = dataBase.getLeaderBoard();
+                System.Diagnostics.Debug.WriteLine(LeaderBoardList.Count);
+                foreach (UserScore userScore in LeaderBoardList)
+                {
+                    System.Diagnostics.Debug.WriteLine(userScore);
+                    LeaderBoardCollection.Add(userScore);
+                }
+
+                BestUsersScoreCollection.Clear();
+                List<UserScore> BestUsersScoreList = dataBase.getUserIdRecords(UserId);
+                System.Diagnostics.Debug.WriteLine("BestUsersScoreList: " + BestUsersScoreList.Count);
+                foreach (UserScore userScore in BestUsersScoreList)
+                {
+                    System.Diagnostics.Debug.WriteLine(userScore);
+                    BestUsersScoreCollection.Add(userScore);
+                }
             });
         }
 

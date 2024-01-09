@@ -9,13 +9,6 @@ namespace DotaScope2.Views
         public LogIn()
         {
             InitializeComponent();
-            DataContext = new LogInViewModel();
-        }
-
-        private void LoginButtonClick(object sender, RoutedEventArgs e)
-        {
-            System.Diagnostics.Debug.WriteLine("Login Button Click");
-            ((LogInViewModel)DataContext).LoginFunc();
         }
     }
 }

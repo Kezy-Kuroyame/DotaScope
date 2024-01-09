@@ -83,10 +83,12 @@
 				<TextBlock Grid.Row="0" FontSize="70" Text="Teams" FontWeight="Medium" Foreground="White" Margin="150 0 0 0" VerticalAlignment="Center"/>
 				<Grid Grid.Row="1" Background="">
 					<DataGrid  ItemsSource="{Binding TeamsCollection}"
-							   Name="dataGrid" Width="1070"
-							   Margin="0 100 0 0" IsReadOnly="True"
+							   Name="dataGrid" Width="1090"
+							   VerticalAlignment="Top"
+							   AutoGenerateColumns="False"
+							   Margin="0 80 0 0" IsReadOnly="True"
 								GridLinesVisibility="All"
-								BorderThickness="1" BorderBrush="Gray" Height="650" 
+								BorderThickness="1" BorderBrush="Gray" 
 							    Background="#2D2D2D" >
 
 						<DataGrid.Columns>

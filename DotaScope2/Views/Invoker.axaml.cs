@@ -10,7 +10,6 @@ namespace DotaScope2.Views
         public Invoker()
         {
             InitializeComponent();
-            DataContext = new InvokerViewModel();
         }
 
         private void QButtonClick(object sender, RoutedEventArgs e)

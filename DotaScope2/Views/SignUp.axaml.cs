@@ -9,13 +9,6 @@ namespace DotaScope2.Views
         public SignUp()
         {
             InitializeComponent();
-            DataContext = new SignUpViewModel();
-        }
-
-        private void SignUpButtonClick(object sender, RoutedEventArgs e)
-        {
-            System.Diagnostics.Debug.WriteLine("SignUp Button Click");
-            ((SignUpViewModel)DataContext).SignUpFunc();
         }
     }
 }

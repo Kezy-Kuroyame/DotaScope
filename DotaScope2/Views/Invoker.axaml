@@ -2,6 +2,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:controls="clr-namespace:Avalonia.Controls;assembly=Avalonia.Controls.DataGrid"
 			 xmlns:vm="clr-namespace:DotaScope2.ViewModels"	 
              mc:Ignorable="d" d:DesignWidth="1920" d:DesignHeight="1080"
              x:Class="DotaScope2.Views.Invoker"
@@ -10,9 +11,7 @@
 			 KeyUp="ButtonKeyUp"
 			 Focusable="True"
 			 >
-	<Design.DataContext>
-		<vm:InvokerViewModel />
-	</Design.DataContext>
+
 	<ScrollViewer>
 		<Grid MaxHeight="1080" Background="#1A1A1A">
 			<TextBlock Background=""
@@ -33,9 +32,53 @@
 					<ColumnDefinition Width="350"/>
 				</Grid.ColumnDefinitions>
 				<!-- Рекорды -->
+
+				<Grid Grid.Column="0" ShowGridLines="True" Background="">
+					<Grid.RowDefinitions>
+						<RowDefinition Height="*"/>
+						<RowDefinition Height="*"/>
+					</Grid.RowDefinitions>
+					<Grid ShowGridLines="True" Grid.Row="0">
+						<Grid.RowDefinitions>
+							<RowDefinition Height="40"/>
+							<RowDefinition/>
+						</Grid.RowDefinitions>
+						<TextBlock Grid.Row="0" Text="Leader Board" HorizontalAlignment="Center" Foreground="White" FontSize="30" Margin="0 5 0 0"/>
+						<DataGrid Grid.Row="1" ItemsSource="{Binding LeaderBoardCollection}"
+							   Name="LeaderBoardGrid" 
+							   Margin="10 0 100 0" IsReadOnly="True" Padding="15 0"
+								GridLinesVisibility="None"
+								BorderThickness="0" BorderBrush="Gray"
+							    Background=""
+							HeadersVisibility="None">
+							<DataGrid.Columns>
+								<DataGridTextColumn Binding="{Binding Path=Name}" FontSize="18" Width=""  Foreground="White"  />
+								<DataGridTextColumn Binding="{Binding Path=Score}" FontSize="18"  Width="" Foreground="White"/> 
+							</DataGrid.Columns>
+						</DataGrid>
+					</Grid>
+					<Grid ShowGridLines="True" Grid.Row="1">
+						<Grid.RowDefinitions>
+							<RowDefinition Height="40"/>
+							<RowDefinition/>
+						</Grid.RowDefinitions>
+						<TextBlock Grid.Row="0" Text="Your Best Scores" HorizontalAlignment="Center" Foreground="White" FontSize="30" Margin="0 5 0 0"/>
+						<DataGrid Grid.Row="1" ItemsSource="{Binding BestUsersScoreCollection}"
+							   Name="BestUserScoresGrid" 
+							   Margin="10 0 100 0" IsReadOnly="True" Padding="15 0"
+								GridLinesVisibility="None"
+								BorderThickness="0" BorderBrush="Gray"
+							    Background=""
+								HeadersVisibility="None">
+							<DataGrid.Columns>
+								<DataGridTextColumn Binding="{Binding Path=Name}" FontSize="18" Width=""  Foreground="White"  />
+								<DataGridTextColumn Binding="{Binding Path=Score}" FontSize="18"  Width="" Foreground="White"/> 
+							</DataGrid.Columns>
+						</DataGrid>
+					</Grid>
 				
-				<Image Source="{Binding FirstBall}" Grid.Column="0" Width="200" />
-				
+				</Grid>
+					
 				<!-- Игровая Колонка -->
 				<Grid Grid.Column="1" ShowGridLines="" Background="">
 					<Grid.RowDefinitions>

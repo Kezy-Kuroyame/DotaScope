@@ -5,7 +5,7 @@ using System.Reactive;
 
 namespace DotaScope2.ViewModels;
 
-public class HomeViewModel: ViewModelBase
+public class HomeViewModel: NavigationViewModel
 {
     public string DotaScope => "DotaScope";
     public string Matches => "Matches";
@@ -30,27 +30,7 @@ public class HomeViewModel: ViewModelBase
 
     public ReactiveCommand<Unit, Unit> NavigateToTeamsViewCommand { get; }
 
-    public HomeViewModel()
-        
-    {
-        NavigateToTeamsViewCommand = ReactiveCommand.Create(() =>
-        {
-            NavigateToTeams();
-        });
-    }
-    public void NavigateToTeams()
-    {
-        // Переключаемся на SecondView при вызове этого метода
-        var teamsViewModel = new TeamsViewModel();
-
-        // Создаем экземпляр FirstView и связываем его с FirstViewModel
-        var teamsView = new Teams
-        {
-            DataContext = teamsViewModel
-        };
-
-        // По умолчанию отображаем FirstView
-        ContentView = teamsView;
+    public HomeViewModel() {    
     }
 
 }

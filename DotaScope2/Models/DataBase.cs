@@ -47,13 +47,13 @@ namespace DotaScope2.Models
             }
         }
 
-        public void insertGame(string id_user, int score)
+        public void insertGame(int id_user, int score)
         {
             string conString = DBConnection.ConnectionString;
             string insertQuery = $@"
-                INSER INTO invoker_game (id_user, score)
+                INSERT INTO invoker_game (id_user, score)
                 VALUES
-                    ('{id_user}', {score});";
+                    ({id_user}, {score});";
 
             using (NpgsqlConnection connection = new NpgsqlConnection(conString))
             {
@@ -83,7 +83,7 @@ namespace DotaScope2.Models
             }
         }
 
-        public int getUser(string name)
+        public int getUserIdDb(string name)
         {
             string conString = DBConnection.ConnectionString;
             string selectQuery = $@"
@@ -133,11 +133,61 @@ namespace DotaScope2.Models
             }
         }
 
+        public User getUserById(int id)
+        {
+            string conString = DBConnection.ConnectionString;
+            string selectQuery = $@"
+                SELECT* FROM users 
+                WHERE users.id_user = '{id}'
+                ";
+            List<User> users = new List<User>();
+            using (NpgsqlConnection connection = new NpgsqlConnection(conString))
+            {
+                try
+                {
+                    connection.Open();
+
+                    using (NpgsqlCommand cmd = new NpgsqlCommand(selectQuery, connection))
+                    {
+                        using (NpgsqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                User entity = new User
+                                {
+                                    Id = reader.GetInt32(0),
+                                    Name = reader.GetString(1),
+                                    Password = reader.GetString(2)
+                                };
+                                users.Add(entity);
+                            }
+                            System.Diagnostics.Debug.WriteLine("Соединение закрыто");
+                            connection.Close();
+                            if (users.Count == 0)
+                            {
+                                return null;
+                            }
+                            else
+                            {
+                                return users[0];
+                            }
+                        }
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine("Ошибка: " + ex.Message);
+                    return null;
+                }
+            }
+        }
+
         public List<UserScore> getLeaderBoard()
         {
             string conString = DBConnection.ConnectionString;
             string selectQuery = $@"
-                SELECT (users.name, invoker_game.score) FROM invoker_game
+                SELECT users.name as Name, invoker_game.score as Score FROM invoker_game
                 JOIN users ON invoker_game.id_user = users.id_user
                 ORDER BY invoker_game.score DESC
                 LIMIT 10;";
@@ -175,15 +225,15 @@ namespace DotaScope2.Models
             }
         }
 
-        public List<UserScore> getUserRecords(int userId)
+        public List<UserScore> getUserIdRecords(int userId)
         {
             string conString = DBConnection.ConnectionString;
             string selectQuery = $@"
-                SELECT (users.name, invoker_game.score) FROM invoker_game 
+                SELECT users.name as Name, invoker_game.score as Score FROM invoker_game 
                 JOIN users ON invoker_game.id_user = users.id_user
-                WHERE (users.id_user == {userId})
+                WHERE (users.id_user = {userId})
                 ORDER BY invoker_game.score DESC
-                LIMIT 10;";
+                LIMIT 5;";
 
             List<UserScore> scores = new List<UserScore>();
             using (NpgsqlConnection connection = new NpgsqlConnection(conString))

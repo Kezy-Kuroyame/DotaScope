@@ -8,9 +8,7 @@
 	         x:DataType="vm:LogInViewModel"
              x:Class="DotaScope2.Views.LogIn">
 	
-	<Design.DataContext>
-		<vm:LogInViewModel />
-	</Design.DataContext>
+
 	<Grid Background="#1A1A1A">
 		<Grid ShowGridLines="">
 			<Grid.RowDefinitions>
@@ -22,9 +20,11 @@
 				
 			<!--Header-->
 			<TextBlock  Grid.Row="0" FontSize="70" Text="Login" Foreground="White" FontWeight="Medium" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-			<TextBox Grid.Row="1" Text="{Binding Name}" Width="400" Height="70" CornerRadius="30" Background="#1FFFFFFF" BorderBrush="#25FFFFFF" BorderThickness="2" Watermark="Name" Foreground="White" FontSize="32" VerticalAlignment="Center" Padding="20 15 0 0" Name="NameLoginField"/>
-			<TextBox IsHitTestVisible="True"   Text="{Binding Password}" PasswordChar="*" Grid.Row="2"  Width="400" Height="70" CornerRadius="30" Background="#1FFFFFFF" BorderBrush="#25FFFFFF" BorderThickness="2" Watermark="Password" Foreground="White" FontSize="32" VerticalAlignment="Center" Padding="20 15 0 0" Name="PasswordLoginField"/>
-			<Button Grid.Row="3" Click="LoginButtonClick" Background="#FFb361f3" HorizontalAlignment="Center" Content="Login" FontSize="50" Padding="50 5" CornerRadius="10" />
+			<TextBox Grid.Row="1" Text="{Binding NameLoginIn}" Width="400" Height="70" CornerRadius="30" Background="#1FFFFFFF" BorderBrush="#25FFFFFF" BorderThickness="2" Watermark="Name" Foreground="White" FontSize="32" VerticalAlignment="Center" Padding="20 15 0 0" Name="NameLoginField"/>
+			<TextBlock Grid.Row="1" Margin="40 110 0 0" Text="{Binding ErrorNameLoginIn}" Width="400"  Foreground="#f73636" FontSize="16" VerticalAlignment="Center" Name="ErrorNameLoginField"/>
+			<TextBox IsHitTestVisible="True"  Text="{Binding PasswordLoginIn}" PasswordChar="*" Grid.Row="2"  Width="400" Height="70" CornerRadius="30" Background="#1FFFFFFF" BorderBrush="#25FFFFFF" BorderThickness="2" Watermark="Password" Foreground="White" FontSize="32" VerticalAlignment="Center" Padding="20 15 0 0" Name="PasswordLoginField"/>
+			<TextBlock Grid.Row="2" Margin="40 110 0 0" Text="{Binding ErrorPasswordLoginIn}" Width="400"  Foreground="#f73636" FontSize="16" VerticalAlignment="Center" Name="ErrorPasswordLoginField"/>
+			<Button Grid.Row="3" Command="{Binding LoginFuncCommand}" Background="#FFb361f3" HorizontalAlignment="Center" Content="Login" FontSize="50" Padding="50 5" CornerRadius="10" />
 		</Grid>
 	</Grid>
 

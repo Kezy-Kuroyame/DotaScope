@@ -9,30 +9,32 @@ using System.Windows.Input;
 
 namespace DotaScope2.ViewModels
 {
-    internal class LogInSignUpViewModel : ViewModelBase
+    internal class LogInSignUpViewModel : NavigationViewModel
     {
-        private readonly ViewModelBase[] Pages =
+        private readonly NavigationViewModel[] Pages =
          {
-            new LogInViewModel(),
-            new SignUpViewModel()
          };
 
-        private ViewModelBase _RegistrationPage;
+        private NavigationViewModel _RegistrationPage;
 
-        public ViewModelBase RegistrationPage
+        public NavigationViewModel RegistrationPage
         {
             get { return _RegistrationPage; }
             private set { this.RaiseAndSetIfChanged(ref _RegistrationPage, value); }
         }
 
-        public LogInSignUpViewModel()
+        private MainViewModel _MainViewModel;
+        public MainViewModel MainViewModel { get { return _MainViewModel; }  set { _MainViewModel = value; } }
+
+        public LogInSignUpViewModel(MainViewModel mainViewModel)
         {
-            _RegistrationPage = Pages[0];
+            RegistrationPage = new LogInViewModel(mainViewModel);
 
             // Create Observables which will activate to deactivate our commands based on CurrentPage 
 
             NavigateLogInCommand = ReactiveCommand.Create(NavigateLogIn);
             NavigateSignUpCommand = ReactiveCommand.Create(NavigateSignUp);
+            MainViewModel = mainViewModel;
         }
 
         private IBrush _textColorLogIn = new SolidColorBrush(Color.FromRgb(179, 97, 243));
@@ -84,7 +86,7 @@ namespace DotaScope2.ViewModels
                 }
             };
 
-            RegistrationPage = Pages[0];
+            RegistrationPage = new LogInViewModel(MainViewModel);
         }
 
         public ICommand NavigateSignUpCommand { get; }
@@ -102,7 +104,7 @@ namespace DotaScope2.ViewModels
             };
             TextDecorationsLogIn = null;
 
-            RegistrationPage = Pages[1];
+            RegistrationPage = new SignUpViewModel(MainViewModel);
         }
     }
 }

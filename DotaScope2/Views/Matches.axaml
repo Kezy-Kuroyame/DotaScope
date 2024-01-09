@@ -116,6 +116,7 @@
 
 				<Grid Grid.Row="1" Width="640">
 					<TextBox x:Name="DotaID" Margin="0 5"
+							 Watermark="DotaId"
 							 VerticalAlignment="Top" HorizontalAlignment="Center"
 							 Grid.Row="1" Width="250" Height="30" Text="{Binding GivePlayerId}"></TextBox>
 					<Button Background="#22FFFFFF"
@@ -126,7 +127,7 @@
 							Margin=" 30 5 120 0"
 							Content="Search"
 							/>
-					<DataGrid VerticalAlignment="Top" HorizontalAlignment="Center" Background="#919191"
+					<DataGrid VerticalAlignment="Top" HorizontalAlignment="Center" Background="#2D2D2D"
 							  ItemsSource="{Binding MatchesCollection}"
 							  Margin="0 50 0 0"
 							  IsReadOnly="True"
@@ -134,14 +135,15 @@
 							  CanUserResizeColumns="False"
 							  CanUserSortColumns="False"
 							  GridLinesVisibility="Horizontal"
-							  BorderThickness="1"
+							  BorderThickness="0"
 							  BorderBrush="Gray"
 							  Name="DataGrid"
 							  Width="640"
-							  Foreground="White"
+							  Foreground="#CCFFFFFF"
 							  AutoGenerateColumns="False"
 							  FontSize="10"
-							  HeadersVisibility="None">
+							  HeadersVisibility="None"
+							 >
 						
 
 						<DataGrid.Columns>

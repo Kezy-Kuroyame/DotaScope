@@ -18,7 +18,7 @@ using System.Windows.Input;
 
 namespace DotaScope2.ViewModels
 {
-    public class MatchesViewModel : ViewModelBase
+    public class MatchesViewModel : NavigationViewModel
     {
         public MatchesViewModel() 
         {
