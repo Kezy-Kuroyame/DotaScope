@@ -7,9 +7,7 @@
 	         x:CompileBindings="True"
 	         x:DataType="vm:LogInSignUpViewModel"
              x:Class="DotaScope2.Views.LogInSignUp">
-	<Design.DataContext>
-		<vm:LogInSignUpViewModel />
-	</Design.DataContext>
+
 	
 	<Grid Background="#1A1A1A" ShowGridLines="">
 		<Grid.RowDefinitions>

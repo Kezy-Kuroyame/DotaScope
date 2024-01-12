@@ -12,7 +12,7 @@ namespace DotaScope2.ViewModels;
 
 public class MainViewModel : NavigationViewModel
 {
-    public string Greeting => "Welcome to Avalonia!";
+    public string Greeting => "кто я";
     public string Block => "MainViewModel";
     public string DotaScope => "DotaScope";
     public string Matches => "Matches";

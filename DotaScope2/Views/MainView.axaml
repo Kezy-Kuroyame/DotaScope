@@ -6,9 +6,84 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="DotaScope2.Views.MainView"
              x:DataType="vm:MainViewModel">
-  <Design.DataContext>
-    <vm:MainViewModel />
-  </Design.DataContext>
+	<Design.DataContext>
+		<vm:MainViewModel />
+	</Design.DataContext>
 
-  <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+	<ScrollViewer>
+		<Grid>
+			<!-- ContentPresenter для отображения текущей View -->
+			<TransitioningContentControl  Content="{Binding CurrentPage}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+			<DockPanel
+				Height="40"
+				Background="#4A3458"
+				VerticalAlignment="Top">
+				<Grid ShowGridLines="True">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="300"/>
+						<ColumnDefinition Width="500"/>
+						<ColumnDefinition />
+						<ColumnDefinition Width="200"/>
+					</Grid.ColumnDefinitions>
+
+					<Button
+						Grid.Column="0"
+						Content="{Binding DotaScope}"
+						HorizontalAlignment="Center"
+						VerticalAlignment="Center"
+						FontSize="32"
+						Background="Transparent"
+						FontWeight="Bold"
+						Padding="0 0 0 0"
+						Command="{Binding NavigateHomeCommand}"
+							/>
+					<Grid Grid.Column="1">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition />
+							<ColumnDefinition />
+							<ColumnDefinition />
+						</Grid.ColumnDefinitions>
+						<Button
+							Grid.Column="0"
+							Content="{Binding Matches}"
+							FontSize="20"
+							Background="Transparent"
+							HorizontalAlignment="Center"
+							VerticalAlignment="Center"
+							Command="{Binding NavigateMatchesCommand}"/>
+						<Button
+							Grid.Column="1"
+							Content="{Binding Teams}"
+							Background="Transparent"
+							FontSize="20"
+							HorizontalAlignment="Center"
+							VerticalAlignment="Center"
+							Command="{Binding NavigateTeamsCommand}"
+					/>
+						<Button
+							Grid.Column="3"
+							Content="{Binding Invoker}"
+							FontSize="20"
+							Background="Transparent"
+							HorizontalAlignment="Center"
+							VerticalAlignment="Center"
+							Command="{Binding NavigateInvokerCommand}"/>
+					</Grid>
+
+					<Button
+						Grid.Column="3"
+						Content="{Binding LogIn}"
+						HorizontalAlignment="Center"
+						VerticalAlignment="Center"
+						FontSize="20"
+						Background="#11FFFFFF"
+						Padding="5 0"
+						Foreground="White"
+						Command="{Binding NavigateLogInSignUpCommand}"
+							/>
+				</Grid>
+			</DockPanel>
+
+		</Grid>
+	</ScrollViewer>
 </UserControl>
