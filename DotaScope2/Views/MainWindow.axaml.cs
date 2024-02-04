@@ -9,10 +9,11 @@ public partial class MainWindow : Window
     private UserControl _contentView;
     private HomeViewModel _mainViewModel;
 
+
+
     public MainWindow()
     {
         InitializeComponent();
- 
     }
     private void ShowFirstView()
     {

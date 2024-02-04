@@ -12,8 +12,8 @@
 	<Design.DataContext>
 		<vm:HomeViewModel />
 	</Design.DataContext>
-	<ScrollViewer>
-		<Grid MaxHeight="4000">
+	<ScrollViewer Name="ScrollViewer">
+		<Grid MaxHeight="4000" Background="#1A1A1A">
 			<Grid VerticalAlignment="Top" ShowGridLines="True" Margin="0 40 0 0">
 
 				<Grid.RowDefinitions>
@@ -21,7 +21,7 @@
 					<RowDefinition Height="800"/>
 				</Grid.RowDefinitions>
 
-				<Grid Grid.Row="0" Background="#007E6F">
+				<Grid Grid.Row="0" Background="#007E6F" Name="windowGrid">
 					<Grid>
 						<Grid>
 							<Grid.Background>
@@ -31,10 +31,10 @@
 									<GradientStop Color="#00352837" Offset="0.7"/>
 								</LinearGradientBrush>
 							</Grid.Background>
-							<Image Source="avares://DotaScope2/Assets/search.png" Width="700" Margin="100 0 0 0"/>
+							<Image Source="avares://DotaScope2/Assets/search.png" Width="700" Name="scope" Margin="100 0 0 0"/>
 							<Grid Width="370" Height="250" Background="#00FFFFFF" Margin="0 0 30 110">
 
-								<TextBlock Text="Dota Scope" FontSize="95" FontWeight="Bold" VerticalAlignment="Top" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center"/>
+								<TextBlock Text="Dota Scope" FontSize="95" FontWeight="Bold" VerticalAlignment="Top" Name="TextInImage" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center"/>
 							</Grid>
 						</Grid>
 						<Grid.Background>
@@ -47,24 +47,24 @@
 					</Grid>
 				</Grid>
 
-				<Grid Grid.Row="1">
+				<Grid Grid.Row="1" Name="infoPart">
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition/>
 						<ColumnDefinition/>
 					</Grid.ColumnDefinitions>
 
-					<Grid Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" Width="650" Background="#00FFFFFF">
+					<Grid Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" Width="650" Background="#00FFFFFF" Name="infoBlock">
 						<Grid.RowDefinitions>
 							<RowDefinition Height="auto"/>
 							<RowDefinition Height="auto"/>
 						</Grid.RowDefinitions>
-						<TextBlock Text="{Binding WhatIsHeader}" FontSize="38" Grid.Row="0" TextAlignment="Center" FontWeight="Bold"/>
-						<TextBlock Text="{Binding WhatIsText}" FontSize="24" TextAlignment="Center" Grid.Row="1" LineHeight="40" Margin="0 35 0 0" Foreground="#CACACA" TextWrapping="WrapWithOverflow"/>
+						<TextBlock Text="{Binding WhatIsHeader}" FontSize="38" Foreground="White" Grid.Row="0" TextAlignment="Center" FontWeight="Bold" Name="headerInfo"/>
+						<TextBlock Text="{Binding WhatIsText}" FontSize="24" TextAlignment="Center" Grid.Row="1" LineHeight="40" Margin="0 35 0 0" Foreground="#CACACA" TextWrapping="WrapWithOverflow" Name="info"/>
 					</Grid>
 
-					<Grid Grid.Column="1">
-						<TextBlock Text="?"  FontSize="528" VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="White" />
-					</Grid>
+					
+					<TextBlock Grid.Column="1" Text="?"  FontSize="528" VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="White" Name="question"/>
+					
 				</Grid>
 			</Grid>
 		</Grid>

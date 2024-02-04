@@ -3,7 +3,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:DotaScope2.ViewModels"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="800"
              x:Class="DotaScope2.Views.MainView"
              x:DataType="vm:MainViewModel">
 	<Design.DataContext>
@@ -11,14 +11,14 @@
 	</Design.DataContext>
 
 	<ScrollViewer>
-		<Grid>
+		<Grid Background="#1A1A1A" Name="gridWindow">
 			<!-- ContentPresenter для отображения текущей View -->
 			<TransitioningContentControl  Content="{Binding CurrentPage}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
 			<DockPanel
 				Height="40"
 				Background="#4A3458"
 				VerticalAlignment="Top">
-				<Grid ShowGridLines="True">
+				<Grid ShowGridLines="True" Name="gridHeader">
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition Width="300"/>
 						<ColumnDefinition Width="500"/>
@@ -26,6 +26,7 @@
 						<ColumnDefinition Width="200"/>
 					</Grid.ColumnDefinitions>
 
+					
 					<Button
 						Grid.Column="0"
 						Content="{Binding DotaScope}"
@@ -36,8 +37,9 @@
 						FontWeight="Bold"
 						Padding="0 0 0 0"
 						Command="{Binding NavigateHomeCommand}"
+						Name="homeButton"
 							/>
-					<Grid Grid.Column="1">
+					<Grid Grid.Column="1" Name="gridButtons" IsEnabled="True" >
 						<Grid.ColumnDefinitions>
 							<ColumnDefinition />
 							<ColumnDefinition />
@@ -50,7 +52,8 @@
 							Background="Transparent"
 							HorizontalAlignment="Center"
 							VerticalAlignment="Center"
-							Command="{Binding NavigateMatchesCommand}"/>
+							Command="{Binding NavigateMatchesCommand}"
+							Name="matchesButton"/>
 						<Button
 							Grid.Column="1"
 							Content="{Binding Teams}"
@@ -59,6 +62,7 @@
 							HorizontalAlignment="Center"
 							VerticalAlignment="Center"
 							Command="{Binding NavigateTeamsCommand}"
+							Name="teamsButton"
 					/>
 						<Button
 							Grid.Column="3"
@@ -67,7 +71,8 @@
 							Background="Transparent"
 							HorizontalAlignment="Center"
 							VerticalAlignment="Center"
-							Command="{Binding NavigateInvokerCommand}"/>
+							Command="{Binding NavigateInvokerCommand}"
+							Name="invokerButton"/>
 					</Grid>
 
 					<Button

@@ -8,7 +8,7 @@ namespace DotaScope2.Models
 {
     public class DBConnection
     {
-        private static string connectionString = "Host=localhost;Username=postgres;Password=kir54678199;Database=DotaScopeBD";
+        private static string connectionString = "Host=localhost;Username=postgres;Password=kir54678199;Database=DotaScope";
         public static string ConnectionString { get { return connectionString; } }
     }
 }
