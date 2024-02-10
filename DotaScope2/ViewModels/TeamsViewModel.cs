@@ -16,6 +16,7 @@ using ReactiveUI;
 using System.Reactive;
 using Avalonia.Controls;
 using DotaScope2.Views;
+using System.Xml.Linq;
 
 
 namespace DotaScope2.ViewModels
@@ -26,7 +27,20 @@ namespace DotaScope2.ViewModels
         public string Matches => "Matches";
         public string Teams => "Teams";
         public string LogIn => "Login In";
-        private UserControl _contentView;
+
+        private double _textSize = 32;
+
+        public double dataFontSize
+        {
+            get => _textSize;
+            set
+            {
+                this.RaiseAndSetIfChanged(ref _textSize, value);
+            }
+        }
+    
+
+    private UserControl _contentView;
 
         private ObservableCollection<Team> _teamsCollection;
         public ObservableCollection<Team> TeamsCollection

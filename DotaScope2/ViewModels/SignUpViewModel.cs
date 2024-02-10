@@ -14,6 +14,39 @@ namespace DotaScope2.ViewModels
 {
     public class SignUpViewModel : NavigationViewModel
     {
+        private double _textSizeHeader = 70;
+
+        public double buttonFontHeader
+        {
+            get => _textSizeHeader;
+            set
+            {
+                this.RaiseAndSetIfChanged(ref _textSizeHeader, value);
+            }
+        }
+
+        private double _fieldFontSize = 50;
+
+        public double FieldFontSize
+        {
+            get => _fieldFontSize;
+            set
+            {
+                this.RaiseAndSetIfChanged(ref _fieldFontSize, value);
+            }
+        }
+
+        private double _fieldWidth = 400;
+
+        public double FieldWidth
+        {
+            get => _fieldWidth;
+            set
+            {
+                this.RaiseAndSetIfChanged(ref _fieldWidth, value);
+            }
+        }
+
         private string _name ="";
         public string NameSignUp
         {

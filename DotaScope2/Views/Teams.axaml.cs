@@ -11,10 +11,57 @@ namespace DotaScope2.Views
     public partial class Teams : UserControl
     {
         private readonly TeamsViewModel _viewModel;
+
+        protected bool IsVertical()
+        {
+            Grid windowGrid = this.FindControl<Grid>("windowGrid");
+            double boundsWidth = windowGrid.Bounds.Width;
+            double boundsHeight = windowGrid.Bounds.Height;
+            System.Diagnostics.Debug.WriteLine($"Ўирина окна Teams: {boundsWidth}, высота окна Teams: {boundsHeight}");
+            return (boundsHeight > boundsWidth);
+        }
+
+        private void TeamWindow_Initialized(object sender, EventArgs e)
+        {
+            if (IsVertical())
+            {
+                Resize_Components();
+            }
+        }
+
+        private void resizeTeamTextBlock()
+        {
+            TextBlock teamsTextBlock = this.FindControl<TextBlock>("teamsTextBlock");
+            teamsTextBlock.Margin = new Avalonia.Thickness(0);
+            teamsTextBlock.HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Center;
+        }
+
+        private void resizeTable()
+        {
+            DataGrid dataGrid = this.FindControl<DataGrid>("dataGrid");
+            dataGrid.HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Left;
+            dataGrid.Width = 350;
+
+            Grid gridContent = this.FindControl<Grid>("gridContent");
+            gridContent.Margin = new Avalonia.Thickness(20, 0);
+
+            _viewModel.dataFontSize = 24;
+
+        }
+
+        private void Resize_Components()
+        {
+            resizeTeamTextBlock();
+            resizeTable();
+        }
+
         public Teams()
         {
             InitializeComponent();
-            System.Diagnostics.Debug.WriteLine("Ѕл€ а так выводитс€");
+
+            this.Loaded += TeamWindow_Initialized;
+
+
             _viewModel = new TeamsViewModel();
             DataContext = _viewModel;
             
@@ -33,15 +80,7 @@ namespace DotaScope2.Views
             AvaloniaXamlLoader.Load(this);
         }
 
-        public void SteamLogIn(object source, RoutedEventArgs args)
-        {
-            Console.WriteLine("Click!");
-        }
-
-        public void toTeams(object source, RoutedEventArgs args)
-        {
-            Console.WriteLine("ѕереход в Teams");
-        }
+      
 
        
     }

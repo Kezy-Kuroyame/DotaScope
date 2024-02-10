@@ -4,12 +4,13 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 xmlns:controls="clr-namespace:Avalonia.Controls;assembly=Avalonia.Controls.DataGrid"
 			 xmlns:vm="clr-namespace:DotaScope2.ViewModels"	 
-             mc:Ignorable="d" d:DesignWidth="1920" d:DesignHeight="1080"
+             mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="800"
              x:Class="DotaScope2.Views.Teams"
-			 x:DataType="vm:TeamsViewModel">
+			 x:DataType="vm:TeamsViewModel"
+			 x:Name="teamsUserControl">
 
 	<ScrollViewer>
-		<Grid Background="#1A1A1A">
+		<Grid Background="#1A1A1A" >
 			<DockPanel Grid.Row ="0"
 			Height="40"
 			Background="#4A3458"
@@ -50,13 +51,14 @@
 							FontSize="20"
 							HorizontalAlignment="Center"
 							VerticalAlignment="Center"
-							Click="toTeams"
+							
 							/>
 					</Grid>
 				
 				</Grid>
 			</DockPanel>
-			<Grid VerticalAlignment="Top" ShowGridLines="True" Margin="0 40 0 0">
+			
+			<Grid VerticalAlignment="Top" ShowGridLines="True" Margin="0 40 0 0" Name="windowGrid">
 				  <Grid.RowDefinitions>
 					<RowDefinition Height="150"/>
 					<RowDefinition Height="900"/>
@@ -64,10 +66,10 @@
 				<Canvas Grid.Row="0" Background="#007E6F"/>
 				<Grid Grid.Row="0" Background="#007E6F">
 					<Grid.Background>
-						<LinearGradientBrush StartPoint="0%, 270%" EndPoint="60%, 0%">
-							<GradientStop Color="#720074" Offset="0"/>
-							<GradientStop Color="#88600762" Offset="0.3"/>
-							<GradientStop Color="#00352837" Offset="0.7"/>
+						<LinearGradientBrush StartPoint="0%, 270%" EndPoint="50%, 0%">
+							<GradientStop Color="#720074" Offset="0.1"/>
+							<GradientStop Color="#88600762" Offset="0.5"/>
+							<GradientStop Color="#00352837" Offset="0.9"/>
 						</LinearGradientBrush>
 					</Grid.Background>
 				</Grid>
@@ -80,19 +82,24 @@
 						</LinearGradientBrush>
 					</Grid.Background>
 				</Grid>
-				<TextBlock Grid.Row="0" FontSize="70" Text="Teams" FontWeight="Medium" Foreground="White" Margin="150 0 0 0" VerticalAlignment="Center"/>
-				<Grid Grid.Row="1" Background="">
+				<TextBlock Grid.Row="0" FontSize="70" Text="Teams" FontWeight="Medium" Foreground="White" Name="teamsTextBlock" Margin="150 0 0 0" VerticalAlignment="Center"/>
+				<Grid Grid.Row="1" Background="" Name="gridContent">
 					<DataGrid  ItemsSource="{Binding TeamsCollection}"
 							   Name="dataGrid" Width="1090"
+							   Height="600"
+							   RowHeight="60"
 							   VerticalAlignment="Top"
+							   HorizontalAlignment="Center"
 							   AutoGenerateColumns="False"
 							   Margin="0 80 0 0" IsReadOnly="True"
 								GridLinesVisibility="All"
 								BorderThickness="1" BorderBrush="Gray" 
-							    Background="#2D2D2D" >
+							    Background="#2D2D2D"
+							   Foreground="White"
+							   >
 
 						<DataGrid.Columns>
-							<DataGridTextColumn Binding="{Binding Path=Id}" FontSize="32" Header="#" Width="auto"/>
+							<DataGridTextColumn Binding="{Binding Path=Id}" FontSize="{Binding dataFontSize}" Header="#" Width="auto" />
 							<DataGridTemplateColumn>
 									<DataGridTemplateColumn.CellTemplate>
 										<DataTemplate>
@@ -100,11 +107,11 @@
 										</DataTemplate>
 									</DataGridTemplateColumn.CellTemplate>
 							</DataGridTemplateColumn>
-							<DataGridTextColumn Binding="{Binding Path=Name}" FontSize="32" Width="500" Foreground="White" />
-							<DataGridTextColumn Binding="{Binding Path=Wins}" FontSize="32" Header="Wins" Width="auto"/>
-							<DataGridTextColumn Binding="{Binding Path=Losses}" FontSize="32" Header="Losses" Width="auto"/>
-							<DataGridTextColumn Binding="{Binding Path=Total}" FontSize="32" Header="Total" Width="auto"/>
-							<DataGridTextColumn Binding="{Binding Path=Raiting}" FontSize="32" Header="Raiting" Width="auto"/>
+							<DataGridTextColumn Binding="{Binding Path=Name}" FontSize="{Binding dataFontSize}" Width="500" Foreground="White" />
+							<DataGridTextColumn Binding="{Binding Path=Wins}" FontSize="{Binding dataFontSize}" Header="Wins" Width="auto"/>
+							<DataGridTextColumn Binding="{Binding Path=Losses}" FontSize="{Binding dataFontSize}" Header="Losses" Width="auto"/>
+							<DataGridTextColumn Binding="{Binding Path=Total}" FontSize="{Binding dataFontSize}" Header="Total" Width="auto"/>
+							<DataGridTextColumn Binding="{Binding Path=Raiting}" FontSize="{Binding dataFontSize}" Header="Raiting" Width="auto"/>
 							
 						</DataGrid.Columns>
 					
