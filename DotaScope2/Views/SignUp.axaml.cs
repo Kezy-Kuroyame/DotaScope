@@ -4,6 +4,7 @@ using Avalonia.Media;
 using DotaScope2.ViewModels;
 using System;
 using System.Drawing;
+using Color = Avalonia.Media.Color;
 
 namespace DotaScope2.Views
 {
@@ -40,8 +41,38 @@ namespace DotaScope2.Views
 
             PasswordLoginField.VerticalAlignment = Avalonia.Layout.VerticalAlignment.Top;
             PasswordLoginField.Margin = new Avalonia.Thickness(0, 5, 0, 0);
+        }
 
-            
+        private void RecolorTextBox()
+        {
+            TextBox NameLoginField = this.FindControl<TextBox>("NameLoginField");
+            TextBox PasswordLoginField = this.FindControl<TextBox>("PasswordLoginField");
+
+            NameLoginField.GotFocus += NameBoxGotFocus;
+            PasswordLoginField.GotFocus += PasswordBoxGotFocus;
+
+            NameLoginField.LostFocus += NameBoxLostFocus;
+            PasswordLoginField.LostFocus += PasswordBoxLostFocus;
+        }
+
+        private void NameBoxGotFocus(object sender, RoutedEventArgs e)
+        {
+            NameLoginField.Foreground = new SolidColorBrush(Color.Parse("#000000")); // Set foreground color to red when focused
+        }
+
+        private void PasswordBoxGotFocus(object sender, RoutedEventArgs e)
+        {
+            PasswordLoginField.Foreground = new SolidColorBrush(Color.Parse("#000000")); // Set foreground color to red when 
+        }
+
+        private void NameBoxLostFocus(object sender, RoutedEventArgs e)
+        {
+            NameLoginField.Foreground = new SolidColorBrush(Color.Parse("#AAFFFFFF")); // Set foreground color back to black when focus is lost
+        }
+
+        private void PasswordBoxLostFocus(object sender, RoutedEventArgs e)
+        {
+            PasswordLoginField.Foreground = new SolidColorBrush(Color.Parse("#AAFFFFFF")); // Set foreground color back to black when focus is lost
         }
 
         private void SignUpWindow_Initialized(object sender, EventArgs e)
@@ -49,6 +80,7 @@ namespace DotaScope2.Views
             if (IsVertical())
             {
                 Resize_Components();
+                RecolorTextBox();
             }
         }
         

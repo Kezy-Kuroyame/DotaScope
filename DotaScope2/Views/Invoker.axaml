@@ -101,7 +101,7 @@
 						</Grid>
 						
 						<!-- Game -->
-						<Grid Grid.Row="1" ShowGridLines="True" Name="gameGridMain">
+						<Grid Grid.Row="1" ShowGridLines="" Name="gameGridMain">
 							<Grid.ColumnDefinitions>
 								<ColumnDefinition />
 								<ColumnDefinition Width="250"/>
