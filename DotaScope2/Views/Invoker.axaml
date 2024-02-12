@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 xmlns:controls="clr-namespace:Avalonia.Controls;assembly=Avalonia.Controls.DataGrid"
 			 xmlns:vm="clr-namespace:DotaScope2.ViewModels"	 
-             mc:Ignorable="d" d:DesignWidth="1920" d:DesignHeight="1080"
+             mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="800"
              x:Class="DotaScope2.Views.Invoker"
 	         x:CompileBindings="True"
 	         x:DataType="vm:InvokerViewModel"
@@ -13,7 +13,7 @@
 			 >
 
 	<ScrollViewer>
-		<Grid MaxHeight="1080" Background="#1A1A1A">
+		<Grid MaxHeight="1080" Background="#1A1A1A" Name="windowGrid">
 			<TextBlock Background=""
 					   Height="50"
 					   VerticalAlignment="Top"
@@ -25,7 +25,8 @@
 						Foreground="White"/>
 			<Grid Background=""
 				  Margin="10 150 10 15"
-				  ShowGridLines="">
+				  ShowGridLines=""
+				  Name="content">
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition Width="350"/>
 					<ColumnDefinition/>
@@ -33,7 +34,7 @@
 				</Grid.ColumnDefinitions>
 				<!-- Рекорды -->
 
-				<Grid Grid.Column="0" ShowGridLines="True" Background="">
+				<Grid Grid.Column="0" ShowGridLines="True" Background="" Name="recordsColumnGrid">
 					<Grid.RowDefinitions>
 						<RowDefinition Height="*"/>
 						<RowDefinition Height="*"/>
@@ -80,7 +81,7 @@
 				</Grid>
 					
 				<!-- Игровая Колонка -->
-				<Grid Grid.Column="1" ShowGridLines="" Background="">
+				<Grid Grid.Column="1" ShowGridLines="" Background="" Name="gameColumnGrid">
 					<Grid.RowDefinitions>
 						<RowDefinition/>
 						<RowDefinition/>
@@ -100,15 +101,15 @@
 						</Grid>
 						
 						<!-- Game -->
-						<Grid Grid.Row="1" ShowGridLines="">
+						<Grid Grid.Row="1" ShowGridLines="True" Name="gameGridMain">
 							<Grid.ColumnDefinitions>
-								<ColumnDefinition Width=""/>
+								<ColumnDefinition />
 								<ColumnDefinition Width="250"/>
 								<ColumnDefinition Width="250"/>
 								<ColumnDefinition />
 							</Grid.ColumnDefinitions>
 							<Image Source="{Binding GameImageSpell}" Grid.Column="1" Width="140" HorizontalAlignment="Right" Margin="10 0" />
-							<TextBlock Text="{Binding GameTextSpell}" Grid.Column="2" Margin="10 0" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="White" FontSize="32"/>
+							<TextBlock Text="{Binding GameTextSpell}" Grid.Column="2" TextWrapping="WrapWithOverflow" Margin="10 0" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="White" FontSize="32"/>
 							<TextBlock Text="{Binding Score}" Grid.ColumnSpan="4" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" Foreground="White" FontWeight="Normal"/>
 						</Grid>
 					</Grid>
@@ -132,7 +133,7 @@
 							</Button>
 						</Grid>
 						<!-- Нажатые шарики -->
-						<Grid Grid.Row="1" ShowGridLines="">
+						<Grid Grid.Row="1" ShowGridLines="" Name="pressedBallsGrid">
 							<Grid.ColumnDefinitions>
 								<ColumnDefinition/>
 								<ColumnDefinition Width ="150"/>
@@ -141,19 +142,19 @@
 								<ColumnDefinition/>
 							</Grid.ColumnDefinitions>
 							<!-- First Ball -->
-							<Ellipse Width="100" Height="100" Stroke="#AAFFFFFF" StrokeThickness="2" Grid.Column="1">
+							<Ellipse Width="{Binding widthHeightBall}" Height="{Binding widthHeightBall}" Stroke="#AAFFFFFF" StrokeThickness="2" Grid.Column="1">
 								<Ellipse.Fill>
 									<ImageBrush Source="{Binding FirstBall}	"/>
 								</Ellipse.Fill>
 							</Ellipse>
 							<!-- Second Ball -->
-							<Ellipse Width="100" Height="100" Stroke="#AAFFFFFF" StrokeThickness="2" Grid.Column="2">
+							<Ellipse Width="{Binding widthHeightBall}" Height="{Binding widthHeightBall}" Stroke="#AAFFFFFF" StrokeThickness="2" Grid.Column="2">
 								<Ellipse.Fill>
 									<ImageBrush Source="{Binding SecondBall}"/>
 								</Ellipse.Fill>
 							</Ellipse>
 							<!-- Third Ball -->
-							<Ellipse Width="100" Height="100" Stroke="#AAFFFFFF" StrokeThickness="2" Grid.Column="3">
+							<Ellipse Width="{Binding widthHeightBall}" Height="{Binding widthHeightBall}" Stroke="#AAFFFFFF" StrokeThickness="2" Grid.Column="3">
 								<Ellipse.Fill>
 									<ImageBrush Source="{Binding ThirdBall}"/>
 								</Ellipse.Fill>
@@ -170,28 +171,28 @@
 							<ColumnDefinition/>
 							<ColumnDefinition Width="50"/>
 						</Grid.ColumnDefinitions>
-							<Button Click="QButtonClick" Focusable="True" Grid.Column="1" Background="#2D2D2D" Width="150" Height="150" HorizontalAlignment="Center">
+							<Button Click="QButtonClick" Focusable="True" Grid.Column="1" Background="#2D2D2D" Width="{Binding ballButton}" Height="{Binding ballButton}" HorizontalAlignment="Center" BorderThickness="{Binding borderThicknessButtons}">
 								<Grid >
 									<Image Source="/Assets/Quas_icon.png"/>
-									<TextBlock Text="Q" FontSize="40" Background="#2D2D2D" Width="40" Height="40" VerticalAlignment="Top" HorizontalAlignment="Left" TextAlignment="Center"/>
+									<TextBlock Text="Q" FontSize="{Binding ballButtonText}" Foreground="White" Background="#2D2D2D" Width="{Binding ballButtonText}" Height="{Binding ballButtonText}" VerticalAlignment="Top" HorizontalAlignment="Left" TextAlignment="Center"/>
 								</Grid>
 							</Button>
-							<Button Click="WButtonClick" Focusable="True" Grid.Column="2" Background="#2D2D2D" Width="150" Height="150" HorizontalAlignment="Center">
+							<Button Click="WButtonClick" Focusable="True" Grid.Column="2" Background="#2D2D2D" Width="{Binding ballButton}" Height="{Binding ballButton}" HorizontalAlignment="Center" BorderThickness="{Binding borderThicknessButtons}">
 								<Grid >
 									<Image Source="/Assets/Wex_icon.png"/>
-									<TextBlock Text="W" FontSize="40" Background="#2D2D2D" Width="40" Height="40" VerticalAlignment="Top" HorizontalAlignment="Left" TextAlignment="Center"/>
+									<TextBlock Text="W" FontSize="{Binding ballButtonText}" Foreground="White" Background="#2D2D2D" Width="{Binding ballButtonText}" Height="{Binding ballButtonText}" VerticalAlignment="Top" HorizontalAlignment="Left" TextAlignment="Center"/>
 								</Grid>
 							</Button>
-							<Button Click="EButtonClick" Focusable="True" Grid.Column="3" Background="#2D2D2D" Width="150" Height="150" HorizontalAlignment="Center">
+							<Button Click="EButtonClick" Focusable="True" Grid.Column="3" Background="#2D2D2D" Width="{Binding ballButton}" Height="{Binding ballButton}" HorizontalAlignment="Center" BorderThickness="{Binding borderThicknessButtons}">
 								<Grid >
 									<Image Source="/Assets/Exort_icon.png"/>
-									<TextBlock Text="E" FontSize="40" Background="#2D2D2D" Width="40" Height="40" VerticalAlignment="Top" HorizontalAlignment="Left" TextAlignment="Center"/>
+									<TextBlock Text="E" FontSize="{Binding ballButtonText}" Foreground="White" Background="#2D2D2D" Width="{Binding ballButtonText}" Height="{Binding ballButtonText}" VerticalAlignment="Top" HorizontalAlignment="Left" TextAlignment="Center"/>
 								</Grid>
 							</Button>
-							<Button Click="RButtonClick" Focusable="True" Grid.Column="4" Background="#2D2D2D" Width="150" Height="150" HorizontalAlignment="Center">
+							<Button Click="RButtonClick" Focusable="True" Grid.Column="4" Background="#2D2D2D" Width="{Binding ballButton}" Height="{Binding ballButton}" HorizontalAlignment="Center" BorderThickness="{Binding borderThicknessButtons}">
 								<Grid >
 									<Image Source="/Assets/Invoke_icon.png"/>
-									<TextBlock Text="R" FontSize="40" Background="#2D2D2D" Width="40" Height="40" VerticalAlignment="Top" HorizontalAlignment="Left" TextAlignment="Center"/>
+									<TextBlock Text="R" FontSize="{Binding ballButtonText}" Foreground="White" Background="#2D2D2D" Width="{Binding ballButtonText}" Height="{Binding ballButtonText}" VerticalAlignment="Top" HorizontalAlignment="Left" TextAlignment="Center"/>
 								</Grid>
 							</Button>
 						
@@ -199,7 +200,7 @@
 				</Grid>
 
 				<!-- Спеллы -->
-				<Grid Grid.Column="2" Background="" ShowGridLines="">
+				<Grid Grid.Column="2" Background="" ShowGridLines="" Name="spellsColumnGrid">
 					<Grid.RowDefinitions>
 						<RowDefinition Height="100"/>
 						<RowDefinition/>
@@ -223,14 +224,14 @@
 					<TextBlock Text="SPELLS" Grid.Row="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" Foreground="White" FontFamily="" />
 					
 					<Image Source="/Assets/Cold_Snap_icon.png" Width="30" Grid.Row="1" />
-					<TextBlock Grid.Row="1" Grid.Column="1" FontSize="24" Foreground="White" VerticalAlignment="Center" Margin="10 0 0 0" HorizontalAlignment="Left">
+					<TextBlock Grid.Row="1" Grid.Column="1" FontSize="24" Foreground="White" VerticalAlignment="Center" Margin="{Binding MarginValue}" HorizontalAlignment="Left">
 						<Run Text="{Binding ColdSnap}"/>
 						<Run Text="-"/>
 						<Run Text="Q Q Q" Foreground="#72C3FC" FontWeight="Bold"/>
 					</TextBlock>
 					
 					<Image Source="/Assets/Ghost_Walk_icon.png" Width="30" Grid.Row="2" />
-					<TextBlock Grid.Row="2" Grid.Column="1" FontSize="24" Foreground="White" VerticalAlignment="Center" Margin="10 0 0 0" HorizontalAlignment="Left">
+					<TextBlock Grid.Row="2" Grid.Column="1" FontSize="24" Foreground="White" VerticalAlignment="Center" Margin="{Binding MarginValue}" HorizontalAlignment="Left">
 						<Run Text="{Binding GhostWalk}"/>
 						<Run Text="-"/>
 						<Run Text="Q Q" Foreground="#72C3FC" FontWeight="Bold"/>
@@ -238,7 +239,7 @@
 					</TextBlock>
 					
 					<Image Source="/Assets/Ice_Wall_icon.png" Width="30" Grid.Row="3" />
-					<TextBlock Grid.Row="3" Grid.Column="1" FontSize="24" Foreground="White" VerticalAlignment="Center" Margin="10 0 0 0" HorizontalAlignment="Left">
+					<TextBlock Grid.Row="3" Grid.Column="1" FontSize="24" Foreground="White" VerticalAlignment="Center" Margin="{Binding MarginValue}" HorizontalAlignment="Left">
 						<Run Text="{Binding IceWall}"/>
 						<Run Text="-"/>
 						<Run Text="Q Q" Foreground="#72C3FC" FontWeight="Bold"/>
@@ -246,14 +247,14 @@
 					</TextBlock>
 					
 					<Image Source="/Assets/E.M.P._icon.png" Width="30" Grid.Row="4" />
-					<TextBlock Grid.Row="4" Grid.Column="1" FontSize="24" Foreground="White" VerticalAlignment="Center" Margin="10 0 0 0" HorizontalAlignment="Left">
+					<TextBlock Grid.Row="4" Grid.Column="1" FontSize="24" Foreground="White" VerticalAlignment="Center" Margin="{Binding MarginValue}" HorizontalAlignment="Left">
 						<Run Text="{Binding EMP}"/>
 						<Run Text="-"/>
 						<Run Text="W W W" Foreground="#CE72FC" FontWeight="Bold"/>
 					</TextBlock>
 					
 					<Image Source="/Assets/Tornado_icon.png" Width="30" Grid.Row="5" />
-					<TextBlock Grid.Row="5" Grid.Column="1" FontSize="24" Foreground="White" VerticalAlignment="Center" Margin="10 0 0 0" HorizontalAlignment="Left">
+					<TextBlock Grid.Row="5" Grid.Column="1" FontSize="24" Foreground="White" VerticalAlignment="Center" Margin="{Binding MarginValue}" HorizontalAlignment="Left">
 						<Run Text="{Binding Tornado}"/>
 						<Run Text="-"/>
 						<Run Text="W W" Foreground="#CE72FC" FontWeight="Bold"/>
@@ -261,7 +262,7 @@
 					</TextBlock>
 					
 					<Image Source="/Assets/Alacrity_icon.png" Width="30" Grid.Row="6" />
-					<TextBlock Grid.Row="6" Grid.Column="1" FontSize="24" Foreground="White" VerticalAlignment="Center" Margin="10 0 0 0" HorizontalAlignment="Left">
+					<TextBlock Grid.Row="6" Grid.Column="1" FontSize="24" Foreground="White" VerticalAlignment="Center" Margin="{Binding MarginValue}" HorizontalAlignment="Left">
 						<Run Text="{Binding Alacrity}"/>
 						<Run Text="-"/>
 						<Run Text="W W" Foreground="#CE72FC" FontWeight="Bold"/>
@@ -269,14 +270,14 @@
 					</TextBlock>
 					
 					<Image Source="/Assets/Sun_Strike_icon.png" Width="30" Grid.Row="7" />
-					<TextBlock Grid.Row="7" Grid.Column="1" FontSize="24" Foreground="White" VerticalAlignment="Center" Margin="10 0 0 0" HorizontalAlignment="Left">
+					<TextBlock Grid.Row="7" Grid.Column="1" FontSize="24" Foreground="White" VerticalAlignment="Center" Margin="{Binding MarginValue}" HorizontalAlignment="Left">
 						<Run Text="{Binding SunStrike}"/>
 						<Run Text="-"/>
 						<Run Text="E E E" Foreground="#FCCA72" FontWeight="Bold"/>
 					</TextBlock>
 					
 					<Image Source="/Assets/Forge_Spirit_icon.png" Width="30" Grid.Row="8" />
-					<TextBlock Grid.Row="8" Grid.Column="1" FontSize="24" Foreground="White" VerticalAlignment="Center" Margin="10 0 0 0" HorizontalAlignment="Left">
+					<TextBlock Grid.Row="8" Grid.Column="1" FontSize="24" Foreground="White" VerticalAlignment="Center" Margin="{Binding MarginValue}" HorizontalAlignment="Left">
 						<Run Text="{Binding ForgeSpirit}"/>
 						<Run Text="-"/>
 						<Run Text="E E" Foreground="#FCCA72" FontWeight="Bold"/>
@@ -284,7 +285,7 @@
 					</TextBlock>
 										
 					<Image Source="/Assets/Chaos_Meteor_icon.png" Width="30" Grid.Row="9" />
-					<TextBlock Grid.Row="9" Grid.Column="1" FontSize="24" Foreground="White" VerticalAlignment="Center" Margin="10 0 0 0" HorizontalAlignment="Left">
+					<TextBlock Grid.Row="9" Grid.Column="1" FontSize="24" Foreground="White" VerticalAlignment="Center" Margin="{Binding MarginValue}" HorizontalAlignment="Left">
 						<Run Text="{Binding ChaosMeteor}"/>
 						<Run Text="-"/>
 						<Run Text="E E" Foreground="#FCCA72" FontWeight="Bold"/>
@@ -292,7 +293,7 @@
 					</TextBlock>
 										
 					<Image Source="/Assets/Deafening_Blast_icon.png" Width="30" Grid.Row="10" />
-					<TextBlock Grid.Row="10" Grid.Column="1" FontSize="24" Foreground="White" VerticalAlignment="Center" Margin="10 0 0 0" HorizontalAlignment="Left">
+					<TextBlock Grid.Row="10" Grid.Column="1" FontSize="24" Foreground="White" VerticalAlignment="Center" Margin="{Binding MarginValue}" HorizontalAlignment="Left">
 						<Run Text="{Binding DeafeningBlast}"/>
 						<Run Text="-"/>
 						<Run Text="Q" Foreground="#72C3FC" FontWeight="Bold"/>

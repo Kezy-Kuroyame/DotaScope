@@ -1,4 +1,5 @@
-﻿using Avalonia.Media.Imaging;
+﻿using Avalonia;
+using Avalonia.Media.Imaging;
 using Avalonia.Threading;
 using DotaScope2.Models;
 using DotaScope2.Views;
@@ -21,6 +22,54 @@ namespace DotaScope2.ViewModels
 
     internal class InvokerViewModel : NavigationViewModel
     {
+        private double _widthHeightBall = 100;
+        public double widthHeightBall
+        {
+            get => _widthHeightBall;
+            set
+            {
+                this.RaiseAndSetIfChanged(ref _widthHeightBall, value);
+            }
+        }
+
+        private double _ballButton = 150;
+        public double ballButton
+        {
+            get => _ballButton;
+            set
+            {
+                this.RaiseAndSetIfChanged(ref _ballButton, value);
+            }
+        }
+
+        private double _ballButtonText = 40;
+        public double ballButtonText
+        {
+            get => _ballButtonText;
+            set
+            {
+                this.RaiseAndSetIfChanged(ref _ballButtonText, value);
+            }
+        }
+
+        private double _borderThicknessButtons = 5;
+        public double borderThicknessButtons
+        {
+            get => _borderThicknessButtons;
+            set
+            {
+                this.RaiseAndSetIfChanged(ref _borderThicknessButtons, value);
+            }
+        }
+
+        private Thickness _marginValue = new Thickness(10, 0, 0, 0);
+
+        public Thickness MarginValue
+        {
+            get => _marginValue;
+            set => this.RaiseAndSetIfChanged(ref _marginValue, value);
+        }
+
         public string InvokerGame => "Invoker Game";
         public string Spells => "Spells";
         private string _startGameButton = "Start Game";
