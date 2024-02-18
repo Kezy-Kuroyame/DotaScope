@@ -410,16 +410,16 @@ namespace DotaScope2.ViewModels
             ballsNameToNumMap["E"] = 100;
 
             Dictionary<int, string> spellsNumToNameMap = new Dictionary<int, string>();
-            spellsNumToNameMap[1 + 1 + 1] = "Cold Snap";
-            spellsNumToNameMap[1 + 1 + 10] = "Ghost Walk";
-            spellsNumToNameMap[1 + 1 + 100] = "Ice Wall";
-            spellsNumToNameMap[10 + 10 + 10] = "E.M.P.";
-            spellsNumToNameMap[10 + 10 + 1] = "Tornado";
-            spellsNumToNameMap[10 + 10 + 100] = "Alacrity";
-            spellsNumToNameMap[100 + 100 + 100] = "Sun Strike";
-            spellsNumToNameMap[100 + 100 + 1] = "Forge Spirit";
-            spellsNumToNameMap[100 + 100 + 10] = "Chaos Meteor";
-            spellsNumToNameMap[1 + 10 + 100] = "Deafening Blast";
+            spellsNumToNameMap[3] = "Cold Snap";
+            spellsNumToNameMap[12] = "Ghost Walk";
+            spellsNumToNameMap[102] = "Ice Wall";
+            spellsNumToNameMap[30] = "E.M.P.";
+            spellsNumToNameMap[21] = "Tornado";
+            spellsNumToNameMap[120] = "Alacrity";
+            spellsNumToNameMap[300] = "Sun Strike";
+            spellsNumToNameMap[201] = "Forge Spirit";
+            spellsNumToNameMap[210] = "Chaos Meteor";
+            spellsNumToNameMap[111] = "Deafening Blast";
 
             castSpellWithoutCreating(ballsNameToNumMap, spellsNumToNameMap);
         }
