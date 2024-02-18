@@ -9,55 +9,11 @@
 
 	<ScrollViewer>
 		<Grid Background="#1A1A1A">
-			<DockPanel Grid.Row ="0"
-			Height="40"
-			Background="#4A3458"
 			
-			VerticalAlignment="Top">
-				<Grid>
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="300"/>
-						<ColumnDefinition Width="400"/>
-						<ColumnDefinition />
-					</Grid.ColumnDefinitions>
-
-					<TextBlock
-						Grid.Column="0"
-						Text="{Binding DotaScope}"
-						HorizontalAlignment="Center"
-						VerticalAlignment="Center"
-						FontSize="32"
-					
-						FontWeight="Bold"
-						TextAlignment="Center"/>
-					<Grid Grid.Column="1">
-						<Grid.ColumnDefinitions>
-							<ColumnDefinition />
-							<ColumnDefinition />
-						</Grid.ColumnDefinitions>
-						<Button
-							Grid.Column="0"
-							Content="{Binding Matches}"
-							FontSize="20"
-							Background="Transparent"
-							HorizontalAlignment="Center"
-							VerticalAlignment="Center" />
-						<Button
-							Grid.Column="1"
-							Content="{Binding Teams}"
-							Background="Transparent"
-							FontSize="20"
-							HorizontalAlignment="Center"
-							VerticalAlignment="Center"
-							Click="toTeams"
-							/>
-					</Grid>
-
-				</Grid>
-			</DockPanel>
-			<Grid VerticalAlignment="Top" Margin="0 40 0 0">
+			<Grid VerticalAlignment="Top">
 				  <Grid.RowDefinitions>
 					<RowDefinition Height="150"/>
+					<RowDefinition Height="20"/>
 					<RowDefinition Height="900"/>
 				</Grid.RowDefinitions>
 				
@@ -80,9 +36,14 @@
 						</LinearGradientBrush>
 					</Grid.Background>
 				</Grid>
-				<TextBlock Grid.Row="0" FontSize="70" Text="Matches" FontWeight="Medium" Foreground="White" Margin="20 0 0 0" VerticalAlignment="Center"/>
-				<Grid Grid.Row="0" VerticalAlignment="Center" Width="640" >
-					<Image Source="{Binding GiveAvatar^}" VerticalAlignment="Center" HorizontalAlignment="Left" Width="100" Height="100"/>
+
+
+
+				<!-- \\\\\\\\\\\\\\\\\\\\\\\\HEADER\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
+				
+				<TextBlock Name="MatchesText" Grid.Row="0" FontSize="70" Text="Matches" FontWeight="Medium" Foreground="White" Margin="20 0 0 0" VerticalAlignment="Center"/>
+				<Grid Name="MatchesGrid" Grid.Row="0" VerticalAlignment="Center" Width="640" >
+					<Image Name="Avatar" Source="{Binding GiveAvatar^}" VerticalAlignment="Center" HorizontalAlignment="Left" Width="100" Height="100"/>
 					<ItemsControl ItemsSource="{Binding players}">
 						<ItemsControl.ItemTemplate>
 							<DataTemplate>
@@ -114,23 +75,37 @@
 					<Image Source="{Binding GiveRank^}" VerticalAlignment="Center" HorizontalAlignment="Right" Width="100" Height="100"/>
 				</Grid>
 
-				<Grid Grid.Row="1" Width="640">
-					<TextBox x:Name="DotaID" Margin="0 5"
+				<!-- \\\\\\\\\\\\\\\\\\\\\\\\HEADER\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
+				
+				
+				<Grid Grid.Row="1" Margin="0 10 0 10">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="0.5*"></ColumnDefinition>
+						<ColumnDefinition Width="0.5*"></ColumnDefinition>
+					</Grid.ColumnDefinitions>
+					<TextBox x:Name="DotaID" 
 							 Watermark="DotaId"
-							 VerticalAlignment="Top" HorizontalAlignment="Center"
-							 Grid.Row="1" Width="250" Height="30" Text="{Binding GivePlayerId}"></TextBox>
+							 Grid.Column="0"
+							 VerticalAlignment="Top" HorizontalAlignment="Right"
+							 Height="30" Text="{Binding GivePlayerId}"
+							 ></TextBox>
 					<Button Background="#22FFFFFF"
-							Grid.Row="1"
+							Grid.Column="1"
 							Command="{Binding NewPlayerComand}"
-							HorizontalAlignment="Right"
-							VerticalAlignment="Top"
-							Margin=" 30 5 120 0"
+							Margin="0 15 0 0"
+							Padding="0"
+							Height="30"
+							VerticalContentAlignment="Center"
+							VerticalAlignment="Center"
+							HorizontalAlignment="Left"
 							Content="Search"
 							/>
+				</Grid>
+				<Grid Grid.Row="2">
 					<DataGrid VerticalAlignment="Top" HorizontalAlignment="Center" Background="#2D2D2D"
 							  ItemsSource="{Binding MatchesCollection}"
-							  Margin="0 50 0 0"
 							  IsReadOnly="True"
+							  Margin="0 20 0 0"
 							  CanUserReorderColumns="False"
 							  CanUserResizeColumns="False"
 							  CanUserSortColumns="False"
@@ -138,13 +113,12 @@
 							  BorderThickness="0"
 							  BorderBrush="Gray"
 							  Name="DataGrid"
-							  Width="640"
 							  Foreground="#CCFFFFFF"
 							  AutoGenerateColumns="False"
 							  FontSize="10"
 							  HeadersVisibility="None"
 							 >
-						
+
 
 						<DataGrid.Columns>
 							<DataGridTemplateColumn>
