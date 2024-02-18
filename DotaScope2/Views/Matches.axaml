@@ -10,8 +10,8 @@
 	<ScrollViewer>
 		<Grid Background="#1A1A1A">
 			
-			<Grid VerticalAlignment="Top">
-				  <Grid.RowDefinitions>
+			<Grid Name="TopBackground" VerticalAlignment="Center">
+				<Grid.RowDefinitions>
 					<RowDefinition Height="150"/>
 					<RowDefinition Height="20"/>
 					<RowDefinition Height="900"/>
@@ -42,37 +42,51 @@
 				<!-- \\\\\\\\\\\\\\\\\\\\\\\\HEADER\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
 				
 				<TextBlock Name="MatchesText" Grid.Row="0" FontSize="70" Text="Matches" FontWeight="Medium" Foreground="White" Margin="20 0 0 0" VerticalAlignment="Center"/>
-				<Grid Name="MatchesGrid" Grid.Row="0" VerticalAlignment="Center" Width="640" >
-					<Image Name="Avatar" Source="{Binding GiveAvatar^}" VerticalAlignment="Center" HorizontalAlignment="Left" Width="100" Height="100"/>
-					<ItemsControl ItemsSource="{Binding players}">
-						<ItemsControl.ItemTemplate>
-							<DataTemplate>
-								<Grid>
-									<Grid.ColumnDefinitions>
-										<ColumnDefinition Width="100"/>
-										<ColumnDefinition Width="300"/>
-										<ColumnDefinition Width="60"/>
-										<ColumnDefinition Width="80"/>
-										<ColumnDefinition Width="120"/>
-									</Grid.ColumnDefinitions>
-									<Grid.RowDefinitions>
-										<RowDefinition Height="33"/>
-										<RowDefinition Height="33"/>
-										<RowDefinition Height="33"/>
-									</Grid.RowDefinitions>
-									<TextBlock Grid.Column="1" VerticalAlignment="Center" Margin="10 0 0 0" Grid.Row="1" FontSize="24" FontWeight="Medium" Foreground="White" Text="{Binding name}"/>
-									<TextBlock Grid.Column="2" VerticalAlignment="Center" Grid.Row="0" FontWeight="Medium" Foreground="Yellow" Margin="20 0 0 0" Text="{Binding total}"/>
-									<TextBlock Grid.Column="3" VerticalAlignment="Center" Grid.Row="0" FontWeight="Medium" Foreground="White" Text="Matches"/>
-									<TextBlock Grid.Column="2" VerticalAlignment="Center" Grid.Row="1" FontWeight="Medium" Foreground="#2ACB4F" Margin="5 0 0 0" Text="{Binding percent}"/>
-									<TextBlock Grid.Column="3" VerticalAlignment="Center" Grid.Row="1" FontWeight="Medium" Foreground="White" Margin="5 0 0 0" Text="Win Rate"/>
-									<TextBlock Grid.Column="2" VerticalAlignment="Center" Grid.Row="2" FontWeight="Medium" Foreground="#2ACB4F" Margin="20 0 0 0" Text="{Binding win}"/>
-									<TextBlock Grid.Column="3" VerticalAlignment="Center" Grid.Row="2" FontWeight="Medium" Foreground="#FFFFFF" Margin="-2.5 0 0 0" Text="-"/>
-									<TextBlock Grid.Column="3" VerticalAlignment="Center" Grid.Row="2" FontWeight="Medium" Foreground="#EC041F" Margin="7.5 0 0 0" Text="{Binding lose}"/>
-								</Grid>
-							</DataTemplate>
-						</ItemsControl.ItemTemplate>
-					</ItemsControl>
-					<Image Source="{Binding GiveRank^}" VerticalAlignment="Center" HorizontalAlignment="Right" Width="100" Height="100"/>
+				<Grid Name="MatchesGrid" Grid.Row="0" VerticalAlignment="Center" Width="640" Margin="0 30 0 0">
+					<Grid.RowDefinitions>
+						<RowDefinition Height="100"/>
+						<RowDefinition Height="100"/>
+						<RowDefinition Height="100"/>
+					</Grid.RowDefinitions>
+					<Grid Name="GridAvatar" VerticalAlignment="Center" HorizontalAlignment="Left" Width="100" Height="100">
+						<Image Name="Avatar" Source="{Binding GiveAvatar^}"/>
+					</Grid>
+					
+					<Grid Name="MatchesHeaderGrid">
+						<ItemsControl ItemsSource="{Binding players}">
+							<ItemsControl.ItemTemplate>
+								<DataTemplate>
+									<Grid>
+										<Grid.ColumnDefinitions>
+											<ColumnDefinition Width="100"/>
+											<ColumnDefinition Width="300"/>
+											<ColumnDefinition Width="60"/>
+											<ColumnDefinition Width="80"/>
+											<ColumnDefinition Width="120"/>
+										</Grid.ColumnDefinitions>
+										<Grid.RowDefinitions>
+											<RowDefinition Height="33"/>
+											<RowDefinition Height="33"/>
+											<RowDefinition Height="33"/>
+										</Grid.RowDefinitions>
+										<Grid Name="PlayerName" Grid.Column="1" VerticalAlignment="Center" Margin="10 0 0 0" Grid.Row="1" >
+											<TextBlock FontSize="24" FontWeight="Medium" Foreground="White" Text="{Binding name}"/>
+										</Grid>
+										<TextBlock Grid.Column="2" VerticalAlignment="Center" Grid.Row="0" FontWeight="Medium" Foreground="Yellow" Margin="20 0 0 0" Text="{Binding total}"/>
+										<TextBlock Grid.Column="3" VerticalAlignment="Center" Grid.Row="0" FontWeight="Medium" Foreground="White" Text="Matches"/>
+										<TextBlock Grid.Column="2" VerticalAlignment="Center" Grid.Row="1" FontWeight="Medium" Foreground="#2ACB4F" Margin="5 0 0 0" Text="{Binding percent}"/>
+										<TextBlock Grid.Column="3" VerticalAlignment="Center" Grid.Row="1" FontWeight="Medium" Foreground="White" Margin="5 0 0 0" Text="Win Rate"/>
+										<TextBlock Grid.Column="2" VerticalAlignment="Center" Grid.Row="2" FontWeight="Medium" Foreground="#2ACB4F" Margin="20 0 0 0" Text="{Binding win}"/>
+										<TextBlock Grid.Column="3" VerticalAlignment="Center" Grid.Row="2" FontWeight="Medium" Foreground="#FFFFFF" Margin="-2.5 0 0 0" Text="	"/>
+										<TextBlock Grid.Column="3" VerticalAlignment="Center" Grid.Row="2" FontWeight="Medium" Foreground="#EC041F" Margin="7.5 0 0 0" Text="{Binding lose}"/>
+									</Grid>
+								</DataTemplate>
+							</ItemsControl.ItemTemplate>
+						</ItemsControl>
+					</Grid>
+					<Grid Name="GridRank" VerticalAlignment="Center" HorizontalAlignment="Right" Width="100" Height="100">
+						<Image Source="{Binding GiveRank^}" Name="PlayerRank"/>
+					</Grid>
 				</Grid>
 
 				<!-- \\\\\\\\\\\\\\\\\\\\\\\\HEADER\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
