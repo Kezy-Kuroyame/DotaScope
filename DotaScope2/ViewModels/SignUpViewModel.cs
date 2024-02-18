@@ -35,13 +35,13 @@ namespace DotaScope2.ViewModels
             }
         }
 
-        private bool _isPC = true;
-        public bool isPC
+        private bool _isMobile = false;
+        public bool IsMobile
         {
-            get => _isPC;
+            get => _isMobile;
             set
             {
-                this.RaiseAndSetIfChanged(ref _isPC, value);
+                this.RaiseAndSetIfChanged(ref _isMobile, value);
             }
         }
 
@@ -161,6 +161,11 @@ namespace DotaScope2.ViewModels
                         System.Diagnostics.Debug.WriteLine("Sign up Correct");
 
                         DataBase db = new DataBase();
+                        if (IsMobile)
+                        {
+                            db.IsMobile = true;
+                        }
+
                         await db.insertUser(NameSignUp.ToLower(), PasswordSignUp);
 
                         User user = await db.getUserIdByName(NameSignUp.ToLower());

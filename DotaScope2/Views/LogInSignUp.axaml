@@ -9,7 +9,7 @@
              x:Class="DotaScope2.Views.LogInSignUp">
 
 	
-	<Grid Background="#1A1A1A" ShowGridLines="" Name="windowGrid">
+	<Grid Background="#1A1A1A" ShowGridLines="" Name="windowGrid" MaxHeight="1530">
 		<Grid.RowDefinitions>
 			<RowDefinition Height="130"/>
 			<RowDefinition/>

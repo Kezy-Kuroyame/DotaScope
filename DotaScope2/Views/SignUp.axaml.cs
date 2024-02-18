@@ -79,6 +79,7 @@ namespace DotaScope2.Views
         {
             if (IsVertical())
             {
+                ((SignUpViewModel)DataContext).IsMobile = true;
                 Resize_Components();
                 RecolorTextBox();
             }

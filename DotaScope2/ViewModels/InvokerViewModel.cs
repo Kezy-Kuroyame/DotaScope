@@ -197,6 +197,16 @@ namespace DotaScope2.ViewModels
 
             }
         }
+
+        private bool _isMobile = false;
+        public bool IsMobile
+        {
+            get => _isMobile;
+            set
+            {
+                this.RaiseAndSetIfChanged(ref _isMobile, value);
+            }
+        }
         //------------------------------------------------ Главный код---------------------------------------------------------- 
         public int setUserId(int userId)
         {
@@ -215,6 +225,11 @@ namespace DotaScope2.ViewModels
         private async Task LeaderBoardsInitialized()
         {
             DataBase dataBase = new DataBase();
+            if (IsMobile)
+            {
+                dataBase.IsMobile = true;
+            }
+
             List<UserScore> LeaderBoardList = await dataBase.getLeaderBoard();
             System.Diagnostics.Debug.WriteLine(LeaderBoardList.Count);
             foreach (UserScore userScore in LeaderBoardList)
@@ -225,6 +240,11 @@ namespace DotaScope2.ViewModels
             }
 
             List<UserScore> BestUsersScoreList = await dataBase.getUserIdRecords(UserId);
+            if (BestUsersScoreList == null)
+            {
+                BestUsersScoreList = [];
+            }
+
             System.Diagnostics.Debug.WriteLine("BestUsersScoreList: " + BestUsersScoreList.Count);
             foreach (UserScore userScore in BestUsersScoreList)
             {
@@ -340,7 +360,12 @@ namespace DotaScope2.ViewModels
             Score = "Score " + CountCurrent;
 
             DataBase dataBase = new DataBase();
-           
+            
+            if (IsMobile)
+            {
+                dataBase.IsMobile = true;
+            }
+
 
             await dataBase.insertGame(UserId, int.Parse(CountCurrent));
             await Dispatcher.UIThread.InvokeAsync(() => { LeaderBoardCollection.Clear(); });

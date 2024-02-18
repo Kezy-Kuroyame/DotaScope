@@ -22,7 +22,7 @@ namespace DotaScope2.Views
             Grid windowGrid = this.FindControl<Grid>("windowGrid");
             double boundsWidth = windowGrid.Bounds.Width;
             double boundsHeight = windowGrid.Bounds.Height;
-            System.Diagnostics.Debug.WriteLine($"Ўирина окна LogInSignUp: {boundsWidth}, высота окна Teams: {boundsHeight}");
+            System.Diagnostics.Debug.WriteLine($"Ўирина окна LogIn: {boundsWidth}, высота окна LogIn: {boundsHeight}");
             return (boundsHeight > boundsWidth);
         }
 
@@ -46,6 +46,9 @@ namespace DotaScope2.Views
         {
             if (IsVertical())
             {
+                System.Diagnostics.Debug.WriteLine($"€ педик");
+
+                ((LogInViewModel)DataContext).IsMobile = true;
                 Resize_Components();
                 RecolorTextBox();
             }

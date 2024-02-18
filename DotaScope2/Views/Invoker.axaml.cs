@@ -21,6 +21,7 @@ namespace DotaScope2.Views
         {
             if (IsVertical())
             {
+                ((InvokerViewModel)DataContext).IsMobile = true;
                 Resize_Components();
             }
         }
