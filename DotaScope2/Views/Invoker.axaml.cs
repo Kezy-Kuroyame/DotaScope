@@ -2,14 +2,110 @@ using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using DotaScope2.ViewModels;
+using System;
 
 namespace DotaScope2.Views
 {
     public partial class Invoker : UserControl
     {
+        protected bool IsVertical()
+        {
+            Grid windowGrid = this.FindControl<Grid>("windowGrid");
+            double boundsWidth = windowGrid.Bounds.Width;
+            double boundsHeight = windowGrid.Bounds.Height;
+            System.Diagnostics.Debug.WriteLine($"Ўирина окна Invoker: {boundsWidth}, высота окна Invoker: {boundsHeight}");
+            return (boundsHeight > boundsWidth);
+        }
+
+        private void InvokerWindow_Initialized(object sender, EventArgs e)
+        {
+            if (IsVertical())
+            {
+                Resize_Components();
+            }
+        }
+
+        private void Resize_Components()
+        {
+            ResizeGridRows();
+            ResizeGameColumn();
+            ResizeButtons();
+        }
+
+        private void ResizeGridRows()
+        {
+            Grid windowGrid = this.FindControl<Grid>("windowGrid");
+            windowGrid.MaxHeight = 3000; 
+
+            Grid content = this.FindControl<Grid>("content");
+            content.Margin = new Avalonia.Thickness(0, 150, 10, 0);
+
+            RowDefinition newRowDefinition1 = new RowDefinition();
+            content.RowDefinitions.Add(newRowDefinition1);
+            RowDefinition newRowDefinition2 = new RowDefinition();
+            content.RowDefinitions.Add(newRowDefinition2);
+            RowDefinition newRowDefinition3 = new RowDefinition();
+            content.RowDefinitions.Add(newRowDefinition3);
+
+            Grid recordsColumnGrid = this.FindControl<Grid>("recordsColumnGrid");
+            Grid gameColumnGrid = this.FindControl<Grid>("gameColumnGrid");
+            Grid spellsColumnGrid = this.FindControl<Grid>("spellsColumnGrid");
+
+            Grid.SetRow(gameColumnGrid, 0);
+            Grid.SetRow(spellsColumnGrid, 1);
+            Grid.SetRow(recordsColumnGrid, 2);
+
+            content.ColumnDefinitions[0].Width = new GridLength();
+            content.ColumnDefinitions[1].Width = new GridLength();
+            content.ColumnDefinitions[2].Width = new GridLength();
+
+            Grid.SetColumnSpan(gameColumnGrid, 3);
+            Grid.SetColumnSpan(spellsColumnGrid, 3);
+            Grid.SetColumnSpan(recordsColumnGrid, 3);
+
+            content.RowDefinitions[0].Height = new GridLength(600);
+            content.RowDefinitions[1].Height = new GridLength(600);
+            content.RowDefinitions[2].Height = new GridLength(600);
+
+        }
+
+        private void ResizeGameColumn()
+        {
+            Grid gameColumnGrid = this.FindControl<Grid>("gameColumnGrid");
+            gameColumnGrid.RowDefinitions[0].Height= new GridLength(200);
+            gameColumnGrid.RowDefinitions[1].Height = new GridLength(300);
+            gameColumnGrid.RowDefinitions[2].Height = new GridLength(100);
+
+
+
+            Grid gameGridMain = this.FindControl<Grid>("gameGridMain");
+            gameGridMain.ColumnDefinitions[1].Width = new GridLength(150, GridUnitType.Pixel);
+            gameGridMain.ColumnDefinitions[2].Width = new GridLength(150, GridUnitType.Pixel);
+
+            ((InvokerViewModel)DataContext).MarginValue = new Avalonia.Thickness(-15, 0, 0, 0);
+
+        }
+
+        private void ResizeButtons()
+        {
+            Grid pressedBallsGrid = this.FindControl<Grid>("pressedBallsGrid");
+
+            pressedBallsGrid.ColumnDefinitions[1].Width = new GridLength(100, GridUnitType.Pixel);
+            pressedBallsGrid.ColumnDefinitions[2].Width = new GridLength(100, GridUnitType.Pixel);
+            pressedBallsGrid.ColumnDefinitions[3].Width = new GridLength(100, GridUnitType.Pixel);
+
+            ((InvokerViewModel)DataContext).widthHeightBall = 75;
+
+            ((InvokerViewModel)DataContext).ballButton = 75;
+
+            ((InvokerViewModel)DataContext).ballButtonText = 20;
+
+        }
+
         public Invoker()
         {
             InitializeComponent();
+            this.Loaded += InvokerWindow_Initialized;
         }
 
         private void QButtonClick(object sender, RoutedEventArgs e)

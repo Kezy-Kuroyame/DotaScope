@@ -9,7 +9,7 @@
              x:Class="DotaScope2.Views.LogInSignUp">
 
 	
-	<Grid Background="#1A1A1A" ShowGridLines="">
+	<Grid Background="#1A1A1A" ShowGridLines="" Name="windowGrid">
 		<Grid.RowDefinitions>
 			<RowDefinition Height="130"/>
 			<RowDefinition/>
@@ -17,7 +17,7 @@
 
 		<!-- Sign Up and Log In buttons -->
 		<TransitioningContentControl Grid.Row="1" Content="{Binding RegistrationPage}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-		<Grid Grid.Row="0" ShowGridLines="">
+		<Grid Grid.Row="0" ShowGridLines="" >
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition/>
 				<ColumnDefinition/>
@@ -33,7 +33,7 @@
 					Text="LOGIN"
 					Name="LogInPageTextButton"
 					Foreground="{Binding TextColorLogIn}"
-					FontSize="50"
+					FontSize="{Binding buttonFontSize}"
 					FontWeight="Normal"
 					TextDecorations="{Binding TextDecorationsLogIn}"
 					/>
@@ -49,7 +49,7 @@
 					Text="SIGN UP"
 					Name="SignUpPageTextButton"
 					Foreground="{Binding TextColorSignUp}"
-					FontSize="50"
+					FontSize="{Binding buttonFontSize}"
 					FontWeight="Normal"
 					TextDecorations="{Binding TextDecorationsSignUp}"
 					/>

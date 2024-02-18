@@ -5,270 +5,313 @@ using System.Text;
 using System.Threading.Tasks;
 using DotaScope2.Models;
 using Npgsql;
+using SQLitePCL;
+using Microsoft.Data.Sqlite;
+
 using static System.Formats.Asn1.AsnWriter;
+using System.Reflection;
+using Avalonia;
+using Avalonia.Platform;
+using System.IO;
+using Newtonsoft.Json;
+using System.Net.Http;
+using System.Reflection.Metadata;
 
 namespace DotaScope2.Models
 {
     internal class DataBase
     {
-        public void insertUser(string name, string pas)
-        {
-            string conString = DBConnection.ConnectionString;
-            string insertQuery = $@"
-                INSERT INTO users (name, password, games, score_sum)
-                VALUES
-                    ('{name}', '{pas}', 0, 0);";
+        
 
-            using (NpgsqlConnection connection = new NpgsqlConnection(conString))
+        public async Task insertUser(string name, string password)
+        {
+            using (HttpClient client = new HttpClient())
             {
                 try
                 {
-                    connection.Open();
-                    System.Diagnostics.Debug.WriteLine("Соединение успешно установлено!");
+                    string apiUrl = $"http://10.0.2.2:5000/users";
+                    var request = new User(0, name, password);
+                    var jsonContent = JsonConvert.SerializeObject(request);
+                    var content = new StringContent(jsonContent, System.Text.Encoding.UTF8, "application/json");
 
-                    using (NpgsqlCommand cmd = new NpgsqlCommand(insertQuery, connection))
+                    HttpResponseMessage response = await client.PostAsync(apiUrl, content);
+                    System.Diagnostics.Debug.WriteLine(response);
+
+                    if (response.IsSuccessStatusCode)
                     {
-                        int rowsAffected = cmd.ExecuteNonQuery();
-                        if (rowsAffected > 0)
-                        {
-                            System.Diagnostics.Debug.WriteLine("Запись успешно добавлена!");
-                        }
-                        else
-                        {
-                            System.Diagnostics.Debug.WriteLine("Не удалось добавить запись.");
-                        }
+                        // Read the response content as string
+                        string responseBody = await response.Content.ReadAsStringAsync();
+                        Console.WriteLine("Response: " + responseBody);
                     }
-                    connection.Close();
+                    else
+                    {
+                        // Print the HTTP status code if the request was not successful
+                        Console.WriteLine("HTTP Status Code: " + response.StatusCode);
+                    }
                 }
-                catch (Exception ex)
+                catch (HttpRequestException ex)
                 {
-                    System.Diagnostics.Debug.WriteLine("Ошибка соединения: " + ex.Message);
+                    string apiUrl = $"http://127.0.0.1:5000/users";
+                    var request = new User(0, name, password);
+                    var jsonContent = JsonConvert.SerializeObject(request);
+                    var content = new StringContent(jsonContent, System.Text.Encoding.UTF8, "application/json");
+
+                    HttpResponseMessage response = await client.PostAsync(apiUrl, content);
+                    System.Diagnostics.Debug.WriteLine(response);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        // Read the response content as string
+                        string responseBody = await response.Content.ReadAsStringAsync();
+                        Console.WriteLine("Response: " + responseBody);
+                    }
+                    else
+                    {
+                        // Print the HTTP status code if the request was not successful
+                        Console.WriteLine("HTTP Status Code: " + response.StatusCode);
+                    }
                 }
             }
         }
 
-        public void insertGame(int id_user, int score)
-        {
-            string conString = DBConnection.ConnectionString;
-            string insertQuery = $@"
-                INSERT INTO invoker_game (id_user, score)
-                VALUES
-                    ({id_user}, {score});";
 
-            using (NpgsqlConnection connection = new NpgsqlConnection(conString))
+        public async Task insertGame(int id_user, int score)
+        {
+            using (HttpClient client = new HttpClient())
             {
                 try
                 {
-                    connection.Open();
-                    System.Diagnostics.Debug.WriteLine("Соединение успешно установлено!");
+                    string apiUrl = $"http://10.0.2.2:5000/invokergame";
+                    var request = new InvokerGame(0, id_user, score);
+                    var jsonContent = JsonConvert.SerializeObject(request);
+                    var content = new StringContent(jsonContent, System.Text.Encoding.UTF8, "application/json");
 
-                    using (NpgsqlCommand cmd = new NpgsqlCommand(insertQuery, connection))
+                    HttpResponseMessage response = await client.PostAsync(apiUrl, content);
+                    System.Diagnostics.Debug.WriteLine(response);
+
+                    if (response.IsSuccessStatusCode)
                     {
-                        int rowsAffected = cmd.ExecuteNonQuery();
-                        if (rowsAffected > 0)
-                        {
-                            System.Diagnostics.Debug.WriteLine("Запись успешно добавлена!");
-                        }
-                        else
-                        {
-                            System.Diagnostics.Debug.WriteLine("Не удалось добавить запись.");
-                        }
+                        // Read the response content as string
+                        string responseBody = await response.Content.ReadAsStringAsync();
+                        Console.WriteLine("Response: " + responseBody);
                     }
-                    connection.Close();
+                    else
+                    {
+                        // Print the HTTP status code if the request was not successful
+                        Console.WriteLine("HTTP Status Code: " + response.StatusCode);
+                    }
                 }
-                catch (Exception ex)
+                catch (HttpRequestException ex)
                 {
-                    System.Diagnostics.Debug.WriteLine("Ошибка соединения: " + ex.Message);
+                    string apiUrl = $"http://127.0.0.1:5000/invokergame";
+                    var request = new InvokerGame(0, id_user, score);
+                    var jsonContent = JsonConvert.SerializeObject(request);
+                    var content = new StringContent(jsonContent, System.Text.Encoding.UTF8, "application/json");
+
+                    HttpResponseMessage response = await client.PostAsync(apiUrl, content);
+                    System.Diagnostics.Debug.WriteLine(response);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        // Read the response content as string
+                        string responseBody = await response.Content.ReadAsStringAsync();
+                        Console.WriteLine("Response: " + responseBody);
+                    }
+                    else
+                    {
+                        // Print the HTTP status code if the request was not successful
+                        Console.WriteLine("HTTP Status Code: " + response.StatusCode);
+                    }
                 }
             }
         }
 
-        public int getUserIdDb(string name)
+        public async Task<User> getUserIdByName(string name)
         {
-            string conString = DBConnection.ConnectionString;
-            string selectQuery = $@"
-                SELECT* FROM users 
-                WHERE users.name = '{name}'
-                ";
-            List<User> users = new List<User>();
-            using (NpgsqlConnection connection = new NpgsqlConnection(conString))
+            using (HttpClient client = new HttpClient())
             {
                 try
                 {
-                    connection.Open();
+                    string apiUrl = $"http://10.0.2.2:5000/users";
+                    string jsonResponse = await client.GetStringAsync(apiUrl);
+                    System.Diagnostics.Debug.WriteLine(jsonResponse);
 
-                    using (NpgsqlCommand cmd = new NpgsqlCommand(selectQuery, connection))
+                    // Десериализация полученных данных
+                    User[] deserializedData = JsonConvert.DeserializeObject <User[]>(jsonResponse);
+
+                    foreach (var item in deserializedData)
                     {
-                        using (NpgsqlDataReader reader = cmd.ExecuteReader())
+                        if (item.Name == name)
                         {
-                            while (reader.Read())
-                            {
-                                User entity = new User
-                                {
-                                    Id = reader.GetInt32(0),
-                                    Name = reader.GetString(1),
-                                    Password = reader.GetString(2)
-                                };
-                                users.Add(entity);
-                            }
-                            System.Diagnostics.Debug.WriteLine("Соединение закрыто");
-                            connection.Close();
-                            if (users.Count == 0)
-                            {
-                                return -1;
-                            }
-                            else
-                            {
-                                return users[0].Id;
-                            }
+                            return item;
                         }
                     }
-
+                    return null;
                 }
-                catch (Exception ex)
+                catch (HttpRequestException ex)
                 {
-                    System.Diagnostics.Debug.WriteLine("Ошибка: " + ex.Message);
-                    return -2;
-                }
-            }
-        }
+                    string apiUrl = $"http://127.0.0.1:5000/users";
+                    string jsonResponse = await client.GetStringAsync(apiUrl);
+                    System.Diagnostics.Debug.WriteLine(jsonResponse);
 
-        public User getUserById(int id)
-        {
-            string conString = DBConnection.ConnectionString;
-            string selectQuery = $@"
-                SELECT* FROM users 
-                WHERE users.id_user = '{id}'
-                ";
-            List<User> users = new List<User>();
-            using (NpgsqlConnection connection = new NpgsqlConnection(conString))
-            {
-                try
-                {
-                    connection.Open();
+                    // Десериализация полученных данных
+                    User[] deserializedData = JsonConvert.DeserializeObject<User[]>(jsonResponse);
 
-                    using (NpgsqlCommand cmd = new NpgsqlCommand(selectQuery, connection))
+
+
+                    foreach (var item in deserializedData)
                     {
-                        using (NpgsqlDataReader reader = cmd.ExecuteReader())
+                        if (item.Name == name)
                         {
-                            while (reader.Read())
-                            {
-                                User entity = new User
-                                {
-                                    Id = reader.GetInt32(0),
-                                    Name = reader.GetString(1),
-                                    Password = reader.GetString(2)
-                                };
-                                users.Add(entity);
-                            }
-                            System.Diagnostics.Debug.WriteLine("Соединение закрыто");
-                            connection.Close();
-                            if (users.Count == 0)
-                            {
-                                return null;
-                            }
-                            else
-                            {
-                                return users[0];
-                            }
+                            return item;
                         }
                     }
-
-                }
-                catch (Exception ex)
-                {
-                    System.Diagnostics.Debug.WriteLine("Ошибка: " + ex.Message);
                     return null;
                 }
             }
         }
 
-        public List<UserScore> getLeaderBoard()
-        {
-            string conString = DBConnection.ConnectionString;
-            string selectQuery = $@"
-                SELECT users.name as Name, invoker_game.score as Score FROM invoker_game
-                JOIN users ON invoker_game.id_user = users.id_user
-                ORDER BY invoker_game.score DESC
-                LIMIT 10;";
 
-            List<UserScore> scores = new List<UserScore>();
-            using (NpgsqlConnection connection = new NpgsqlConnection(conString))
+        public async Task<User> getUserById(int id)
+        {
+            using (HttpClient client = new HttpClient())
             {
                 try
                 {
-                    connection.Open();
+                    
+                    string apiUrl = $"http://10.0.2.2:5000/users/{id}";
+                    string jsonResponse = await client.GetStringAsync(apiUrl);
+                    System.Diagnostics.Debug.WriteLine(jsonResponse);
 
-                    using (NpgsqlCommand cmd = new NpgsqlCommand(selectQuery, connection))
+                    // Десериализация полученных данных
+                    User deserializedData = JsonConvert.DeserializeObject<User>(jsonResponse);
+
+                    // Очистка и добавление данных в коллекцию
+                    if (deserializedData != null)
                     {
-                        using (NpgsqlDataReader reader = cmd.ExecuteReader())
-                        {
-                            while (reader.Read())
-                            {
-                                UserScore entity = new UserScore
-                                {
-                                    Name = reader.GetString(0),
-                                    Score = reader.GetInt32(1), 
-                                };
-                                scores.Add(entity);
-                            }
-                            connection.Close();
-                            return scores;
-                        }
+                        return deserializedData;
                     }
-
+                    else
+                    {
+                        return null;
+                    }
                 }
-                catch (Exception ex ){
-                    System.Diagnostics.Debug.WriteLine("Ошибка: " + ex.Message);
-                    return scores;
+                catch (HttpRequestException ex)
+                {
+                    string apiUrl = $"http://127.0.0.1:5000/users/{id}";
+                    string jsonResponse = await client.GetStringAsync(apiUrl);
+                    System.Diagnostics.Debug.WriteLine(jsonResponse);
+
+                    // Десериализация полученных данных
+                    User deserializedData = JsonConvert.DeserializeObject<User>(jsonResponse);
+
+                    // Очистка и добавление данных в коллекцию
+                    if (deserializedData != null)
+                    {
+                        return deserializedData;
+                    }
+                    else
+                    {
+                        return null;
+                    }
                 }
             }
         }
 
-        public List<UserScore> getUserIdRecords(int userId)
-        {
-            string conString = DBConnection.ConnectionString;
-            string selectQuery = $@"
-                SELECT users.name as Name, invoker_game.score as Score FROM invoker_game 
-                JOIN users ON invoker_game.id_user = users.id_user
-                WHERE (users.id_user = {userId})
-                ORDER BY invoker_game.score DESC
-                LIMIT 5;";
 
-            List<UserScore> scores = new List<UserScore>();
-            using (NpgsqlConnection connection = new NpgsqlConnection(conString))
+        public async Task<List<UserScore>> getLeaderBoard()
+        {
+            using (HttpClient client = new HttpClient())
+            {
+               
+                try 
+                {
+                    string apiUrl = $"http://10.0.2.2:5000/leaderboard";
+                    string jsonResponse = await client.GetStringAsync(apiUrl);
+                    System.Diagnostics.Debug.WriteLine(jsonResponse);
+
+                    // Десериализация полученных данных
+                    UserScore[] deserializedData = JsonConvert.DeserializeObject<UserScore[]>(jsonResponse);
+
+                    // Очистка и добавление данных в коллекцию
+                    if (deserializedData != null)
+                    {
+                        return deserializedData.ToList();
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+                catch(HttpRequestException ex)
+                {
+                    string apiUrl = $"http://127.0.0.1:5000/leaderboard";
+                    string jsonResponse = await client.GetStringAsync(apiUrl);
+                    System.Diagnostics.Debug.WriteLine(jsonResponse);
+
+                    // Десериализация полученных данных
+                    UserScore[] deserializedData = JsonConvert.DeserializeObject<UserScore[]>(jsonResponse);
+
+                    // Очистка и добавление данных в коллекцию
+                    if (deserializedData != null)
+                    {
+                        return deserializedData.ToList();
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+              
+            }
+        }
+    
+
+        public async Task<List<UserScore>> getUserIdRecords(int userId)
+        {
+            using (HttpClient client = new HttpClient())
             {
                 try
                 {
-                    connection.Open();
+                    string apiUrl = $"http://10.0.2.2:5000/leaderboard/{userId}";
+                    string jsonResponse = await client.GetStringAsync(apiUrl);
+                    System.Diagnostics.Debug.WriteLine(jsonResponse);
 
-                    using (NpgsqlCommand cmd = new NpgsqlCommand(selectQuery, connection))
+                    // Десериализация полученных данных
+                    UserScore[] deserializedData = JsonConvert.DeserializeObject<UserScore[]>(jsonResponse);
+
+                    // Очистка и добавление данных в коллекцию
+                    if (deserializedData != null)
                     {
-                        using (NpgsqlDataReader reader = cmd.ExecuteReader())
-                        {
-                            while (reader.Read())
-                            {
-                                UserScore entity = new UserScore
-                                {
-                                    Name = reader.GetString(0),
-                                    Score = reader.GetInt32(1),
-                                };
-                                scores.Add(entity);
-                            }
-                            connection.Close();
-                            return scores;
-                        }
+                        return deserializedData.ToList();
                     }
-
+                    else
+                    {
+                        return null;
+                    }
                 }
-                catch (Exception ex)
+                catch (HttpRequestException ex)
                 {
-                    System.Diagnostics.Debug.WriteLine("Ошибка: " + ex.Message);
-                    return scores;
+                    string apiUrl = $"http://127.0.0.1:5000/leaderboard/{userId}";
+                    string jsonResponse = await client.GetStringAsync(apiUrl);
+                    System.Diagnostics.Debug.WriteLine(jsonResponse);
+
+                    // Десериализация полученных данных
+                    UserScore[] deserializedData = JsonConvert.DeserializeObject<UserScore[]>(jsonResponse);
+
+                    // Очистка и добавление данных в коллекцию
+                    if (deserializedData != null)
+                    {
+                        return deserializedData.ToList();
+                    }
+                    else
+                    {
+                        return null;
+                    }
                 }
             }
         }
-    }
+            }
 
     public class UserScore
     {
@@ -276,12 +319,6 @@ namespace DotaScope2.Models
         public int Score { get; set; }
         // Добавьте дополнительные свойства, соответствующие вашим столбцам
     }
-
-    public class User
-    {
-         public int Id { get; set; }
-        public string Name { get; set; }
-        public string Password { get; set; }
-        // Добавьте дополнительные свойства, соответствующие вашим столбцам
-    }
 }
+  
+

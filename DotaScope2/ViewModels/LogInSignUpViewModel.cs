@@ -15,6 +15,19 @@ namespace DotaScope2.ViewModels
          {
          };
 
+        private double _textSizeButton = 50;
+
+        public double buttonFontSize
+        {
+            get => _textSizeButton;
+            set
+            {
+                this.RaiseAndSetIfChanged(ref _textSizeButton, value);
+            }
+        }
+
+        
+
         private NavigationViewModel _RegistrationPage;
 
         public NavigationViewModel RegistrationPage

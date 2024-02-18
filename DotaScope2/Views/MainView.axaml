@@ -17,7 +17,9 @@
 			<DockPanel
 				Height="40"
 				Background="#4A3458"
-				VerticalAlignment="Top">
+				VerticalAlignment="Top"
+				Name="dockPanelHeader">
+				
 				<Grid ShowGridLines="True" Name="gridHeader">
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition Width="300"/>
@@ -26,6 +28,17 @@
 						<ColumnDefinition Width="200"/>
 					</Grid.ColumnDefinitions>
 
+					<Menu DockPanel.Dock="Top" Grid.Row="0" Name="menu">
+						<MenuItem Header="Page" Foreground="#CCFFFFFF"  Background="#11FFFFFF" BorderThickness="1" CornerRadius="10" BorderBrush="#55FFFFFF" Width="200" Margin="20 0 0 0">
+							<MenuItem Header="Home" Command="{Binding NavigateHomeCommand}"/>
+							<Separator/>
+							<MenuItem Header="Teams" Command="{Binding NavigateTeamsCommand}"/>
+							<Separator/>
+							<MenuItem Header="Matches" Command="{Binding NavigateMatchesCommand}"/>
+							<Separator/>
+							<MenuItem Header="Invoker" Command="{Binding NavigateInvokerCommand}"/>
+						</MenuItem>
+					</Menu>
 					
 					<Button
 						Grid.Column="0"
@@ -85,6 +98,7 @@
 						Padding="5 0"
 						Foreground="White"
 						Command="{Binding NavigateLogInSignUpCommand}"
+						Name="navigateLogInSignUpButton"
 							/>
 				</Grid>
 			</DockPanel>

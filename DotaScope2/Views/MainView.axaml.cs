@@ -25,28 +25,14 @@ public partial class MainView : UserControl
     {
         HideButtons();
         ReColumnGridHeader();
-        CreateNativeMenu();
+
+        Button navigateLogInSignUpButton = this.FindControl<Button>("navigateLogInSignUpButton");
+        navigateLogInSignUpButton.HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Center;
+
+        Menu menu = this.FindControl<Menu>("menu");
+        menu.IsVisible = true;
     }
 
-    private void CreateNativeMenu()
-    {
-        NativeMenu nativeMenu = new NativeMenu();
-        NativeMenuItem home = new NativeMenuItem("Home");
-        NativeMenuItem teams = new NativeMenuItem("Teams");
-        NativeMenuItem matches = new NativeMenuItem("Matches");
-        NativeMenuItem invoker = new NativeMenuItem("Invoker");
-
-        nativeMenu.Add(home);
-        nativeMenu.Add(teams);
-        nativeMenu.Add(matches);
-        nativeMenu.Add(invoker);
-
-        AddNativeMenu(nativeMenu);
-        Grid gridHeader = this.FindControl<Grid>("gridHeader");
-        Grid.SetRow(nativeMenu, 0);
-
-        gridHeader.Children.Add((nativeMenu);
-    }
 
     private void HideButtons()
     {
@@ -68,16 +54,19 @@ public partial class MainView : UserControl
     private void ReColumnGridHeader()
     {
         Grid gridHeader = this.FindControl<Grid>("gridHeader");
+
+        ColumnDefinition column1 = gridHeader.ColumnDefinitions[0];
+        column1.Width = new GridLength(250, GridUnitType.Pixel);
+
         ColumnDefinition column2 = gridHeader.ColumnDefinitions[1];
         column2.Width = new GridLength(0, GridUnitType.Pixel);
-    }
 
-    private void AddNativeMenu(NativeMenu nativeMenu)
-    {
-        
-
+        ColumnDefinition column4 = gridHeader.ColumnDefinitions[3];
+        column4.Width = new GridLength(150, GridUnitType.Pixel);
 
     }
+
+   
 
     private void MainWindow_Initialized(object sender, EventArgs e)
     {

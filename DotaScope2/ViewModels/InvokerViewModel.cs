@@ -1,4 +1,5 @@
-﻿using Avalonia.Media.Imaging;
+﻿using Avalonia;
+using Avalonia.Media.Imaging;
 using Avalonia.Threading;
 using DotaScope2.Models;
 using DotaScope2.Views;
@@ -21,6 +22,64 @@ namespace DotaScope2.ViewModels
 
     internal class InvokerViewModel : NavigationViewModel
     {
+        private bool _isPC = true;
+        public bool isPC
+        {
+            get => _isPC;
+            set
+            {
+                this.RaiseAndSetIfChanged(ref _isPC, value);
+            }
+        }
+
+        private double _widthHeightBall = 100;
+        public double widthHeightBall
+        {
+            get => _widthHeightBall;
+            set
+            {
+                this.RaiseAndSetIfChanged(ref _widthHeightBall, value);
+            }
+        }
+
+        private double _ballButton = 150;
+        public double ballButton
+        {
+            get => _ballButton;
+            set
+            {
+                this.RaiseAndSetIfChanged(ref _ballButton, value);
+            }
+        }
+
+        private double _ballButtonText = 40;
+        public double ballButtonText
+        {
+            get => _ballButtonText;
+            set
+            {
+                this.RaiseAndSetIfChanged(ref _ballButtonText, value);
+            }
+        }
+
+        private double _borderThicknessButtons = 5;
+        public double borderThicknessButtons
+        {
+            get => _borderThicknessButtons;
+            set
+            {
+                this.RaiseAndSetIfChanged(ref _borderThicknessButtons, value);
+            }
+        }
+
+        private Thickness _marginValue = new Thickness(10, 0, 0, 0);
+
+        public Thickness MarginValue
+        {
+            get => _marginValue;
+            set => this.RaiseAndSetIfChanged(ref _marginValue, value);
+        }
+
         public string InvokerGame => "Invoker Game";
         public string Spells => "Spells";
         private string _startGameButton = "Start Game";
@@ -121,8 +180,7 @@ namespace DotaScope2.ViewModels
             }
             set
             {
-                _leaderBoardCollection = value;
-                OnPropertyChanged(nameof(Teams));
+                this.RaiseAndSetIfChanged(ref _leaderBoardCollection, value);
             }
         }
             
@@ -135,8 +193,8 @@ namespace DotaScope2.ViewModels
             }
             set
             {
-                _bestUsersScoreCollection = value;
-                OnPropertyChanged(nameof(Teams));
+                this.RaiseAndSetIfChanged(ref _bestUsersScoreCollection, value);
+
             }
         }
         //------------------------------------------------ Главный код---------------------------------------------------------- 
@@ -149,25 +207,36 @@ namespace DotaScope2.ViewModels
         public InvokerViewModel(int userId){
             UserId = userId;
             System.Diagnostics.Debug.WriteLine("Invoker UserID: " + UserId);
+            LeaderBoardsInitialized();
+            
+            }
 
+
+        private async Task LeaderBoardsInitialized()
+        {
             DataBase dataBase = new DataBase();
-            List<UserScore> LeaderBoardList = dataBase.getLeaderBoard();
+            List<UserScore> LeaderBoardList = await dataBase.getLeaderBoard();
             System.Diagnostics.Debug.WriteLine(LeaderBoardList.Count);
             foreach (UserScore userScore in LeaderBoardList)
             {
                 System.Diagnostics.Debug.WriteLine(userScore);
-                LeaderBoardCollection.Add(userScore);
+                await Dispatcher.UIThread.InvokeAsync(() => { LeaderBoardCollection.Add(userScore); });
+                
             }
-            
-            List<UserScore> BestUsersScoreList = dataBase.getUserIdRecords(UserId);
+
+            List<UserScore> BestUsersScoreList = await dataBase.getUserIdRecords(UserId);
             System.Diagnostics.Debug.WriteLine("BestUsersScoreList: " + BestUsersScoreList.Count);
             foreach (UserScore userScore in BestUsersScoreList)
             {
                 System.Diagnostics.Debug.WriteLine(userScore);
-                BestUsersScoreCollection.Add(userScore);
-            }
+                
+                await Dispatcher.UIThread.InvokeAsync(() => { BestUsersScoreCollection.Add(userScore); });
 
+            }
+            return;
         }
+
+        
 
         private void setImages()
         {
@@ -262,37 +331,25 @@ namespace DotaScope2.ViewModels
         // Таймер до конца игры
         private async Task TimerCallbackGame()
         {
-            await Dispatcher.UIThread.InvokeAsync(() =>
-            {
-                System.Diagnostics.Debug.WriteLine("Время таймера истекло.");
-                beginningGame = false;
-                GameImageSpell = null;
-                StartGameButton = "Start Game";
-                GameTextSpell = string.Empty;
-                Score = "Score " + CountCurrent;
+           
+            System.Diagnostics.Debug.WriteLine("Время таймера истекло.");
+            beginningGame = false;
+            GameImageSpell = null;
+            StartGameButton = "Start Game";
+            GameTextSpell = string.Empty;
+            Score = "Score " + CountCurrent;
 
-                DataBase dataBase = new DataBase();
-                dataBase.insertGame(UserId, int.Parse(CountCurrent));
+            DataBase dataBase = new DataBase();
+           
 
-                LeaderBoardCollection.Clear();
-                List<UserScore> LeaderBoardList = dataBase.getLeaderBoard();
-                System.Diagnostics.Debug.WriteLine(LeaderBoardList.Count);
-                foreach (UserScore userScore in LeaderBoardList)
-                {
-                    System.Diagnostics.Debug.WriteLine(userScore);
-                    LeaderBoardCollection.Add(userScore);
-                }
-
-                BestUsersScoreCollection.Clear();
-                List<UserScore> BestUsersScoreList = dataBase.getUserIdRecords(UserId);
-                System.Diagnostics.Debug.WriteLine("BestUsersScoreList: " + BestUsersScoreList.Count);
-                foreach (UserScore userScore in BestUsersScoreList)
-                {
-                    System.Diagnostics.Debug.WriteLine(userScore);
-                    BestUsersScoreCollection.Add(userScore);
-                }
-            });
+            await dataBase.insertGame(UserId, int.Parse(CountCurrent));
+            await Dispatcher.UIThread.InvokeAsync(() => { LeaderBoardCollection.Clear(); });
+            await Dispatcher.UIThread.InvokeAsync(() => { BestUsersScoreCollection.Clear(); });
+            await LeaderBoardsInitialized();
+            return;
         }
+        
+        
 
         public void gameLogic()
         {

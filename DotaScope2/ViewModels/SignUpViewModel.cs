@@ -14,6 +14,59 @@ namespace DotaScope2.ViewModels
 {
     public class SignUpViewModel : NavigationViewModel
     {
+        private User _user;
+        public User user
+        {
+            get { return _user; }
+            set
+            {
+                this.RaiseAndSetIfChanged(ref _user, value);
+            }
+        }
+
+        private double _textSizeHeader = 70;
+
+        public double buttonFontHeader
+        {
+            get => _textSizeHeader;
+            set
+            {
+                this.RaiseAndSetIfChanged(ref _textSizeHeader, value);
+            }
+        }
+
+        private bool _isPC = true;
+        public bool isPC
+        {
+            get => _isPC;
+            set
+            {
+                this.RaiseAndSetIfChanged(ref _isPC, value);
+            }
+        }
+
+        private double _fieldFontSize = 50;
+
+        public double FieldFontSize
+        {
+            get => _fieldFontSize;
+            set
+            {
+                this.RaiseAndSetIfChanged(ref _fieldFontSize, value);
+            }
+        }
+
+        private double _fieldWidth = 400;
+
+        public double FieldWidth
+        {
+            get => _fieldWidth;
+            set
+            {
+                this.RaiseAndSetIfChanged(ref _fieldWidth, value);
+            }
+        }
+
         private string _name ="";
         public string NameSignUp
         {
@@ -88,6 +141,11 @@ namespace DotaScope2.ViewModels
         public void SignUpFunc()
         {
             System.Diagnostics.Debug.WriteLine("Sign up active. Name: " + NameSignUp + " Password: " + PasswordSignUp);
+            SignUpFuncAsync();
+        }
+
+        public async void SignUpFuncAsync()
+        {
             char[] charactersToCheck = { ' ' };
             if (NameSignUp.Length > 0)
             {
@@ -103,11 +161,13 @@ namespace DotaScope2.ViewModels
                         System.Diagnostics.Debug.WriteLine("Sign up Correct");
 
                         DataBase db = new DataBase();
-                        db.insertUser(NameSignUp, PasswordSignUp);
+                        await db.insertUser(NameSignUp.ToLower(), PasswordSignUp);
 
-                        int id = db.getUserIdDb(NameSignUp);
+                        User user = await db.getUserIdByName(NameSignUp.ToLower());
+                        System.Diagnostics.Debug.WriteLine("User: " + user.Id_user.ToString() + " " + user.Name + " " + user.Password);
+
                         MainViewModel.LogIn = "Log out";
-                        MainViewModel.SetUserId(id);
+                        MainViewModel.SetUserId(user.Id_user);
                         MainViewModel.NavigateHome();
                         // вот здесь тип ты крутой и переход на другую страницу
                     }
@@ -125,6 +185,6 @@ namespace DotaScope2.ViewModels
             {
                 ErrorNameSignUp = "Логин не может быть пустым";
             }
-        }
+        }        
     }
 }
