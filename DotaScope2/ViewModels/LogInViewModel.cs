@@ -13,8 +13,17 @@ namespace DotaScope2.ViewModels
 {
     internal class LogInViewModel : NavigationViewModel
     {
-        private double _textSizeHeader = 70;
+        private User _user;
+        public User user
+        {
+            get { return _user; }
+            set
+            {
+                this.RaiseAndSetIfChanged(ref _user, value);
+            }
+        }
 
+        private double _textSizeHeader = 70;
         public double buttonFontHeader
         {
             get => _textSizeHeader;
@@ -23,7 +32,17 @@ namespace DotaScope2.ViewModels
                 this.RaiseAndSetIfChanged(ref _textSizeHeader, value);
             }
         }
-        
+
+        private bool _isPC = true;
+        public bool isPC
+        {
+            get => _isPC;
+            set
+            {
+                this.RaiseAndSetIfChanged(ref _isPC, value);
+            }
+        }
+
         private double _fieldFontSize = 50;
 
         public double FieldFontSize
@@ -100,48 +119,57 @@ namespace DotaScope2.ViewModels
 
         public void LoginFunc()
         {
-            
+
             System.Diagnostics.Debug.WriteLine("Login In active. Name: " + NameLoginIn + " Password: " + PasswordLoginIn);
-            char[] charactersToCheck = { ' ' };
-            if (NameLoginIn.Length > 0)
-            {
-                ErrorNameLoginIn = "";
-                if (PasswordLoginIn.Length > 0)
+            LoginFuncAsync();
+        }
+           
+        public async void LoginFuncAsync()
+        {
+                char[] charactersToCheck = { ' ' };
+                if (NameLoginIn.Length > 0)
                 {
-                    ErrorPasswordLoginIn = "";
-                    System.Diagnostics.Debug.WriteLine("Sign up Correct");
+                    ErrorNameLoginIn = "";
+                    if (PasswordLoginIn.Length > 0)
+                    {
+                        ErrorPasswordLoginIn = "";
+                        System.Diagnostics.Debug.WriteLine("Sign up Correct");
 
-                    DataBase db = new DataBase();
+                        DataBase db = new DataBase();
 
-                    int id = db.getUserIdDb(NameLoginIn);
-                    if (id >= 0) {
-                        ErrorNameLoginIn = "";
-                        User user = db.getUserById(id);
-                        string pas = user.Password;
-                        if (PasswordLoginIn == pas)
+                        User user = await db.getUserIdByName(NameLoginIn.ToLower());
+                        if (user != null)
                         {
-                            ErrorPasswordLoginIn = "Неверный пароль";
-                            MainViewModel.LogIn = "Log Out";
-                            MainViewModel.SetUserId(id);
-                            MainViewModel.NavigateHome();
+                            ErrorNameLoginIn = "";
+                            string pas = user.Password;
+                            if (PasswordLoginIn == pas)
+                            {
+                                MainViewModel.LogIn = "Log Out";
+                                MainViewModel.SetUserId(user.Id_user);
+                                MainViewModel.NavigateHome();
+                            }
+                            else
+                            {
+                                ErrorPasswordLoginIn = "Неверный пароль";
+                            }
                         }
+                        else
+                        {
+                            ErrorNameLoginIn = "Неверный логин";
+                        }
+                        // вот здесь тип ты крутой и переход на другую страницу
                     }
                     else
                     {
-                        ErrorNameLoginIn = "Неверный логин";
+                        ErrorPasswordLoginIn = "Пароль не может быть пустым";
                     }
-                    // вот здесь тип ты крутой и переход на другую страницу
                 }
                 else
                 {
-                    ErrorPasswordLoginIn = "Пароль не может быть пустым";
+                    ErrorNameLoginIn = "Логин не может быть пустым";
                 }
             }
-            else
-            {
-                ErrorNameLoginIn = "Логин не может быть пустым";
-            }
         }
-       
+
     }
-}
+
